@@ -501,7 +501,7 @@
             <div class="feature-card">
                 <span class="feature-icon">🌐</span>
                 <div class="feature-title" data-i18n="f3-title">Publieke AI Chat</div>
-                <p class="feature-desc" data-i18n="f3-desc">Flask API met rate limiting zodat niemand het kan misbruiken. Bereikbaar via cleo.alanokricha.com met SSL encryptie.</p>
+                <p class="feature-desc" data-i18n="f3-desc">Flask API met rate limiting zodat niemand het kan misbruiken. Bereikbaar via naja.nexusakai.com met SSL encryptie.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">📊</span>
@@ -607,7 +607,7 @@
 app = <span class="c-fn">Flask</span>(__name__)
 
 <span class="c-comment"># CORS — only allowed domains</span>
-<span class="c-fn">CORS</span>(app, resources={<span class="c-str">r"/*"</span>: {<span class="c-str">"origins"</span>: [<span class="c-str">"https://www.alanokricha.com"</span>]}})
+<span class="c-fn">CORS</span>(app, resources={<span class="c-str">r"/*"</span>: {<span class="c-str">"origins"</span>: [<span class="c-str">"https://www.nexusakai.com"</span>]}})
 
 <span class="c-comment"># Rate limiting — 100 requests per hour per IP</span>
 limiter = <span class="c-fn">Limiter</span>(app=app, default_limits=[<span class="c-str">"100 per hour"</span>])
@@ -700,7 +700,7 @@ limiter = <span class="c-fn">Limiter</span>(app=app, default_limits=[<span class
             "features-title": "Wat het kan",
             "f1-title": "Lokale AI", "f1-desc": "Ollama draait AI modellen (Qwen 2.5) volledig lokaal. Gecombineerd met ChromaDB voor slimme context. Alles blijft op Nexus, geen cloud nodig.",
             "f2-title": "Beveiliging", "f2-desc": "Alle diensten draaien alleen op localhost. Firewall blokkeert alles van buitenaf. SSH werkt alleen met keys. Cloudflare Tunnel voor veilige externe toegang.",
-            "f3-title": "Publieke AI Chat", "f3-desc": "Flask API met rate limiting zodat niemand het kan misbruiken. Bereikbaar via cleo.alanokricha.com met SSL encryptie.",
+            "f3-title": "Publieke AI Chat", "f3-desc": "Flask API met rate limiting zodat niemand het kan misbruiken. Bereikbaar via naja.nexusakai.com met SSL encryptie.",
             "f4-title": "Monitoring Dashboard", "f4-desc": "FastAPI dashboard voor live Nexus prestaties. CPU, geheugen, temperatuur — alles in real-time.",
             "f5-title": "Smart Home", "f5-desc": "Homebridge verbindt alle slimme apparaten met Apple HomeKit. Philips Hue, IKEA — alles via één systeem.",
             "f6-title": "Development Setup", "f6-desc": "VS Code Remote SSH om vanaf de Mac op Nexus te programmeren. Continue.dev voor AI-powered code suggesties.",
@@ -730,7 +730,7 @@ limiter = <span class="c-fn">Limiter</span>(app=app, default_limits=[<span class
             "features-title": "What it can do",
             "f1-title": "Local AI", "f1-desc": "Ollama runs AI models (Qwen 2.5) entirely locally. Combined with ChromaDB for smart context. Everything stays on Nexus, no cloud needed.",
             "f2-title": "Security", "f2-desc": "All services run on localhost only. Firewall blocks all incoming traffic. SSH with keys only. Cloudflare Tunnel for secure external access.",
-            "f3-title": "Public AI Chat", "f3-desc": "Flask API with rate limiting so no one can abuse it. Accessible via cleo.alanokricha.com with SSL encryption.",
+            "f3-title": "Public AI Chat", "f3-desc": "Flask API with rate limiting so no one can abuse it. Accessible via naja.nexusakai.com with SSL encryption.",
             "f4-title": "Monitoring Dashboard", "f4-desc": "FastAPI dashboard for live Nexus performance. CPU, memory, temperature — all in real-time.",
             "f5-title": "Smart Home", "f5-desc": "Homebridge connects all smart devices to Apple HomeKit. Philips Hue, IKEA — all through one system.",
             "f6-title": "Development Setup", "f6-desc": "VS Code Remote SSH to code on Nexus from my Mac. Continue.dev for AI-powered code suggestions.",

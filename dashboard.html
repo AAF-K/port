@@ -598,7 +598,7 @@
 </div>
 
 <script>
-    const API = 'https://cleo.alanokricha.com/chat';
+    const API = 'https://naja.nexusakai.com/chat';
     let chatHistory = [];
 
     // Chat
@@ -633,7 +633,7 @@
         } catch(e) { removeTyping(); const d=document.createElement('div'); d.className='error-msg'; d.textContent='❌ '+e.message; document.getElementById('messages').appendChild(d); }
     }
     async function checkAPI() {
-        try { const r = await fetch('https://cleo.alanokricha.com/health'); if(r.ok) addMsg(lang==='nl'?'Hey! Ik ben Naja, waar kan ik je mee helpen?':'Hi! I\'m Naja, how can I help you?'); }
+        try { const r = await fetch('https://naja.nexusakai.com/health'); if(r.ok) addMsg(lang==='nl'?'Hey! Ik ben Naja, waar kan ik je mee helpen?':'Hi! I\'m Naja, how can I help you?'); }
         catch(e) { const d=document.createElement('div'); d.className='error-msg'; d.textContent='⚠️ Naja offline.'; document.getElementById('messages').appendChild(d); }
     }
 
