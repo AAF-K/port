@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjEzIiByeT0iNSIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iMTMiIHJ5PSI5LjUiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjUiIHJ5PSIxMyIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSIyOSIgeTI9IjE2IiBzdHJva2U9IiMwMGU4N2EiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE2IiB5MT0iMyIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raspberry Pi AI Infrastructuur — Alano Kricha</title>
+    <title>Nexus — Raspberry Pi 5 Server — Alano Kricha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,394 +16,289 @@
             --accent: #00e87a;
             --accent2: #00b860;
             --warm: #f0a500;
+            --red: #ff4060;
+            --blue: #60a5fa;
             --text: #f0f0f8;
             --muted: #8888aa;
             --dim: #3a3a5c;
-            --red: #ff4060;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a { color: inherit; text-decoration: none; }
         html { scroll-behavior: smooth; }
-
         body {
-            background: var(--bg);
-            color: var(--text);
+            background: var(--bg); color: var(--text);
             font-family: 'Syne', sans-serif;
-            overflow-x: hidden;
-            cursor: none;
+            overflow-x: hidden; cursor: none;
         }
 
-        /* Cursor */
-        .cursor { position: fixed; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; }
-        .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(0,232,122,0.4); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-color 0.3s; }
+        /* CURSOR */
+        .cursor { position: fixed; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .15s, height .15s; }
+        .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(0,232,122,0.4); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: width .3s, height .3s, border-color .3s; }
+        @media (max-width: 768px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
 
-        /* Header */
+        /* HEADER */
         header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            padding: 20px 48px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 18px 48px;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid transparent;
-            transition: border-color 0.3s, background 0.3s, backdrop-filter 0.3s;
+            transition: border-color .3s, background .3s, backdrop-filter .3s;
         }
-        header.scrolled {
-            border-color: var(--border);
-            background: rgba(9,9,15,0.85);
-            backdrop-filter: blur(20px);
-        }
+        header.scrolled { border-color: var(--border); background: rgba(9,9,15,0.88); backdrop-filter: blur(20px); }
         .back-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 8px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.2s;
+            font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--muted); transition: color .2s;
         }
         .back-link:hover { color: var(--accent); }
         .lang-btn {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            background: none;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: none;
-            transition: all 0.2s;
+            font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--muted); background: none; border: 1px solid var(--border);
+            border-radius: 4px; padding: 4px 10px; cursor: none; transition: all .2s;
         }
         .lang-btn:hover { color: var(--accent); border-color: rgba(0,232,122,0.3); }
 
-        /* Hero */
+        /* HERO */
         .hero {
-            min-height: 40vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 100px 48px 48px;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border);
+            min-height: 100vh;
+            display: grid; grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 96px 48px 56px;
+            gap: 56px;
+            position: relative; overflow: hidden;
         }
-        .hero-grid {
-            position: absolute;
-            inset: 0;
+        .hero-bg {
+            position: absolute; inset: 0;
             background-image:
                 linear-gradient(rgba(0,232,122,0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,232,122,0.03) 1px, transparent 1px);
             background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at 70% 50%, black 20%, transparent 70%);
+            mask-image: radial-gradient(ellipse at 20% 55%, black 20%, transparent 65%);
         }
-        
-        
-        
+        .hero-glow {
+            position: absolute; width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,232,122,0.05) 0%, transparent 65%);
+            top: 50%; left: 28%; transform: translate(-50%,-50%);
+            pointer-events: none;
+        }
+        .hero-left { position: relative; z-index: 1; }
         .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.1s forwards;
+            display: flex; align-items: center; gap: 12px; margin-bottom: 32px;
+            opacity: 0; animation: fadeUp .7s ease .15s forwards;
         }
-        .eyebrow-line { width: 40px; height: 1px; background: var(--accent); }
+        .eyebrow-line { width: 32px; height: 1px; background: var(--accent); }
         .eyebrow-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 11px; color: var(--accent);
+            letter-spacing: 2px; text-transform: uppercase;
         }
         .hero-title {
-            font-size: clamp(32px, 5vw, 68px);
-            font-weight: 800;
-            line-height: 0.95;
-            letter-spacing: -3px;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.25s forwards;
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 800; line-height: 1.05;
+            letter-spacing: -3px; margin-bottom: 28px;
+            opacity: 0; animation: fadeUp .7s ease .3s forwards;
         }
-        .hero-title .italic {
-            font-family: 'Fraunces', serif;
-            font-style: italic;
-            font-weight: 300;
-            color: var(--accent);
+        .hero-title .italic { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; color: var(--accent); letter-spacing: -2px; }
+        .hero-title .dim { color: var(--dim); }
+        .hero-sub {
+            font-size: 15px; color: var(--muted); line-height: 1.7;
+            max-width: 400px; margin-bottom: 36px;
+            opacity: 0; animation: fadeUp .7s ease .45s forwards;
         }
-        .hero-meta {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.4s forwards;
+        .hero-pills {
+            display: flex; flex-wrap: wrap; gap: 7px;
+            opacity: 0; animation: fadeUp .7s ease .58s forwards;
         }
-        .hero-desc {
-            font-size: 15px;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 480px;
+        .hero-pill {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            padding: 5px 12px; border-radius: 99px;
+            border: 1px solid var(--border); color: var(--muted); background: var(--surface);
+            transition: all .2s;
         }
-        .badge-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            padding: 5px 12px;
-            border-radius: 3px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            letter-spacing: 0.5px;
-        }
+        .hero-pill.on { border-color: rgba(0,232,122,0.3); color: var(--accent); background: rgba(0,232,122,0.05); }
 
-        /* Stats */
-        .stats-bar {
-            border-bottom: 1px solid var(--border);
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
+        /* HERO RIGHT — Nexus terminal */
+        .hero-right { position: relative; z-index: 1; opacity: 0; animation: fadeUp .7s ease .4s forwards; }
+        .term-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+        .term-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 18px; border-bottom: 1px solid var(--border); background: var(--surface2);
         }
-        .stat-item {
-            padding: 32px 40px;
-            border-right: 1px solid var(--border);
-            transition: background 0.3s;
+        .term-dots { display: flex; gap: 6px; }
+        .term-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--dim); }
+        .term-dot.g { background: var(--accent); }
+        .term-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+        .live-chip { display: flex; align-items: center; gap: 5px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+        .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease infinite; }
+
+        .term-body { padding: 18px; display: flex; flex-direction: column; gap: 6px; }
+        .term-row { display: grid; grid-template-columns: 100px 1fr; font-family: 'JetBrains Mono', monospace; font-size: 11px; gap: 8px; padding: 4px 0; }
+        .term-row.sep { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 10px; }
+        .t-lbl { color: var(--dim); }
+        .t-val { color: var(--text); }
+        .t-val.ok { color: var(--accent); }
+        .t-val.warm { color: var(--warm); }
+        .bar { display: inline-block; width: 80px; background: var(--dim); border-radius: 2px; height: 6px; margin-left: 6px; vertical-align: middle; position: relative; top: -1px; }
+        .bar-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+
+        .term-footer {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            padding: 14px 18px; border-top: 1px solid var(--border);
+            background: rgba(0,232,122,0.02);
         }
-        .stat-item:last-child { border-right: none; }
+        .tf-val { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 500; color: var(--accent); line-height: 1; }
+        .tf-lbl { font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
+
+        /* STATS BAR */
+        .stats-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; overflow: hidden; }
+        .stat-item { flex: 1; padding: 18px 32px; border-right: 1px solid var(--border); transition: background .2s; }
+        .stat-item:first-child { padding-left: 48px; }
+        .stat-item:last-child { border-right: none; padding-right: 48px; }
         .stat-item:hover { background: rgba(0,232,122,0.02); }
-        .stat-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 30px;
-            font-weight: 500;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 4px;
-        }
-        .stat-label {
-            font-size: 11px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
+        .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 500; color: var(--accent); display: block; line-height: 1; margin-bottom: 4px; }
+        .stat-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; }
 
-        /* Content */
-        .content { padding: 80px 48px; max-width: 1300px; margin: 0 auto; }
+        /* CONTENT */
+        .content { padding: 0 48px; max-width: 1400px; margin: 0 auto; }
 
-        .section { margin-bottom: 80px; }
-
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-        .label-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+        /* SECTION */
+        .section { padding: 72px 0; border-top: 1px solid var(--border); }
+        .section:first-child { border-top: none; }
+        .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+        .label-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 2px; }
         .label-line { flex: 1; height: 1px; background: var(--border); }
-        .label-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+        .label-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
 
-        .section-title {
-            font-size: clamp(28px, 4vw, 44px);
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            line-height: 1.05;
-            margin-bottom: 20px;
-        }
-        .section-body {
-            font-size: 15px;
-            color: var(--muted);
-            line-height: 1.8;
-            max-width: 680px;
-            margin-bottom: 16px;
-        }
+        .section-title { font-size: clamp(28px, 3.5vw, 48px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px; }
+        .section-body { font-size: 15px; color: var(--muted); line-height: 1.75; max-width: 680px; margin-bottom: 16px; }
 
-        /* Tech pills */
-        .tech-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-        .tech-pill {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            padding: 6px 14px;
-            border-radius: 3px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            transition: all 0.2s;
-        }
-        .tech-pill:hover { border-color: rgba(0,232,122,0.3); color: var(--text); }
-
-        /* Features grid */
-        .features-grid {
+        /* BENTO FEATURES */
+        .bento-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-            background: var(--border);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
         }
-        .feature-card {
-            background: var(--bg);
-            padding: 32px;
-            transition: background 0.3s;
+        .bento-cell {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 14px; overflow: hidden; position: relative;
+            transition: border-color .3s;
         }
-        .feature-card:hover { background: var(--surface); }
-        .feature-icon { font-size: 24px; margin-bottom: 16px; display: block; }
-        .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.3px; }
-        .feature-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+        .bento-cell:hover { border-color: rgba(0,232,122,0.22); }
+        .bento-cell.feat {
+            grid-column: 1 / -1;
+            display: grid; grid-template-columns: 1fr 1fr;
+        }
+        .bento-cell.feat::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0; transition: opacity .3s;
+        }
+        .bento-cell.feat:hover::before { opacity: 1; }
+        .cell-inner { padding: 32px; display: flex; flex-direction: column; }
+        .cell-inner-r { padding: 32px; display: flex; flex-direction: column; background: var(--surface2); border-left: 1px solid var(--border); }
 
-        /* Architecture */
+        .cell-icon { font-size: 28px; margin-bottom: 16px; }
+        .cell-title { font-size: 20px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 8px; }
+        .cell-sub { font-size: 12px; color: var(--accent); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+        .cell-desc { font-size: 13px; color: var(--muted); line-height: 1.7; flex: 1; }
+        .cell-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+        .cell-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 9px;
+            padding: 3px 9px; border-radius: 3px;
+            background: var(--surface2); border: 1px solid var(--border);
+            color: var(--muted); letter-spacing: .5px; transition: all .2s;
+        }
+        .bento-cell:hover .cell-tag { border-color: rgba(0,232,122,0.18); color: var(--text); }
+
+        /* Feat right panel — services list */
+        .services-list { display: flex; flex-direction: column; gap: 0; }
+        .service-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 9px 0; border-bottom: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+        }
+        .service-row:last-child { border-bottom: none; }
+        .svc-name { color: var(--muted); }
+        .svc-port { color: var(--dim); font-size: 10px; }
+        .svc-status { color: var(--accent); font-size: 10px; }
+
+        /* ARCHITECTURE */
         .arch-layers { display: flex; flex-direction: column; gap: 0; }
         .arch-layer {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            border: 1px solid var(--border);
-            border-bottom: none;
-            transition: background 0.2s;
+            display: grid; grid-template-columns: 80px 1fr;
+            gap: 24px; padding: 20px 0;
+            border-top: 1px solid var(--border);
+            transition: background .2s; margin: 0 -8px; padding-left: 8px; padding-right: 8px;
+            border-radius: 6px;
         }
-        .arch-layer:first-child { border-radius: 12px 12px 0 0; }
-        .arch-layer:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 12px 12px; }
-        .arch-layer:hover { background: var(--surface); }
-        .arch-num {
-            padding: 24px;
-            border-right: 1px solid var(--border);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            letter-spacing: 1px;
-        }
-        .arch-content { padding: 24px 28px; }
-        .arch-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-        .arch-items { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); line-height: 1.6; }
+        .arch-layer:hover { background: rgba(0,232,122,0.02); }
+        .arch-num { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; padding-top: 2px; }
+        .arch-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+        .arch-items { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); line-height: 1.8; }
 
-        /* Insights */
+        /* INSIGHTS */
         .insights-list { display: flex; flex-direction: column; gap: 0; }
-        .insight-item {
-            display: grid;
-            grid-template-columns: 40px 1fr;
-            gap: 20px;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--border);
-            align-items: start;
-        }
-        .insight-item:first-child { border-top: 1px solid var(--border); }
-        .insight-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent);
-            margin-top: 7px;
-            justify-self: center;
-        }
-        .insight-text { font-size: 15px; color: var(--muted); line-height: 1.7; }
-        .insight-text strong { color: var(--text); font-weight: 700; }
+        .insight-item { display: flex; gap: 16px; padding: 20px 0; border-top: 1px solid var(--border); align-items: flex-start; }
+        .insight-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; }
+        .insight-text { font-size: 14px; color: var(--muted); line-height: 1.75; }
+        .insight-text strong { color: var(--text); }
 
-        /* Code block */
-        .code-wrap {
-            background: #06060e;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .code-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface);
-        }
+        /* CODE */
+        .code-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .code-header { display: flex; align-items: center; gap: 8px; padding: 12px 18px; border-bottom: 1px solid var(--border); background: var(--surface2); }
         .code-dot { width: 10px; height: 10px; border-radius: 50%; }
         .code-filename { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: 8px; }
-        .code-body {
-            padding: 24px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            line-height: 1.8;
-            overflow-x: auto;
-            color: #8888aa;
-        }
-        .c-comment { color: #3a3a5c; }
-        .c-key { color: #7c6af7; }
-        .c-str { color: #00e87a; }
-        .c-fn { color: #60a5fa; }
+        .code-body { padding: 24px 24px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8; color: var(--muted); overflow-x: auto; }
+        .c-comment { color: var(--dim); }
+        .c-key { color: var(--accent); }
+        .c-str { color: var(--warm); }
+        .c-cmd { color: var(--blue); }
 
-        /* Impact */
-        .impact-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        .impact-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
-            transition: all 0.2s;
-        }
-        .impact-card:hover { border-color: rgba(0,232,122,0.2); transform: translateY(-3px); }
-        .impact-icon { font-size: 20px; margin-bottom: 12px; display: block; }
-        .impact-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
-        .impact-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+        /* IMPACT */
+        .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .impact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: border-color .3s; }
+        .impact-card:hover { border-color: rgba(0,232,122,0.2); }
+        .impact-val { font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 500; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+        .impact-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+        .impact-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
-        /* Animations */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* TECH PILLS */
+        .tech-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 24px; }
+        .tech-pill { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 4px 10px; border-radius: 3px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
 
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 48px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border); padding: 36px 48px; display: flex; justify-content: space-between; align-items: center; }
         .footer-left { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
         .footer-left span { color: var(--accent); }
-        .footer-right a {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: color 0.2s;
-        }
+        .footer-right { display: flex; gap: 28px; }
+        .footer-right a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; transition: color .2s; }
         .footer-right a:hover { color: var(--accent); }
 
-        /* Responsive */
-        @media (max-width: 900px) {
-            header { padding: 20px 24px; }
-            .hero { padding: 76px 24px 32px; min-height: auto; }
-            .hero-title { letter-spacing: -2px; }
-            .stats-bar { grid-template-columns: repeat(2, 1fr); }
-            .stat-item { border-bottom: 1px solid var(--border); }
-            .content { padding: 60px 24px; }
-            .features-grid { grid-template-columns: 1fr; }
-            .arch-layer { grid-template-columns: 1fr; }
-            .arch-num { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 24px; }
-            .impact-grid { grid-template-columns: 1fr; }
-            footer { padding: 32px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
-            body { cursor: auto; }
-            .cursor, .cursor-ring { display: none; }
-        }
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 768px) {
-            .page-hero { padding: 16px 0 24px !important; }
-            .page { padding: 76px 24px 24px !important; }
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            header { padding: 18px 24px; }
+            .hero { grid-template-columns: 1fr; min-height: auto; padding: 88px 24px 48px; gap: 40px; }
+            .hero-right { display: none; }
+            .stats-bar { flex-wrap: wrap; }
+            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 24px; }
+            .stat-item:first-child { padding-left: 24px; }
+            .stat-item:last-child { border-bottom: none; }
+            .content { padding: 0 24px; }
+            .section { padding: 48px 0; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-cell.feat { display: flex; flex-direction: column; }
+            .cell-inner-r { border-left: none; border-top: 1px solid var(--border); }
+            .impact-grid { grid-template-columns: 1fr 1fr; }
+            footer { padding: 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
         }
     </style>
 </head>
@@ -413,57 +308,109 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <header id="header">
-    <a href="index.html" class="back-link">
-        ← <span data-i18n="back">Portfolio</span>
-    </a>
-    <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">EN</button>
+    <a href="index.html" class="back-link">← <span data-i18n="back">Portfolio</span></a>
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()">EN</button>
 </header>
 
-<!-- Hero -->
+<!-- HERO -->
 <section class="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-eyebrow">
-        <div class="eyebrow-line"></div>
-        <span class="eyebrow-text">Project 01</span>
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-left">
+        <div class="hero-eyebrow">
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Project 02 · Nexus</span>
+        </div>
+        <h1 class="hero-title">
+            Raspberry<br>
+            <span class="italic">Pi</span> server<br>
+            <span class="dim">thuis</span>
+        </h1>
+        <p class="hero-sub" data-i18n="hero-sub">Mijn eigen Raspberry Pi 5 die 24/7 thuis draait. AI modellen, media server, DNS filtering, smart home en beveiliging. Volledig self-hosted, volledig onder controle.</p>
+        <div class="hero-pills">
+            <span class="hero-pill on">Raspberry Pi 5</span>
+            <span class="hero-pill on">Docker</span>
+            <span class="hero-pill">Ollama</span>
+            <span class="hero-pill">Pi-hole</span>
+            <span class="hero-pill">Tailscale</span>
+            <span class="hero-pill">Grafana</span>
+            <span class="hero-pill">Linux</span>
+        </div>
     </div>
-    <h1 class="hero-title" id="hero-title">
-        Raspberry Pi<br>
-        <span class="italic">AI</span> Infrastructuur
-    </h1>
-    <div class="hero-meta">
-        <p class="hero-desc" data-i18n="hero-sub">De Raspberry Pi 5 die bij mij thuis staat en 24/7 alles draait: AI, media, monitoring, smart home en beveiliging. Volledig self-hosted, volledig onder controle.</p>
-        <div class="badge-row">
-            <span class="badge">Raspberry Pi 5 · 16GB</span>
-            <span class="badge">Samsung T7 SSD 1TB</span>
-            <span class="badge">Ollama AI</span>
-            <span class="badge">Docker</span>
-            <span class="badge">Tailscale VPN</span>
-            <span class="badge" data-i18n="badge-security">Zero-Trust</span>
+    <div class="hero-right">
+        <div class="term-card">
+            <div class="term-header">
+                <div class="term-dots">
+                    <div class="term-dot"></div>
+                    <div class="term-dot"></div>
+                    <div class="term-dot g"></div>
+                </div>
+                <span class="term-title">nexus @ 192.168.2.72</span>
+                <div class="live-chip"><div class="live-dot"></div>live</div>
+            </div>
+            <div class="term-body">
+                <div class="term-row">
+                    <span class="t-lbl">CPU</span>
+                    <span class="t-val ok">12%<span class="bar"><span class="bar-fill" style="width:12%"></span></span></span>
+                </div>
+                <div class="term-row">
+                    <span class="t-lbl">RAM</span>
+                    <span class="t-val">8.4 / 16 GB<span class="bar"><span class="bar-fill" style="width:52%"></span></span></span>
+                </div>
+                <div class="term-row">
+                    <span class="t-lbl">Temp</span>
+                    <span class="t-val ok">52°C ✓</span>
+                </div>
+                <div class="term-row">
+                    <span class="t-lbl">Storage</span>
+                    <span class="t-val">T7: 61% vrij</span>
+                </div>
+                <div class="term-row sep">
+                    <span class="t-lbl">Services</span>
+                    <span class="t-val ok">17 / 17 ✓</span>
+                </div>
+                <div class="term-row">
+                    <span class="t-lbl">AI modellen</span>
+                    <span class="t-val">3 lokaal</span>
+                </div>
+                <div class="term-row">
+                    <span class="t-lbl">Uptime</span>
+                    <span class="t-val ok">34d 6h ✓</span>
+                </div>
+                <div class="term-row">
+                    <span class="t-lbl">IP extern</span>
+                    <span class="t-val">100.109.6.112</span>
+                </div>
+            </div>
+            <div class="term-footer">
+                <div><div class="tf-val">17</div><div class="tf-lbl">Services</div></div>
+                <div><div class="tf-val">0€</div><div class="tf-lbl">AI kosten</div></div>
+                <div><div class="tf-val">~5€</div><div class="tf-lbl">Stroom/mnd</div></div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Stats -->
+<!-- STATS BAR -->
 <div class="stats-bar reveal">
-    <div class="stat-item"><span class="stat-num">17</span><span class="stat-label" data-i18n="stat1">Actieve Services</span></div>
-    <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label" data-i18n="stat2">Uptime</span></div>
-    <div class="stat-item"><span class="stat-num">0€</span><span class="stat-label" data-i18n="stat3">Maandelijkse AI kosten</span></div>
-    <div class="stat-item"><span class="stat-num">3+</span><span class="stat-label" data-i18n="stat4">AI Modellen lokaal</span></div>
-    <div class="stat-item"><span class="stat-num">~5€</span><span class="stat-label" data-i18n="stat5">Stroom per maand</span></div>
+    <div class="stat-item"><span class="stat-val">17</span><span class="stat-lbl" data-i18n="stat1">Actieve services</span></div>
+    <div class="stat-item"><span class="stat-val">24/7</span><span class="stat-lbl" data-i18n="stat2">Uptime</span></div>
+    <div class="stat-item"><span class="stat-val">0€</span><span class="stat-lbl" data-i18n="stat3">Maandelijkse AI kosten</span></div>
+    <div class="stat-item"><span class="stat-val">3+</span><span class="stat-lbl" data-i18n="stat4">Lokale AI modellen</span></div>
+    <div class="stat-item"><span class="stat-val">~5€</span><span class="stat-lbl" data-i18n="stat5">Stroom per maand</span></div>
 </div>
 
 <div class="content">
 
-    <!-- Overview -->
+    <!-- OVERVIEW -->
     <div class="section reveal">
         <div class="section-label">
-            <span class="label-num">01</span>
-            <div class="label-line"></div>
-            <span class="label-text" data-i18n="overview-title">Project overzicht</span>
+            <span class="label-num">01</span><div class="label-line"></div>
+            <span class="label-text" data-i18n="s1-label">Project overzicht</span>
         </div>
-        <h2 class="section-title" data-i18n="overview-heading">Nexus: alles op één Pi.</h2>
-        <p class="section-body" data-i18n="overview-p1">Nexus is de naam van mijn Raspberry Pi 5 die thuis staat te draaien. Geen cloud, geen abonnement. Gewoon mijn eigen hardware. 17 actieve services: van AI modellen en media server tot DNS filtering, honeypot en smart home automation.</p>
-        <p class="section-body" data-i18n="overview-p2">De Pi draait op een Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. Alle services draaien als systemd services of Docker containers. Externe toegang gaat uitsluitend via Tailscale VPN of Cloudflare Tunnel, nooit direct open naar internet.</p>
+        <h2 class="section-title" data-i18n="s1-title">Nexus: alles op één Pi.</h2>
+        <p class="section-body" data-i18n="s1-p1">Nexus is de naam van mijn Raspberry Pi 5 die thuis staat te draaien. Geen cloud, geen abonnement. Gewoon mijn eigen hardware. 17 actieve services: van AI modellen en media server tot DNS filtering, honeypot en smart home automation.</p>
+        <p class="section-body" data-i18n="s1-p2">De Pi draait op een Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. Alle services draaien als systemd services of Docker containers. Externe toegang gaat uitsluitend via Tailscale VPN of Cloudflare Tunnel, nooit direct open naar internet.</p>
         <div class="tech-row">
             <span class="tech-pill">Raspberry Pi 5 · 16GB</span>
             <span class="tech-pill">Debian 13 Trixie</span>
@@ -482,123 +429,213 @@
         </div>
     </div>
 
-    <!-- Features -->
+    <!-- FEATURES BENTO -->
     <div class="section reveal">
         <div class="section-label">
-            <span class="label-num">02</span>
-            <div class="label-line"></div>
-            <span class="label-text" data-i18n="features-title">Wat het kan</span>
+            <span class="label-num">02</span><div class="label-line"></div>
+            <span class="label-text" data-i18n="s2-label">Wat Nexus draait</span>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <span class="feature-icon">🤖</span>
-                <div class="feature-title" data-i18n="f1-title">Lokale AI · AKAI & Ollama</div>
-                <p class="feature-desc" data-i18n="f1-desc">Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus.</p>
+        <div class="bento-grid">
+
+            <!-- AI — featured -->
+            <div class="bento-cell feat">
+                <div class="cell-inner">
+                    <span class="cell-icon">🤖</span>
+                    <div class="cell-sub" data-i18n="f1-sub">Lokale AI · AKAI & Ollama</div>
+                    <div class="cell-title" data-i18n="f1-title">Eigen AI modellen, geen cloud</div>
+                    <p class="cell-desc" data-i18n="f1-desc">Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus via de OpenClaw gateway op poort 18789.</p>
+                    <div class="cell-tags">
+                        <span class="cell-tag">Ollama :11434</span>
+                        <span class="cell-tag">OpenClaw :18789</span>
+                        <span class="cell-tag">Flask API :5000</span>
+                        <span class="cell-tag">0€ per query</span>
+                    </div>
+                </div>
+                <div class="cell-inner-r">
+                    <p class="cell-sub">Services op Nexus</p>
+                    <div class="services-list">
+                        <div class="service-row"><span class="svc-name">AKAI Gateway</span><span class="svc-port">:18789</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Ollama</span><span class="svc-port">:11434</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Grafana</span><span class="svc-port">:3000</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Prometheus</span><span class="svc-port">:9090</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Pi-hole</span><span class="svc-port">:8082</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Nextcloud</span><span class="svc-port">:11000</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Jellyfin</span><span class="svc-port">:8096</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Homebridge</span><span class="svc-port">:8581</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Cowrie honeypot</span><span class="svc-port">:2222</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Endlessh</span><span class="svc-port">:22</span><span class="svc-status">✓ running</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">📊</span>
-                <div class="feature-title" data-i18n="f2-title">Monitoring · Grafana & Prometheus</div>
-                <p class="feature-desc" data-i18n="f2-desc">Grafana dashboard op poort 3000 met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API op poort 61208.</p>
+
+            <!-- Monitoring -->
+            <div class="bento-cell">
+                <div class="cell-inner">
+                    <span class="cell-icon">📊</span>
+                    <div class="cell-sub" data-i18n="f2-sub">Monitoring · Grafana & Prometheus</div>
+                    <div class="cell-title" data-i18n="f2-title">Real-time server inzicht</div>
+                    <p class="cell-desc" data-i18n="f2-desc">Grafana dashboard op poort 3000 met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API op poort 61208.</p>
+                    <div class="cell-tags">
+                        <span class="cell-tag">Grafana :3000</span>
+                        <span class="cell-tag">Prometheus :9090</span>
+                        <span class="cell-tag">Glances :61208</span>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">📺</span>
-                <div class="feature-title" data-i18n="f3-title">Media · Jellyfin & Nextcloud</div>
-                <p class="feature-desc" data-i18n="f3-desc">Jellyfin draait als media server op poort 8096. Films en muziek streamen naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).</p>
+
+            <!-- Media -->
+            <div class="bento-cell">
+                <div class="cell-inner">
+                    <span class="cell-icon">📺</span>
+                    <div class="cell-sub" data-i18n="f3-sub">Media · Jellyfin & Nextcloud</div>
+                    <div class="cell-title" data-i18n="f3-title">Eigen cloud en media server</div>
+                    <p class="cell-desc" data-i18n="f3-desc">Jellyfin draait als media server op poort 8096. Films en muziek streamen naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).</p>
+                    <div class="cell-tags">
+                        <span class="cell-tag">Jellyfin :8096</span>
+                        <span class="cell-tag">Nextcloud :11000</span>
+                        <span class="cell-tag">238 GB NAS</span>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">🔒</span>
-                <div class="feature-title" data-i18n="f4-title">Security · honeypot & firewall</div>
-                <p class="feature-desc" data-i18n="f4-desc">Cowrie SSH/Telnet honeypot (Docker) logt aanvalspogingen. Endlessh tarpit op poort 22. UFW firewall blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.</p>
+
+            <!-- Security -->
+            <div class="bento-cell">
+                <div class="cell-inner">
+                    <span class="cell-icon">🔒</span>
+                    <div class="cell-sub" data-i18n="f4-sub">Security · honeypot & firewall</div>
+                    <div class="cell-title" data-i18n="f4-title">Zero-trust beveiliging</div>
+                    <p class="cell-desc" data-i18n="f4-desc">Cowrie SSH/Telnet honeypot logt aanvalspogingen. Endlessh tarpit op poort 22. UFW blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.</p>
+                    <div class="cell-tags">
+                        <span class="cell-tag">Cowrie :2222</span>
+                        <span class="cell-tag">Endlessh :22</span>
+                        <span class="cell-tag">UFW + Fail2ban</span>
+                        <span class="cell-tag">Canary tokens</span>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">🏠</span>
-                <div class="feature-title" data-i18n="f5-title">Smart Home · Homebridge</div>
-                <p class="feature-desc" data-i18n="f5-desc">Homebridge verbindt alle slimme apparaten met Apple HomeKit. Bereikbaar op poort 8581. AKAI kan via tools de verlichting en apparaten aansturen via een Telegram bericht.</p>
+
+            <!-- Smart Home -->
+            <div class="bento-cell">
+                <div class="cell-inner">
+                    <span class="cell-icon">🏠</span>
+                    <div class="cell-sub" data-i18n="f5-sub">Smart Home · Homebridge</div>
+                    <div class="cell-title" data-i18n="f5-title">HomeKit via AKAI</div>
+                    <p class="cell-desc" data-i18n="f5-desc">Homebridge verbindt alle slimme apparaten met Apple HomeKit. Bereikbaar op poort 8581. AKAI kan via tools de verlichting en apparaten aansturen via een Telegram bericht.</p>
+                    <div class="cell-tags">
+                        <span class="cell-tag">Homebridge :8581</span>
+                        <span class="cell-tag">Apple HomeKit</span>
+                        <span class="cell-tag">AKAI tools</span>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <span class="feature-icon">🌐</span>
-                <div class="feature-title" data-i18n="f6-title">DNS · Pi-hole & Tailscale</div>
-                <p class="feature-desc" data-i18n="f6-desc">Pi-hole v6 filtert advertenties en tracking voor het hele netwerk via DNS. Tailscale VPN geeft veilige toegang tot alle services van overal ter wereld, zonder poorten open te zetten.</p>
+
+            <!-- DNS -->
+            <div class="bento-cell">
+                <div class="cell-inner">
+                    <span class="cell-icon">🌐</span>
+                    <div class="cell-sub" data-i18n="f6-sub">DNS · Pi-hole & Tailscale</div>
+                    <div class="cell-title" data-i18n="f6-title">Privé DNS en VPN toegang</div>
+                    <p class="cell-desc" data-i18n="f6-desc">Pi-hole v6 filtert advertenties en tracking voor het hele netwerk via DNS. Tailscale VPN geeft veilige toegang tot alle services van overal ter wereld, zonder poorten open te zetten.</p>
+                    <div class="cell-tags">
+                        <span class="cell-tag">Pi-hole :8082</span>
+                        <span class="cell-tag">Tailscale VPN</span>
+                        <span class="cell-tag">100.109.6.112</span>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 
-    <!-- Architecture -->
+    <!-- ARCHITECTURE -->
     <div class="section reveal">
         <div class="section-label">
-            <span class="label-num">03</span>
-            <div class="label-line"></div>
-            <span class="label-text" data-i18n="arch-title">Systeem Architectuur</span>
+            <span class="label-num">03</span><div class="label-line"></div>
+            <span class="label-text" data-i18n="s3-label">Systeem architectuur</span>
         </div>
+        <h2 class="section-title" data-i18n="s3-title">6 lagen, één Pi.</h2>
         <div class="arch-layers">
             <div class="arch-layer">
                 <div class="arch-num">LAAG 06</div>
-                <div class="arch-content">
-                    <div class="arch-title">Externe Toegang</div>
+                <div>
+                    <div class="arch-title" data-i18n="l6-title">Externe Toegang</div>
                     <div class="arch-items">Cloudflare Tunnel → nexusakai.com · Tailscale VPN :100.109.6.112 · SSH op poort 2022 (keys only)</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 05</div>
-                <div class="arch-content">
-                    <div class="arch-title">Security</div>
+                <div>
+                    <div class="arch-title" data-i18n="l5-title">Security</div>
                     <div class="arch-items">UFW (default deny) · Fail2ban (24u ban) · Cowrie honeypot :2222 · Endlessh tarpit :22 · Canary tokens</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 04</div>
-                <div class="arch-content">
-                    <div class="arch-title">AI & Assistent</div>
+                <div>
+                    <div class="arch-title" data-i18n="l4-title">AI & Assistent</div>
                     <div class="arch-items">Ollama :11434 · AKAI (OpenClaw gateway) :18789 · Flask chatbot API :5000 · Trading Journal :5001</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 03</div>
-                <div class="arch-content">
-                    <div class="arch-title">Applicatie Services (Docker)</div>
-                    <div class="arch-items">Pi-hole :8082 · Nextcloud :11000 · Grafana :3000 · Prometheus :9090 · Jellyfin :8096 · Homebridge :8581 · Glance :8484 · qBittorrent · Cowrie</div>
+                <div>
+                    <div class="arch-title" data-i18n="l3-title">Applicatie Services</div>
+                    <div class="arch-items">Pi-hole :8082 · Nextcloud :11000 · Grafana :3000 · Prometheus :9090 · Jellyfin :8096 · Homebridge :8581 · Glance :8484</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 02</div>
-                <div class="arch-content">
-                    <div class="arch-title">OS & Runtime</div>
+                <div>
+                    <div class="arch-title" data-i18n="l2-title">OS & Runtime</div>
                     <div class="arch-items">Debian 13 Trixie · Python 3.13 · Node.js 22 · Docker · systemd · NetworkManager</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 01</div>
-                <div class="arch-content">
-                    <div class="arch-title">Hardware</div>
+                <div>
+                    <div class="arch-title" data-i18n="l1-title">Hardware</div>
                     <div class="arch-items">Raspberry Pi 5 (Cortex-A76, 2.4GHz) · 16GB LPDDR4X · Samsung T7 SSD 1TB (boot) · NEXUS-NAS SSD 238GB · Gigabit LAN</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Approach -->
+    <!-- INSIGHTS -->
     <div class="section reveal">
         <div class="section-label">
-            <span class="label-num">04</span>
-            <div class="label-line"></div>
-            <span class="label-text" data-i18n="approach-title">Aanpak</span>
+            <span class="label-num">04</span><div class="label-line"></div>
+            <span class="label-text" data-i18n="s4-label">Wat ik heb geleerd</span>
         </div>
-        <h2 class="section-title" data-i18n="insights-title">Belangrijke keuzes</h2>
+        <h2 class="section-title" data-i18n="s4-title">Vijf keuzes die het verschil maakten.</h2>
         <div class="insights-list">
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Docker bypass UFW:</strong> Docker heeft de nare eigenschap dat het iptables regels toevoegt die UFW omzeilen. De oplossing: een DOCKER-USER chain in /etc/ufw/after.rules die expliciet alleen het lokale subnet en Tailscale doorlaat.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>UAS quirk voor NAS SSD:</strong> De Samsung T7 NAS SSD had ~44 resets per sessie door een bug in de JMicron USB bridge (152d:0583). Fix: usb-storage.quirks=152d:0583:u in cmdline.txt forceert UAS-modus uit.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Pi-hole via DNS forwarding:</strong> Met double NAT (KPN modem + TP-Link Deco mesh) moest de Deco geconfigureerd worden als DNS forwarder naar 192.168.2.72:53, anders kwamen queries nooit bij Pi-hole aan.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Statisch IP via NetworkManager:</strong> De Pi gebruikt NetworkManager (niet dhcpcd). Statisch IP instellen via nmcli, niet via dhcpcd.conf. Dat bestand wordt volledig genegeerd.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Honeypot data is waardevol:</strong> Cowrie logt elk SSH aanvalspatroon. Frequente aanvallers proberen standaard credentials (root/123456, admin/admin) binnen 3 seconden. Endlessh houdt ze uren vast op poort 22.</p></div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Docker bypass UFW:</strong> Docker voegt iptables regels toe die UFW omzeilen. De oplossing: een DOCKER-USER chain in /etc/ufw/after.rules die expliciet alleen het lokale subnet en Tailscale doorlaat.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>UAS quirk voor NAS SSD:</strong> De Samsung T7 NAS SSD had ~44 resets per sessie door een bug in de JMicron USB bridge (152d:0583). Fix: usb-storage.quirks=152d:0583:u in cmdline.txt forceert UAS-modus uit.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Pi-hole via DNS forwarding:</strong> Met double NAT (KPN modem + TP-Link Deco mesh) moest de Deco geconfigureerd worden als DNS forwarder naar 192.168.2.72:53, anders kwamen queries nooit bij Pi-hole aan.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Statisch IP via NetworkManager:</strong> De Pi gebruikt NetworkManager (niet dhcpcd). Statisch IP instellen via nmcli, niet via dhcpcd.conf. Dat bestand wordt volledig genegeerd.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Honeypot data is waardevol:</strong> Cowrie logt elk SSH aanvalspatroon. Frequente aanvallers proberen standaard credentials (root/123456, admin/admin) binnen 3 seconden. Endlessh houdt ze uren vast op poort 22.</p>
+            </div>
         </div>
     </div>
 
-    <!-- Code -->
+    <!-- CODE -->
     <div class="section reveal">
         <div class="section-label">
-            <span class="label-num">05</span>
-            <div class="label-line"></div>
-            <span class="label-text" data-i18n="code-title">Code voorbeeld</span>
+            <span class="label-num">05</span><div class="label-line"></div>
+            <span class="label-text" data-i18n="s5-label">Code voorbeeld</span>
         </div>
         <div class="code-wrap">
             <div class="code-header">
@@ -608,61 +645,54 @@
                 <span class="code-filename">firewall_fix.sh: Docker UFW bypass</span>
             </div>
             <div class="code-body">
-<span class="c-comment"># UFW default deny + essentiële regels</span>
-ufw default deny incoming
-ufw default allow outgoing
+<span class="c-comment">#!/bin/bash</span>
+<span class="c-comment"># Fix: Docker omzeilt UFW standaard. Dit script blokkeert dat.</span>
 
-<span class="c-comment"># SSH alleen van lokaal netwerk + Tailscale</span>
-ufw allow from <span class="c-str">192.168.2.0/24</span> to any port <span class="c-fn">22</span>
-ufw allow from <span class="c-str">100.64.0.0/10</span>  <span class="c-comment"># Tailscale VPN</span>
-
-<span class="c-comment"># Fix: Docker omzeilt UFW via eigen iptables regels.</span>
-<span class="c-comment"># Oplossing: DOCKER-USER chain in after.rules</span>
-cat >> /etc/ufw/after.rules << <span class="c-str">'EOF'</span>
-*filter
+<span class="c-comment"># Stap 1: Voeg DOCKER-USER chain toe aan /etc/ufw/after.rules</span>
+<span class="c-cmd">cat</span> >> /etc/ufw/after.rules << <span class="c-str">'EOF'</span>
+<span class="c-str">*filter
 :DOCKER-USER - [0:0]
--I DOCKER-USER -i eth0 -j DROP
--I DOCKER-USER -i eth0 -s <span class="c-str">192.168.2.0/24</span> -j ACCEPT
--I DOCKER-USER -i tailscale0 -j ACCEPT
-COMMIT
+-A DOCKER-USER -i eth0 -s 192.168.2.0/24 -j RETURN
+-A DOCKER-USER -i eth0 -s 100.64.0.0/10 -j RETURN
+-A DOCKER-USER -i eth0 -j DROP
+COMMIT</span>
 <span class="c-str">EOF</span>
 
-<span class="c-comment"># Honeypot: Cowrie vangt aanvallers op 2222, Endlessh tart ze op 22</span>
-ufw allow <span class="c-fn">2222</span>/tcp  <span class="c-comment"># Cowrie SSH honeypot</span>
-ufw allow <span class="c-fn">2223</span>/tcp  <span class="c-comment"># Cowrie Telnet honeypot</span>
+<span class="c-comment"># Stap 2: Herlaad UFW</span>
+<span class="c-cmd">ufw</span> reload
 
-ufw --force enable
+<span class="c-comment"># Resultaat: Docker containers zijn niet meer direct bereikbaar</span>
+<span class="c-comment"># van buiten het lokale netwerk of Tailscale VPN.</span>
             </div>
         </div>
     </div>
 
-    <!-- Impact -->
+    <!-- IMPACT -->
     <div class="section reveal">
         <div class="section-label">
-            <span class="label-num">06</span>
-            <div class="label-line"></div>
-            <span class="label-text" data-i18n="impact-title">Wat het heeft opgeleverd</span>
+            <span class="label-num">06</span><div class="label-line"></div>
+            <span class="label-text" data-i18n="s6-label">Resultaten</span>
         </div>
         <div class="impact-grid">
             <div class="impact-card">
-                <span class="impact-icon">🤖</span>
-                <div class="impact-title">AKAI draait erop</div>
-                <p class="impact-desc">Mijn persoonlijke AI assistent AKAI draait 24/7 op Nexus. Bereikbaar via Telegram, reageert op berichten, plant afspraken, monitort de server zelf. Zonder Nexus bestaat AKAI niet.</p>
+                <div class="impact-val">AKAI</div>
+                <div class="impact-title" data-i18n="i1-title">Persoonlijke AI draait 24/7</div>
+                <p class="impact-desc" data-i18n="i1-desc">AKAI reageert dag en nacht via Telegram en voice calls. Volledig lokaal, volledig privé.</p>
             </div>
             <div class="impact-card">
-                <span class="impact-icon">🔒</span>
-                <div class="impact-title">95% security score</div>
-                <p class="impact-desc">Geen beveiligingsincidenten. UFW, Fail2ban, Cowrie honeypot en Endlessh werken samen. Aanvalspogingen worden gelogd en aanvallers worden minuten- tot uren vastgehouden in de tarpit.</p>
+                <div class="impact-val">95%</div>
+                <div class="impact-title" data-i18n="i2-title">Security score</div>
+                <p class="impact-desc" data-i18n="i2-desc">Van 70% naar 95% na implementatie van honeypot, UFW fix en canary tokens.</p>
             </div>
             <div class="impact-card">
-                <span class="impact-icon">📊</span>
-                <div class="impact-title">Complete monitoring</div>
-                <p class="impact-desc">Grafana toont real-time grafieken van CPU, RAM, temperatuur en disk I/O. Prometheus scrapt elke 15 seconden. Pi-hole toont DNS statistieken. Alles zichtbaar op één dashboard.</p>
+                <div class="impact-val">17</div>
+                <div class="impact-title" data-i18n="i3-title">Services altijd online</div>
+                <p class="impact-desc" data-i18n="i3-desc">Grafana, Jellyfin, Nextcloud, Pi-hole en meer. Allemaal op één Pi van 5 euro stroom per maand.</p>
             </div>
             <div class="impact-card">
-                <span class="impact-icon">💰</span>
-                <div class="impact-title">~5€ per maand</div>
-                <p class="impact-desc">17 services draaien voor de stroomkosten van één kop koffie per maand. Geen Dropbox abonnement, geen cloud AI kosten, geen betaalde media service. Alles self-hosted.</p>
+                <div class="impact-val">~5€</div>
+                <div class="impact-title" data-i18n="i4-title">Per maand aan stroom</div>
+                <p class="impact-desc" data-i18n="i4-desc">Geen cloud abonnement, geen licentiekosten. Alleen stroom. Alles draait lokaal op eigen hardware.</p>
             </div>
         </div>
     </div>
@@ -671,9 +701,9 @@ ufw --force enable
 
 <footer>
     <div class="footer-left">© 2026 <span>Alano Kricha</span> · Voorburg</div>
-    <div class="footer-right" style="display:flex; gap:28px;">
-        <a href="index.html">← Portfolio</a>
-        <a href="akai.html">AKAI →</a>
+    <div class="footer-right">
+        <a href="index.html" data-i18n="back">Portfolio</a>
+        <a href="akai.html">AKAI</a>
         <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
         <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
     </div>
@@ -683,113 +713,81 @@ ufw --force enable
     // Cursor
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
-    (function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); })();
-    document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.borderColor = 'rgba(0,232,122,0.6)'; });
-        el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.borderColor = 'rgba(0,232,122,0.4)'; });
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+        mx=e.clientX; my=e.clientY;
+        cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+    });
+    (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button,.bento-cell,.impact-card').forEach(el=>{
+        el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.borderColor='rgba(0,232,122,0.6)'; });
+        el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(0,232,122,0.4)'; });
     });
 
     // Header scroll
-    window.addEventListener('scroll', () => {
-        document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
-    });
+    window.addEventListener('scroll', () => document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50));
 
     // Reveal
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'), i*80); obs.unobserve(e.target); } });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // i18n
+    // i18n — all values are plain text, textContent only
     const T = {
         nl: {
-            "back": "Terug naar portfolio",
-            "hero-sub": "Een self-hosted AI en automatiserings platform met focus op privacy, prestaties en schaalbaarheid.",
-            "badge-security": "Zero-Trust",
-            "stat1": "Architectuur Lagen", "stat2": "Actieve Services", "stat4": "AI Modellen", "stat5": "Gem. Reactietijd",
-            "overview-title": "Project overzicht", "overview-heading": "Gebouwd voor privacy.\nGeoptimaliseerd voor AI.",
-            "overview-p1": "Een zelfgebouwde server op een Raspberry Pi 5, waar ik AI modellen lokaal kan draaien, mijn smart home apparaten kan bedienen en data kan opslaan. Het hele systeem draait 24/7 en is van buitenaf veilig te bereiken.",
-            "overview-p2": "Door alle services alleen op localhost te draaien en externe toegang via een beveiligde tunnel te regelen, blijft alles privé en veilig. Alle AI modellen draaien lokaal. Mijn data gaat nergens naartoe.",
-            "features-title": "Wat het kan",
-            "f1-title": "Lokale AI", "f1-desc": "Ollama draait AI modellen (Qwen 2.5) volledig lokaal. Gecombineerd met ChromaDB voor slimme context. Alles blijft op Nexus, geen cloud nodig.",
-            "f2-title": "Beveiliging", "f2-desc": "Alle diensten draaien alleen op localhost. Firewall blokkeert alles van buitenaf. SSH werkt alleen met keys. Cloudflare Tunnel voor veilige externe toegang.",
-            "f3-title": "Publieke AI Chat", "f3-desc": "Flask API met rate limiting zodat niemand het kan misbruiken. Bereikbaar via naja.nexusakai.com met SSL encryptie.",
-            "f4-title": "Monitoring Dashboard", "f4-desc": "FastAPI dashboard voor live Nexus prestaties. CPU, geheugen, temperatuur: alles in real-time.",
-            "f5-title": "Smart Home", "f5-desc": "Homebridge verbindt alle slimme apparaten met Apple HomeKit. Philips Hue, IKEA: alles via één systeem.",
-            "f6-title": "Development Setup", "f6-desc": "VS Code Remote SSH om vanaf de Mac op Nexus te programmeren. Continue.dev voor AI-powered code suggesties.",
-            "arch-title": "Systeem Architectuur",
-            "layer5": "Externe Toegang & Beveiliging", "layer4": "Beveiligingslaag", "layer3": "Applicatie Services", "layer2": "OS & Runtime", "layer1": "Hardware",
-            "auto-updates": "Automatische security updates", "active-cooling": "Actieve koeling",
-            "approach-title": "Aanpak", "insights-title": "Belangrijke keuzes",
-            "insight1": "<strong>Alles op localhost:</strong> Geen enkele service is direct vanaf internet te bereiken. Alleen via Cloudflare Tunnel of Tailscale VPN.",
-            "insight2": "<strong>Automatisch herstarten:</strong> Als een service crasht, start systemd hem automatisch opnieuw op.",
-            "insight3": "<strong>Kleinere AI modellen:</strong> Qwen 2.5 met 1.5B of 3B parameters draaien goed op Nexus. Antwoorden binnen 10-20 seconden.",
-            "insight4": "<strong>Rate limiting:</strong> Maximum 100 API requests per uur per IP adres.",
-            "insight5": "<strong>Geheugen beheer:</strong> Elke service heeft een maximum geheugen limiet, zodat de 16GB RAM niet vol loopt.",
-            "code-title": "Code voorbeeld", "impact-title": "Wat het heeft opgeleverd",
-            "i1t": "Snelheid", "i1d": "AI antwoorden binnen 10-20 seconden. Indrukwekkend voor een server die thuis draait.",
-            "i2t": "Veiligheid", "i2d": "Geen enkel beveiligingsprobleem. Firewall en Fail2ban doen hun werk. Security score van 70% naar 95%.",
-            "i3t": "Uitbreidbaar", "i3d": "Dezelfde setup is te verhuizen naar een echte server zonder alles opnieuw te bouwen.",
-            "i4t": "Goedkoop", "i4d": "~5 euro per maand aan stroom. Geen cloud kosten, volledige controle over eigen data."
+            "back":"← Portfolio","hero-sub":"Mijn eigen Raspberry Pi 5 die 24/7 thuis draait. AI modellen, media server, DNS filtering, smart home en beveiliging. Volledig self-hosted, volledig onder controle.",
+            "stat1":"Actieve services","stat2":"Uptime","stat3":"Maandelijkse AI kosten","stat4":"Lokale AI modellen","stat5":"Stroom per maand",
+            "s1-label":"Project overzicht","s1-title":"Nexus: alles op één Pi.",
+            "s1-p1":"Nexus is de naam van mijn Raspberry Pi 5 die thuis staat te draaien. Geen cloud, geen abonnement. Gewoon mijn eigen hardware. 17 actieve services: van AI modellen en media server tot DNS filtering, honeypot en smart home automation.",
+            "s1-p2":"De Pi draait op een Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. Alle services draaien als systemd services of Docker containers. Externe toegang gaat uitsluitend via Tailscale VPN of Cloudflare Tunnel, nooit direct open naar internet.",
+            "s2-label":"Wat Nexus draait",
+            "f1-sub":"Lokale AI · AKAI & Ollama","f1-title":"Eigen AI modellen, geen cloud","f1-desc":"Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus via de OpenClaw gateway op poort 18789.",
+            "f2-sub":"Monitoring · Grafana & Prometheus","f2-title":"Real-time server inzicht","f2-desc":"Grafana dashboard op poort 3000 met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API op poort 61208.",
+            "f3-sub":"Media · Jellyfin & Nextcloud","f3-title":"Eigen cloud en media server","f3-desc":"Jellyfin draait als media server op poort 8096. Films en muziek streamen naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).",
+            "f4-sub":"Security · honeypot & firewall","f4-title":"Zero-trust beveiliging","f4-desc":"Cowrie SSH/Telnet honeypot logt aanvalspogingen. Endlessh tarpit op poort 22. UFW blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.",
+            "f5-sub":"Smart Home · Homebridge","f5-title":"HomeKit via AKAI","f5-desc":"Homebridge verbindt alle slimme apparaten met Apple HomeKit. Bereikbaar op poort 8581. AKAI kan via tools de verlichting en apparaten aansturen via een Telegram bericht.",
+            "f6-sub":"DNS · Pi-hole & Tailscale","f6-title":"Privé DNS en VPN toegang","f6-desc":"Pi-hole v6 filtert advertenties en tracking voor het hele netwerk via DNS. Tailscale VPN geeft veilige toegang tot alle services van overal ter wereld, zonder poorten open te zetten.",
+            "s3-label":"Systeem architectuur","s3-title":"6 lagen, één Pi.",
+            "l6-title":"Externe Toegang","l5-title":"Security","l4-title":"AI & Assistent","l3-title":"Applicatie Services","l2-title":"OS & Runtime","l1-title":"Hardware",
+            "s4-label":"Wat ik heb geleerd","s4-title":"Vijf keuzes die het verschil maakten.",
+            "s5-label":"Code voorbeeld","s6-label":"Resultaten",
+            "i1-title":"Persoonlijke AI draait 24/7","i1-desc":"AKAI reageert dag en nacht via Telegram en voice calls. Volledig lokaal, volledig privé.",
+            "i2-title":"Security score","i2-desc":"Van 70% naar 95% na implementatie van honeypot, UFW fix en canary tokens.",
+            "i3-title":"Services altijd online","i3-desc":"Grafana, Jellyfin, Nextcloud, Pi-hole en meer. Allemaal op één Pi van 5 euro stroom per maand.",
+            "i4-title":"Per maand aan stroom","i4-desc":"Geen cloud abonnement, geen licentiekosten. Alleen stroom. Alles draait lokaal op eigen hardware."
         },
         en: {
-            "back": "Back to portfolio",
-            "hero-sub": "A self-hosted AI and automation platform focused on privacy, performance and scalability.",
-            "badge-security": "Zero-Trust",
-            "stat1": "Architecture Layers", "stat2": "Active Services", "stat4": "AI Models", "stat5": "Avg. Response Time",
-            "overview-title": "Project overview", "overview-heading": "Built for privacy.\nOptimised for AI.",
-            "overview-p1": "A self-built server on a Raspberry Pi 5, where I can run AI models locally, control my smart home devices and store data. The entire system runs 24/7 and can be securely accessed from anywhere.",
-            "overview-p2": "By running all services on localhost only and routing external access through a secured tunnel, everything stays private and safe. All AI models run locally. My data goes nowhere.",
-            "features-title": "What it can do",
-            "f1-title": "Local AI", "f1-desc": "Ollama runs AI models (Qwen 2.5) entirely locally. Combined with ChromaDB for smart context. Everything stays on Nexus, no cloud needed.",
-            "f2-title": "Security", "f2-desc": "All services run on localhost only. Firewall blocks all incoming traffic. SSH with keys only. Cloudflare Tunnel for secure external access.",
-            "f3-title": "Public AI Chat", "f3-desc": "Flask API with rate limiting so no one can abuse it. Accessible via naja.nexusakai.com with SSL encryption.",
-            "f4-title": "Monitoring Dashboard", "f4-desc": "FastAPI dashboard for live Nexus performance. CPU, memory, temperature: all in real-time.",
-            "f5-title": "Smart Home", "f5-desc": "Homebridge connects all smart devices to Apple HomeKit. Philips Hue, IKEA: all through one system.",
-            "f6-title": "Development Setup", "f6-desc": "VS Code Remote SSH to code on Nexus from my Mac. Continue.dev for AI-powered code suggestions.",
-            "arch-title": "System Architecture",
-            "layer5": "External Access & Security", "layer4": "Security Layer", "layer3": "Application Services", "layer2": "OS & Runtime", "layer1": "Hardware",
-            "auto-updates": "Automatic security updates", "active-cooling": "Active cooling",
-            "approach-title": "Approach", "insights-title": "Key decisions",
-            "insight1": "<strong>Everything on localhost:</strong> No service is directly reachable from the internet. Only via Cloudflare Tunnel or Tailscale VPN.",
-            "insight2": "<strong>Auto-restart:</strong> If a service crashes, systemd automatically restarts it.",
-            "insight3": "<strong>Smaller AI models:</strong> Qwen 2.5 with 1.5B or 3B parameters run well on Nexus. Responses within 10-20 seconds.",
-            "insight4": "<strong>Rate limiting:</strong> Maximum 100 API requests per hour per IP address.",
-            "insight5": "<strong>Memory management:</strong> Each service has a memory limit so the 16GB RAM does not fill up.",
-            "code-title": "Code example", "impact-title": "What it delivered",
-            "i1t": "Speed", "i1d": "AI responses within 10-20 seconds. Impressive for a home server.",
-            "i2t": "Security", "i2d": "Zero security incidents. Firewall and Fail2ban doing their job. Security score from 70% to 95%.",
-            "i3t": "Scalable", "i3d": "The same setup can be moved to a real server without rebuilding everything.",
-            "i4t": "Cost-effective", "i4d": "~5 euros per month in electricity. No cloud costs, full control over own data."
+            "back":"← Portfolio","hero-sub":"My own Raspberry Pi 5 running at home 24/7. AI models, media server, DNS filtering, smart home and security. Fully self-hosted, fully in control.",
+            "stat1":"Active services","stat2":"Uptime","stat3":"Monthly AI costs","stat4":"Local AI models","stat5":"Power per month",
+            "s1-label":"Project overview","s1-title":"Nexus: everything on one Pi.",
+            "s1-p1":"Nexus is the name of my Raspberry Pi 5 running at home. No cloud, no subscription. Just my own hardware. 17 active services: from AI models and media server to DNS filtering, honeypot and smart home automation.",
+            "s1-p2":"The Pi runs on a Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. All services run as systemd services or Docker containers. External access goes exclusively via Tailscale VPN or Cloudflare Tunnel, never directly open to the internet.",
+            "s2-label":"What Nexus runs",
+            "f1-sub":"Local AI · AKAI & Ollama","f1-title":"Own AI models, no cloud","f1-desc":"Ollama runs multiple AI models fully locally: Naja-Fast (1B), Naja-Smart (3.8B) and AKAI-Code. No API costs, maximum privacy. AKAI, my personal AI assistant, also runs on Nexus via the OpenClaw gateway on port 18789.",
+            "f2-sub":"Monitoring · Grafana & Prometheus","f2-title":"Real-time server insights","f2-desc":"Grafana dashboard on port 3000 with real-time charts. Prometheus scrapes CPU, RAM, temperature and disk I/O. Glances provides a quick overview via REST API on port 61208.",
+            "f3-sub":"Media · Jellyfin & Nextcloud","f3-title":"Own cloud and media server","f3-desc":"Jellyfin runs as media server on port 8096. Stream films and music to any device. Nextcloud at cloud.nexusakai.com for personal cloud storage. Everything on NAS SSD (238GB).",
+            "f4-sub":"Security · honeypot & firewall","f4-title":"Zero-trust security","f4-desc":"Cowrie SSH/Telnet honeypot logs attack attempts. Endlessh tarpit on port 22. UFW blocks everything except Tailscale and local network. Canary tokens send alerts on intrusion.",
+            "f5-sub":"Smart Home · Homebridge","f5-title":"HomeKit via AKAI","f5-desc":"Homebridge connects all smart devices to Apple HomeKit. Accessible on port 8581. AKAI can control lighting and devices via tools through a Telegram message.",
+            "f6-sub":"DNS · Pi-hole & Tailscale","f6-title":"Private DNS and VPN access","f6-desc":"Pi-hole v6 filters ads and tracking for the entire network via DNS. Tailscale VPN provides secure access to all services from anywhere in the world, without opening ports.",
+            "s3-label":"System architecture","s3-title":"6 layers, one Pi.",
+            "l6-title":"External Access","l5-title":"Security","l4-title":"AI & Assistant","l3-title":"Application Services","l2-title":"OS & Runtime","l1-title":"Hardware",
+            "s4-label":"What I learned","s4-title":"Five choices that made the difference.",
+            "s5-label":"Code example","s6-label":"Results",
+            "i1-title":"Personal AI running 24/7","i1-desc":"AKAI responds day and night via Telegram and voice calls. Fully local, fully private.",
+            "i2-title":"Security score","i2-desc":"From 70% to 95% after implementing honeypot, UFW fix and canary tokens.",
+            "i3-title":"Services always online","i3-desc":"Grafana, Jellyfin, Nextcloud, Pi-hole and more. All on one Pi costing 5 euros of electricity per month.",
+            "i4-title":"Per month in electricity","i4-desc":"No cloud subscription, no license costs. Just electricity. Everything runs locally on own hardware."
         }
     };
     let lang = 'nl';
-    function toggleLanguage() { lang = lang === 'nl' ? 'en' : 'nl'; apply(); }
-    function apply() {
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const k = el.getAttribute('data-i18n');
-            if (T[lang][k]) el.innerHTML = T[lang][k];
-        });
-        // Hero title
-        const heroTitle = document.getElementById('hero-title');
-        if (heroTitle) {
-            if (lang === 'en') {
-                heroTitle.innerHTML = 'Raspberry Pi<br><span class="italic">AI</span> Infrastructure';
-            } else {
-                heroTitle.innerHTML = 'Raspberry Pi<br><span class="italic">AI</span> Infrastructuur';
-            }
-        }
-        // Section titles
-        document.querySelectorAll('.section-title').forEach(el => {
-            if (el.id) {
-                const k = el.id;
-                if (T[lang][k]) el.innerHTML = T[lang][k];
-            }
-        });
+    function toggleLang() {
+        lang = lang === 'nl' ? 'en' : 'nl';
         document.getElementById('langToggle').textContent = lang === 'nl' ? 'EN' : 'NL';
-        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const v = T[lang][el.getAttribute('data-i18n')];
+            if (v !== undefined) el.textContent = v;
+        });
     }
 </script>
 </body>

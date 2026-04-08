@@ -1,1122 +1,488 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjEzIiByeT0iNSIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iMTMiIHJ5PSI5LjUiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjUiIHJ5PSIxMyIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSIyOSIgeTI9IjE2IiBzdHJva2U9IiMwMGU4N2EiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE2IiB5MT0iMyIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Trading Journal — Alano Kricha</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #080810;
-            --surface: #0e0e1a;
-            --surface2: #13131f;
-            --border: #1a1a2e;
-            --accent: #00ff88;
-            --accent2: #00cc6a;
-            --red: #ff3b5c;
-            --yellow: #f59e0b;
-            --text: #e8e8f5;
-            --muted: #52526e;
-            --dim: #2a2a42;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            cursor: none;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Syne', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Noise overlay */
-        
-
-        /* ─── HERO ─── */
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at 30% 40%, black 20%, transparent 65%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .hero-left, .hero-right { position: relative; z-index: 1; }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -200px;
-            left: -200px;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -100px;
-            right: 100px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255,59,92,0.04) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 80px 60px 80px 80px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(240,165,0,0.1);
-            border: 1px solid rgba(240,165,0,0.3);
-            border-radius: 4px;
-            padding: 6px 14px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: #f0a500;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 32px;
-            width: fit-content;
-        }
-
-        .tag::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #f0a500;
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
-        .hero-title {
-            font-size: clamp(42px, 5vw, 64px);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 24px;
-        }
-
-        .hero-title .line2 {
-            color: var(--accent);
-            display: block;
-        }
-
-        .hero-desc {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 420px;
-            margin-bottom: 48px;
-            font-weight: 400;
-        }
-
-        .hero-desc strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #000;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            padding: 14px 28px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,255,136,0.25);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--muted);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            letter-spacing: 1px;
-            padding: 14px 28px;
-            border-radius: 6px;
-            text-decoration: none;
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--muted);
-            color: var(--text);
-        }
-
-        /* ─── PHONE MOCKUP ─── */
-        .hero-right {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 80px 60px 40px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .phone-wrap {
-            position: relative;
-        }
-
-        .phone-glow {
-            position: absolute;
-            inset: -40px;
-            background: radial-gradient(ellipse, rgba(0,255,136,0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .phone {
-            width: 280px;
-            background: #0a0a12;
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.08);
-            overflow: hidden;
-            box-shadow:
-                0 0 0 8px rgba(255,255,255,0.02),
-                0 40px 80px rgba(0,0,0,0.6),
-                0 0 60px rgba(0,255,136,0.05);
-            position: relative;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(-1deg); }
-            50% { transform: translateY(-12px) rotate(1deg); }
-        }
-
-        .phone-notch {
-            width: 80px;
-            height: 20px;
-            background: #0a0a12;
-            border-radius: 0 0 14px 14px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .phone-screen {
-            padding: 12px;
-            background: #0a0a0f;
-        }
-
-        /* Mini app inside phone */
-        .mini-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 4px 12px;
-            border-bottom: 1px solid #1e1e2e;
-            margin-bottom: 12px;
-        }
-
-        .mini-logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: #00ff88;
-            letter-spacing: 1px;
-        }
-
-        .mini-logo span { color: #4a4a6a; }
-
-        .mini-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            color: #4a4a6a;
-        }
-
-        .mini-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .mini-stat {
-            background: #111118;
-            border: 1px solid #1e1e2e;
-            border-radius: 8px;
-            padding: 8px 6px;
-            text-align: center;
-        }
-
-        .mini-stat-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 3px;
-        }
-
-        .mini-stat-label {
-            font-size: 7px;
-            color: #4a4a6a;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .mini-section-title {
-            font-size: 7px;
-            color: #4a4a6a;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .mini-trade {
-            background: #111118;
-            border: 1px solid #1e1e2e;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 6px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mini-trade::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 2px;
-        }
-
-        .mini-trade.win::before { background: #00ff88; }
-        .mini-trade.loss::before { background: #ff3b5c; }
-        .mini-trade.open::before { background: #f59e0b; }
-
-        .mini-trade-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mini-trade-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            color: #e8e8f5;
-        }
-
-        .mini-badge {
-            font-size: 7px;
-            padding: 2px 5px;
-            border-radius: 10px;
-            margin-left: 4px;
-            font-weight: 600;
-        }
-
-        .mini-badge.long { background: rgba(0,255,136,0.1); color: #00ff88; }
-        .mini-badge.short { background: rgba(255,59,92,0.1); color: #ff3b5c; }
-
-        .mini-result {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-        }
-
-        .mini-meta {
-            font-size: 8px;
-            color: #4a4a6a;
-            margin-top: 3px;
-        }
-
-        .mini-fab {
-            background: #00ff88;
-            color: #000;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            padding: 10px;
-            border-radius: 20px;
-            text-align: center;
-            margin-top: 10px;
-            box-shadow: 0 0 20px rgba(0,255,136,0.2);
-        }
-
-        /* ─── STATS BAR ─── */
-        .stats-bar {
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 32px 80px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-        }
-        @media (max-width: 600px) {
-            .stats-bar {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 24px;
-                gap: 24px;
-            }
-            .stat-num { font-size: 24px !important; }
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 32px;
-            font-weight: 500;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* ─── FEATURES ─── */
-        .features {
-            padding: 100px 80px;
-        }
-
-        .section-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: clamp(32px, 4vw, 48px);
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            margin-bottom: 60px;
-            max-width: 600px;
-            line-height: 1.1;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .feature-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0,255,136,0.03) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(0,255,136,0.2);
-            transform: translateY(-4px);
-        }
-
-        .feature-card:hover::before { opacity: 1; }
-
-        .feature-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(0,255,136,0.08);
-            border: 1px solid rgba(0,255,136,0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.3px;
-        }
-
-        .feature-desc {
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.6;
-            font-weight: 400;
-        }
-
-        /* ─── TECH STACK ─── */
-        .tech {
-            padding: 80px;
-            border-top: 1px solid var(--border);
-            background: var(--surface);
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        .tech-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .tech-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px 20px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            transition: all 0.2s;
-        }
-
-        .tech-item:hover {
-            border-color: rgba(0,255,136,0.2);
-            transform: translateX(4px);
-        }
-
-        .tech-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent);
-            flex-shrink: 0;
-        }
-
-        .tech-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 500;
-            flex: 1;
-        }
-
-        .tech-role {
-            font-size: 12px;
-            color: var(--muted);
-        }
-
-        /* Code block */
-        .code-block {
-            background: #06060e;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .code-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface2);
-        }
-
-        .code-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .code-filename {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            margin-left: 8px;
-        }
-
-        .code-body {
-            padding: 20px 18px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            line-height: 1.8;
-            overflow-x: auto;
-        }
-
-        .c-comment { color: #3a3a5c; }
-        .c-key { color: #7c6af7; }
-        .c-str { color: #00ff88; }
-        .c-fn { color: #60a5fa; }
-        .c-num { color: #f59e0b; }
-        .c-text { color: #8888aa; }
-
-        /* ─── AI SECTION ─── */
-        .ai-section {
-            padding: 100px 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-section::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0,255,136,0.04) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .ai-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-            margin-top: 50px;
-        }
-
-        .ai-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .flow-step {
-            display: flex;
-            gap: 20px;
-            position: relative;
-        }
-
-        .flow-step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 19px;
-            top: 44px;
-            bottom: -20px;
-            width: 1px;
-            background: linear-gradient(to bottom, var(--dim), transparent);
-        }
-
-        .flow-num {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--accent);
-            flex-shrink: 0;
-            font-weight: 500;
-        }
-
-        .flow-content {
-            padding: 8px 0 32px;
-        }
-
-        .flow-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: -0.2px;
-        }
-
-        .flow-desc {
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        .ai-models {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .model-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.2s;
-        }
-
-        .model-card:hover {
-            border-color: rgba(0,255,136,0.2);
-        }
-
-        .model-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .model-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .model-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .model-badge {
-            margin-left: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .badge-local { background: rgba(0,255,136,0.1); color: var(--accent); }
-        .badge-api { background: rgba(96,165,250,0.1); color: #60a5fa; }
-
-        .model-desc {
-            font-size: 12px;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-
-        /* ─── FOOTER ─── */
-        .footer {
-            padding: 48px 80px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-left {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--muted);
-        }
-
-        .footer-left span { color: var(--accent); }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            text-decoration: none;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover { color: var(--accent); }
-
-        /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-left > * {
-            animation: fadeUp 0.6s ease both;
-        }
-
-        .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
-        .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
-        .hero-left > *:nth-child(3) { animation-delay: 0.3s; }
-        .hero-left > *:nth-child(4) { animation-delay: 0.4s; }
-
-        .hero-right {
-            animation: fadeUp 0.8s ease 0.3s both;
-        }
-
-        /* Scroll reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Header */
-        .site-header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 20px 48px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid transparent;
-            transition: border-color .3s, background .3s, backdrop-filter .3s;
-        }
-        .site-header.scrolled {
-            border-color: rgba(0,255,136,0.1);
-            background: rgba(8,8,16,0.9);
-            backdrop-filter: blur(20px);
-        }
-        .header-back {
-            font-family: 'JetBrains Mono', monospace; font-size: 11px;
-            letter-spacing: 1.5px; text-transform: uppercase;
-            color: #8888aa; text-decoration: none;
-            transition: color .2s;
-        }
-        .header-back:hover { color: #00e87a; }
-        .header-logo {
-            font-family: 'JetBrains Mono', monospace; font-size: 13px;
-            font-weight: 500; color: #00ff88; letter-spacing: 1px;
-        }
-
-        /* Cursor */
-        .cursor { position: fixed; width: 10px; height: 10px; background: #00ff88; border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
-        .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(0,255,136,0.4); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: width .3s, height .3s, border-color .3s; }
-        @media (max-width: 768px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
-        /* ── MOBILE ── */
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-            .hero-right { display: none; }
-            .hero-left {
-                padding: 100px 24px 60px;
-            }
-            .hero-title {
-                font-size: clamp(36px, 10vw, 56px) !important;
-            }
-            .hero-actions {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .hero-actions a, .hero-actions button {
-                width: 100%;
-                text-align: center;
-            }
-            section { padding: 60px 24px !important; }
-            .features-grid { grid-template-columns: 1fr !important; }
-            .tech-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-            .ai-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-            .site-header { padding: 16px 24px !important; }
-            h2 { font-size: clamp(28px, 8vw, 48px) !important; }
-        }
-
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 32px 48px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .footer-left {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--muted);
-        }
-        .footer-left span { color: var(--accent); }
-        .footer-right a {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--muted);
-            text-decoration: none;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .footer-right a:hover { color: var(--accent); }
-        @media (max-width: 600px) {
-            footer { padding: 24px; flex-direction: column; gap: 12px; align-items: flex-start; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjEzIiByeT0iNSIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iMTMiIHJ5PSI5LjUiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjUiIHJ5PSIxMyIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSIyOSIgeTI9IjE2IiBzdHJva2U9IiMwMGU4N2EiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE2IiB5MT0iMyIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Trading Journal — Alano Kricha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090f;
+      --surface: #0f0f1a;
+      --surface2: #141422;
+      --border: #1c1c30;
+      --accent: #00e87a;
+      --accent2: #00b860;
+      --warm: #f0a500;
+      --text: #f0f0f8;
+      --muted: #8888aa;
+      --dim: #3a3a5c;
+      --red: #ff4060;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    a { color: inherit; text-decoration: none; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; overflow-x: hidden; cursor: none; }
+
+    /* Cursor */
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(0,232,122,0.4); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+    @media (max-width: 768px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
+
+    /* Header */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid transparent; transition: border-color .3s, background .3s, backdrop-filter .3s; }
+    header.scrolled { border-color: var(--border); background: rgba(9,9,15,0.9); backdrop-filter: blur(20px); }
+    .header-left { display: flex; align-items: center; gap: 20px; }
+    .back-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+    .back-link:hover { color: var(--accent); }
+    .logo { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: -0.5px; }
+    .logo span { color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .status-pill { display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--warm); animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .lang-btn { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 5px 10px; cursor: none; transition: all .2s; }
+    .lang-btn:hover { color: var(--accent); border-color: rgba(0,232,122,0.3); }
+
+    /* Hero */
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,232,122,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,232,122,0.03) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 30% 40%, black 20%, transparent 65%); pointer-events: none; }
+    .hero::before { content:''; position:absolute; top:-200px; left:-200px; width:600px; height:600px; background:radial-gradient(circle, rgba(0,232,122,0.06) 0%, transparent 70%); pointer-events:none; }
+    .hero::after { content:''; position:absolute; bottom:-80px; right:80px; width:400px; height:400px; background:radial-gradient(circle, rgba(240,165,0,0.04) 0%, transparent 70%); pointer-events:none; }
+
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 100px 56px 80px 80px; position: relative; z-index: 1; }
+    .hero-left > * { animation: fadeUp 0.6s ease both; }
+    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left > *:nth-child(2) { animation-delay: 0.22s; }
+    .hero-left > *:nth-child(3) { animation-delay: 0.34s; }
+    .hero-left > *:nth-child(4) { animation-delay: 0.46s; }
+
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .eyebrow::before { content:''; width: 28px; height: 1px; background: var(--accent); }
+
+    .hero-title { font-size: clamp(44px, 5.5vw, 72px); font-weight: 800; line-height: 1.03; letter-spacing: -2.5px; margin-bottom: 24px; }
+    .hero-title .accent { color: var(--accent); display: block; font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; }
+
+    .hero-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 440px; margin-bottom: 36px; }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px; padding: 6px 14px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); background: var(--surface); }
+    .pill.warm { border-color: rgba(240,165,0,0.3); color: var(--warm); background: rgba(240,165,0,0.06); }
+
+    /* Hero right: trade terminal */
+    .hero-right { display: flex; align-items: center; justify-content: center; padding: 100px 80px 80px 40px; position: relative; z-index: 1; animation: fadeUp 0.8s ease 0.3s both; }
+
+    .trade-card { width: 340px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,232,122,0.04); }
+    .trade-card-header { padding: 14px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .tc-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .tc-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: 4px; }
+    .trade-card-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9; }
+
+    .tc-line { display: flex; gap: 8px; }
+    .tc-key { color: var(--muted); min-width: 76px; flex-shrink: 0; }
+    .tc-val { color: var(--text); }
+    .tc-val.green { color: var(--accent); }
+    .tc-val.red { color: var(--red); }
+    .tc-val.warm { color: var(--warm); }
+
+    .tc-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+    .tc-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+
+    .tc-ai-block { background: rgba(0,232,122,0.04); border: 1px solid rgba(0,232,122,0.12); border-radius: 8px; padding: 12px; margin-top: 4px; }
+    .tc-ai-line { font-size: 11px; color: var(--muted); line-height: 1.7; }
+    .tc-ai-result { margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+    .tc-ai-result::before { content:''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 1.5s ease infinite; }
+
+    /* Animate terminal lines */
+    .trade-card-body .tc-line:nth-child(1) { animation: fadeUp 0.4s ease 0.8s both; opacity: 0; }
+    .trade-card-body .tc-line:nth-child(2) { animation: fadeUp 0.4s ease 1.0s both; opacity: 0; }
+    .trade-card-body .tc-line:nth-child(3) { animation: fadeUp 0.4s ease 1.2s both; opacity: 0; }
+    .trade-card-body .tc-line:nth-child(4) { animation: fadeUp 0.4s ease 1.4s both; opacity: 0; }
+    .trade-card-body hr { animation: fadeUp 0.4s ease 1.5s both; opacity: 0; }
+    .tc-label { animation: fadeUp 0.4s ease 1.6s both; opacity: 0; }
+    .tc-ai-block { animation: fadeUp 0.4s ease 1.8s both; opacity: 0; }
+
+    /* Stats bar */
+    .stats-bar { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat-item { padding: 24px 32px; border-right: 1px solid var(--border); }
+    .stat-item:last-child { border-right: none; }
+    .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 500; color: var(--text); display: block; margin-bottom: 4px; }
+    .stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+
+    /* Sections */
+    section { padding: 80px; }
+    .sec-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .sec-title { font-size: clamp(28px, 3.5vw, 48px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 48px; }
+    .sec-title .it { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; color: var(--accent); }
+
+    /* Feature bento */
+    .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; }
+    .bento-card { background: var(--surface); padding: 36px; transition: background .2s; }
+    .bento-card:hover { background: var(--surface2); }
+    .bento-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .bento-card.wide3 { grid-column: span 2; }
+
+    .bc-icon { font-size: 28px; margin-bottom: 16px; }
+    .bc-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.5px; }
+    .bc-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .bc-desc strong { color: var(--text); }
+
+    .bc-tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+    .bc-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
+    .bc-tag.accent { border-color: rgba(0,232,122,0.3); color: var(--accent); background: rgba(0,232,122,0.06); }
+    .bc-tag.warm { border-color: rgba(240,165,0,0.3); color: var(--warm); background: rgba(240,165,0,0.06); }
+    .bc-tag.red { border-color: rgba(255,64,96,0.3); color: var(--red); background: rgba(255,64,96,0.06); }
+
+    /* Validation states list */
+    .val-list { display: flex; flex-direction: column; gap: 10px; }
+    .val-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .val-icon { font-size: 14px; width: 20px; text-align: center; }
+    .val-text { color: var(--muted); flex: 1; }
+    .val-result { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+    .val-ok { color: var(--accent); background: rgba(0,232,122,0.1); }
+    .val-warn { color: var(--warm); background: rgba(240,165,0,0.1); }
+
+    /* Tech section */
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .tech-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .tech-item { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--border); transition: background .2s; }
+    .tech-item:last-child { border-bottom: none; }
+    .tech-item:hover { background: var(--surface2); }
+    .tech-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .tech-name { font-size: 14px; font-weight: 600; flex: 1; }
+    .tech-role { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+    /* Code block */
+    .code-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .code-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-file { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: 6px; }
+    .code-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8; overflow-x: auto; }
+    .c-key { color: #7c8cf8; }
+    .c-fn { color: var(--accent); }
+    .c-str { color: #e8c97a; }
+    .c-text { color: var(--text); }
+    .c-com { color: var(--dim); }
+
+    /* AI architecture */
+    .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+
+    .flow-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .flow-step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 1px; min-width: 28px; margin-top: 3px; }
+    .flow-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .flow-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .model-cards { display: flex; flex-direction: column; gap: 12px; }
+    .model-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color .2s; }
+    .model-card:hover { border-color: rgba(0,232,122,0.2); }
+    .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .model-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .model-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; flex: 1; }
+    .model-badge { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 3px 8px; border-radius: 4px; letter-spacing: 1px; text-transform: uppercase; }
+    .badge-local { background: rgba(0,232,122,0.1); color: var(--accent); }
+    .badge-api { background: rgba(120,160,250,0.1); color: #78a0fa; }
+    .badge-search { background: rgba(240,165,0,0.1); color: var(--warm); }
+    .model-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* Insights */
+    .insights { padding: 80px; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .insights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; margin-top: 40px; }
+    .insight-item { background: var(--surface); padding: 28px; transition: background .2s; }
+    .insight-item:hover { background: var(--surface2); }
+    .insight-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 2px; margin-bottom: 12px; }
+    .insight-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .insight-text strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 14px; }
+
+    /* Footer */
+    footer { padding: 32px 80px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .footer-left { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+    .footer-left span { color: var(--accent); }
+    .footer-right a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; transition: color .2s; }
+    .footer-right a:hover { color: var(--accent); }
+
+    /* Animations */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Mobile */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { display: none; }
+      .hero-left { padding: 110px 32px 60px; }
+      .stats-bar { grid-template-columns: repeat(3, 1fr); }
+      .stat-item:nth-child(4), .stat-item:nth-child(5) { border-top: 1px solid var(--border); }
+    }
+    @media (max-width: 768px) {
+      header { padding: 16px 24px; }
+      section, .insights, footer { padding: 60px 24px; }
+      .bento { grid-template-columns: 1fr; }
+      .bento-card.featured { grid-template-columns: 1fr; }
+      .tech-grid, .ai-grid { grid-template-columns: 1fr; }
+      .insights-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .sec-title { font-size: clamp(24px, 8vw, 40px); }
+    }
+  </style>
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
+<header id="header">
+  <div class="header-left">
+    <a href="index.html" class="back-link" id="back-link">← Portfolio</a>
+    <div class="logo">AK<span>.</span></div>
+  </div>
+  <div class="header-right">
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      <span id="status-label">In ontwikkeling</span>
+    </div>
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()">EN</button>
+  </div>
+</header>
 
-    <header class="site-header" id="site-header">
-        <a href="index.html" class="header-back">← Portfolio</a>
-        <span class="header-logo">AI Journal</span>
-    </header>
-
-    <!-- ─── HERO ─── -->
-    <section class="hero">
-        <div class="hero-grid"></div>
-        <div class="hero-left">
-            <div class="tag">Personal Project · In Development</div>
-            <h1 class="hero-title">
-                AI Trading<br>
-                <span class="line2">Journal</span>
-            </h1>
-            <p class="hero-desc">
-                A <strong>self-hosted AI coaching system</strong> for traders. 
-                Pre-trade validation, real-time psychology tracking, post-trade analysis 
-                and weekly coaching reports, all running locally on a <strong>Raspberry Pi 5</strong>.
-            </p>
-            <div class="hero-actions">
-                <a href="#features" class="btn-primary">Explore Features</a>
-                <a href="#tech" class="btn-secondary">View Tech Stack</a>
-            </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="eyebrow" id="hero-eyebrow">Project 03 · Trading Journal</div>
+    <h1 class="hero-title">
+      <span id="hero-line1">AI Trading</span>
+      <span class="accent" id="hero-line2">Journal</span>
+    </h1>
+    <p class="hero-sub" id="hero-sub">Een <strong>zelfgehost AI coaching systeem</strong> voor traders. Pre-trade validatie, psychologie tracking, post-trade analyse en wekelijkse coaching, allemaal op een <strong>Raspberry Pi 5</strong>.</p>
+    <div class="hero-pills">
+      <span class="pill warm" id="pill-wip">In ontwikkeling</span>
+      <span class="pill">Flask · SQLite</span>
+      <span class="pill">Ollama · Qwen2.5</span>
+      <span class="pill">XAUUSD</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="trade-card">
+      <div class="trade-card-header">
+        <div class="tc-dot" style="background:#ff5f57"></div>
+        <div class="tc-dot" style="background:#febc2e"></div>
+        <div class="tc-dot" style="background:#28c840"></div>
+        <span class="tc-title">trade_check.py · pre_trade_check()</span>
+      </div>
+      <div class="trade-card-body">
+        <div class="tc-line"><span class="tc-key">pair:</span><span class="tc-val">XAUUSD</span></div>
+        <div class="tc-line"><span class="tc-key">direction:</span><span class="tc-val green">LONG @ 2847.50</span></div>
+        <div class="tc-line"><span class="tc-key">SL / TP:</span><span class="tc-val">2840.00 / 2862.50</span></div>
+        <div class="tc-line"><span class="tc-key">emotie:</span><span class="tc-val">Rustig</span></div>
+        <hr class="tc-divider">
+        <div class="tc-label">AI Validatie</div>
+        <div class="tc-ai-block">
+          <div class="tc-ai-line">R:R 2.0 ✓ · Stoch RSI 23.4 ✓</div>
+          <div class="tc-ai-line">Trend: bullish ✓ · News: geen ✓</div>
+          <div class="tc-ai-line">Max 2 trades/dag: 0/2 ✓</div>
+          <div class="tc-ai-result" id="ai-result">APPROVED</div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="hero-right">
-            <div class="phone-wrap">
-                <div class="phone-glow"></div>
-                <div class="phone">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                        <!-- Mini app preview -->
-                        <div class="mini-header">
-                            <div class="mini-logo">XAU<span>/USD</span> JOURNAL</div>
-                            <div class="mini-count">4 trades</div>
-                        </div>
+<!-- STATS BAR -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <span class="stat-val">6</span>
+    <span class="stat-lbl" id="stat1-lbl">Core Features</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">3</span>
+    <span class="stat-lbl" id="stat2-lbl">AI Modellen</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">0€</span>
+    <span class="stat-lbl" id="stat3-lbl">Per maand</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">Pi 5</span>
+    <span class="stat-lbl" id="stat4-lbl">Self-hosted</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">100%</span>
+    <span class="stat-lbl" id="stat5-lbl">Privé</span>
+  </div>
+</div>
 
-                        <div class="mini-stats">
-                            <div class="mini-stat">
-                                <div class="mini-stat-val" style="color:#e8e8f5">4</div>
-                                <div class="mini-stat-label">Trades</div>
-                            </div>
-                            <div class="mini-stat">
-                                <div class="mini-stat-val" style="color:#00ff88">75%</div>
-                                <div class="mini-stat-label">Winrate</div>
-                            </div>
-                            <div class="mini-stat">
-                                <div class="mini-stat-val" style="color:#00ff88">$84</div>
-                                <div class="mini-stat-label">P&L</div>
-                            </div>
-                        </div>
+<!-- FEATURES -->
+<section id="features">
+  <div class="sec-eyebrow" id="feat-eyebrow">Functionaliteit</div>
+  <h2 class="sec-title reveal"><span id="feat-title">Gebouwd voor discipline,<br>niet alleen data.</span></h2>
 
-                        <div class="mini-section-title">Recente trades</div>
-
-                        <div class="mini-trade win">
-                            <div class="mini-trade-row">
-                                <div>
-                                    <span class="mini-trade-name">XAUUSD</span>
-                                    <span class="mini-badge long">LONG</span>
-                                </div>
-                                <span class="mini-result" style="color:#00ff88">+$42</span>
-                            </div>
-                            <div class="mini-meta">Today 09:14 · Rustig</div>
-                        </div>
-
-                        <div class="mini-trade loss">
-                            <div class="mini-trade-row">
-                                <div>
-                                    <span class="mini-trade-name">XAUUSD</span>
-                                    <span class="mini-badge short">SHORT</span>
-                                </div>
-                                <span class="mini-result" style="color:#ff3b5c">-$21</span>
-                            </div>
-                            <div class="mini-meta">Yesterday 14:32 · FOMO</div>
-                        </div>
-
-                        <div class="mini-trade open">
-                            <div class="mini-trade-row">
-                                <div>
-                                    <span class="mini-trade-name">XAUUSD</span>
-                                    <span class="mini-badge long">LONG</span>
-                                </div>
-                                <span class="mini-result" style="color:#f59e0b">● OPEN</span>
-                            </div>
-                            <div class="mini-meta">Today 11:02 · Confident</div>
-                        </div>
-
-                        <div class="mini-fab">+ NIEUWE TRADE</div>
-                    </div>
-                </div>
-            </div>
+  <div class="bento">
+    <!-- Featured: Pre-Trade Check -->
+    <div class="bento-card featured reveal">
+      <div>
+        <div class="bc-icon">✅</div>
+        <div class="bc-title" id="f1-title">Pre-Trade Validatie</div>
+        <p class="bc-desc" id="f1-desc">AI controleert elke trade aan de hand van jouw persoonlijke strategie voordat je instapt. R:R check, trend alignment, Stoch RSI bevestiging. Geen plan, geen trade.</p>
+        <div class="bc-tag-row">
+          <span class="bc-tag accent">Qwen2.5:14b</span>
+          <span class="bc-tag">XAUUSD</span>
+          <span class="bc-tag">1:2 R:R</span>
+          <span class="bc-tag">Lokaal</span>
         </div>
-    </section>
-
-    <!-- ─── STATS BAR ─── -->
-    <div class="stats-bar reveal">
-        <div class="stat-item">
-            <span class="stat-num">6</span>
-            <span class="stat-label">Core Features</span>
+      </div>
+      <div class="val-list">
+        <div class="val-item">
+          <span class="val-icon">📐</span>
+          <span class="val-text">Risk/Reward</span>
+          <span class="val-result val-ok">2.0 ✓</span>
         </div>
-        <div class="stat-item">
-            <span class="stat-num">3</span>
-            <span class="stat-label">AI Models</span>
+        <div class="val-item">
+          <span class="val-icon">📉</span>
+          <span class="val-text">Stoch RSI</span>
+          <span class="val-result val-ok">23.4 ✓</span>
         </div>
-        <div class="stat-item">
-            <span class="stat-num">0€</span>
-            <span class="stat-label">Monthly Cost</span>
+        <div class="val-item">
+          <span class="val-icon">📰</span>
+          <span class="val-text">News events</span>
+          <span class="val-result val-ok">Geen ✓</span>
         </div>
-        <div class="stat-item">
-            <span class="stat-num">Pi 5</span>
-            <span class="stat-label">Self-Hosted</span>
+        <div class="val-item">
+          <span class="val-icon">🔢</span>
+          <span class="val-text">Dagelijks limiet</span>
+          <span class="val-result val-ok">0/2 ✓</span>
         </div>
+        <div class="val-item">
+          <span class="val-icon">🧠</span>
+          <span class="val-text">Emotie</span>
+          <span class="val-result val-ok">Rustig ✓</span>
+        </div>
+      </div>
     </div>
 
-    <!-- ─── FEATURES ─── -->
-    <section class="features" id="features">
-        <div class="section-tag">What it does</div>
-        <h2 class="section-title reveal">Built for discipline,<br>not just data.</h2>
+    <!-- Psychology -->
+    <div class="bento-card reveal">
+      <div class="bc-icon">🧠</div>
+      <div class="bc-title" id="f2-title">Psychologie Tracking</div>
+      <p class="bc-desc" id="f2-desc">Log je emotie voor elke trade: Rustig, Confident, FOMO, Gehaast. AI detecteert patronen: slechtere resultaten na verlies, betere resultaten 's ochtends.</p>
+      <div class="bc-tag-row">
+        <span class="bc-tag warm">FOMO detectie</span>
+        <span class="bc-tag">Patroonherkenning</span>
+      </div>
+    </div>
 
-        <div class="features-grid">
-            <div class="feature-card reveal">
-                <div class="feature-icon">✅</div>
-                <div class="feature-title">Pre-Trade Check</div>
-                <p class="feature-desc">AI validates every trade against your personal strategy rules before you enter. R:R check, trend alignment, Stoch RSI confirmation. No plan = no trade.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">🧠</div>
-                <div class="feature-title">Psychology Tracking</div>
-                <p class="feature-desc">Log your emotional state before every trade: Rustig, Confident, FOMO, Gehaast. The AI detects patterns: worse results when trading after a loss, better results in the morning.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">📊</div>
-                <div class="feature-title">Post-Trade Analysis</div>
-                <p class="feature-desc">After closing, get an instant AI breakdown: did you follow the plan? Was the result luck or skill? 2–3 concrete improvements for the same setup next time.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">📰</div>
-                <div class="feature-title">News Context</div>
-                <p class="feature-desc">When a trade goes wrong, Claude API fetches real-time market news to explain external factors (NFP, CPI, Fed decisions) and separates market impact from behavioral errors.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">📅</div>
-                <div class="feature-title">Weekly Coaching</div>
-                <p class="feature-desc">Every week, get a full AI report: winrate by day/time, emotional triggers, pattern recognition. Output: a concrete coaching plan with clear actions for next week.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">🔒</div>
-                <div class="feature-title">100% Private</div>
-                <p class="feature-desc">Everything runs on a Raspberry Pi 5 at home. No cloud, no subscriptions, no data leaving your network. Local Ollama models for daily analysis, Claude API only when needed.</p>
-            </div>
-        </div>
-    </section>
+    <!-- Post-trade -->
+    <div class="bento-card reveal">
+      <div class="bc-icon">📊</div>
+      <div class="bc-title" id="f3-title">Post-Trade Analyse</div>
+      <p class="bc-desc" id="f3-desc">Na het sluiten krijg je een directe AI breakdown: heb je het plan gevolgd? Was het resultaat geluk of skill? 2-3 concrete verbeteringen voor hetzelfde setup.</p>
+      <div class="bc-tag-row">
+        <span class="bc-tag accent">Skill score</span>
+        <span class="bc-tag">Plan check</span>
+      </div>
+    </div>
 
-    <!-- ─── TECH STACK ─── -->
-    <section class="tech" id="tech">
-        <div class="section-tag">Tech Stack</div>
-        <h2 class="section-title reveal">Built from scratch.<br>No shortcuts.</h2>
+    <!-- News context -->
+    <div class="bento-card reveal">
+      <div class="bc-icon">📰</div>
+      <div class="bc-title" id="f4-title">Nieuws Context</div>
+      <p class="bc-desc" id="f4-desc">Als een trade misgaat, haalt Claude API realtime marktnieuws op om externe factoren te verklaren (NFP, CPI, Fed besluiten) en scheidt marktimpact van gedragsfouten.</p>
+      <div class="bc-tag-row">
+        <span class="bc-tag">Claude API</span>
+        <span class="bc-tag">Perplexity</span>
+      </div>
+    </div>
 
-        <div class="tech-grid">
-            <div class="tech-list reveal">
-                <div class="tech-item">
-                    <div class="tech-dot"></div>
-                    <span class="tech-name">Flask</span>
-                    <span class="tech-role">Web framework & REST API</span>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-dot"></div>
-                    <span class="tech-name">SQLite</span>
-                    <span class="tech-role">Local trade database</span>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-dot"></div>
-                    <span class="tech-name">Ollama + Qwen2.5:14b</span>
-                    <span class="tech-role">Local AI analysis engine</span>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-dot"></div>
-                    <span class="tech-name">Anthropic Claude API</span>
-                    <span class="tech-role">News context & deep analysis</span>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-dot"></div>
-                    <span class="tech-name">MetaTrader 5 Python</span>
-                    <span class="tech-role">Automatic trade import (WIP)</span>
-                </div>
-                <div class="tech-item">
-                    <div class="tech-dot"></div>
-                    <span class="tech-name">Raspberry Pi 5 (16GB)</span>
-                    <span class="tech-role">Self-hosted infrastructure</span>
-                </div>
-            </div>
+    <!-- Weekly coaching -->
+    <div class="bento-card reveal">
+      <div class="bc-icon">📅</div>
+      <div class="bc-title" id="f5-title">Wekelijkse Coaching</div>
+      <p class="bc-desc" id="f5-desc">Elke week een volledig AI rapport: winrate per dag/tijd, emotionele triggers, patroonherkenning. Output: een concreet coachingplan met duidelijke acties voor volgende week.</p>
+      <div class="bc-tag-row">
+        <span class="bc-tag warm">Elke zondag</span>
+        <span class="bc-tag">Actieplan</span>
+      </div>
+    </div>
 
-            <div class="code-block reveal">
-                <div class="code-header">
-                    <div class="code-dot" style="background:#ff5f57"></div>
-                    <div class="code-dot" style="background:#febc2e"></div>
-                    <div class="code-dot" style="background:#28c840"></div>
-                    <span class="code-filename">ai.py: pre_trade_check()</span>
-                </div>
-                <div class="code-body">
+    <!-- Privacy -->
+    <div class="bento-card reveal">
+      <div class="bc-icon">🔒</div>
+      <div class="bc-title" id="f6-title">100% Privé</div>
+      <p class="bc-desc" id="f6-desc">Alles draait op een Raspberry Pi 5 thuis. Geen cloud, geen abonnementen, geen data die het netwerk verlaat. Lokale Ollama modellen voor dagelijkse analyse, Claude API alleen indien nodig.</p>
+      <div class="bc-tag-row">
+        <span class="bc-tag accent">Self-hosted</span>
+        <span class="bc-tag red">No cloud</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="tech" style="background: var(--surface); border-top: 1px solid var(--border);">
+  <div class="sec-eyebrow" id="tech-eyebrow">Tech Stack</div>
+  <h2 class="sec-title reveal"><span id="tech-title">Gebouwd from scratch.<br><span class="it">Geen shortcuts.</span></span></h2>
+
+  <div class="tech-grid">
+    <div class="tech-list reveal">
+      <div class="tech-item">
+        <div class="tech-dot"></div>
+        <span class="tech-name">Flask</span>
+        <span class="tech-role">Web framework & REST API</span>
+      </div>
+      <div class="tech-item">
+        <div class="tech-dot"></div>
+        <span class="tech-name">SQLite</span>
+        <span class="tech-role">Lokale trade database</span>
+      </div>
+      <div class="tech-item">
+        <div class="tech-dot"></div>
+        <span class="tech-name">Ollama + Qwen2.5:14b</span>
+        <span class="tech-role">Lokale AI analyse engine</span>
+      </div>
+      <div class="tech-item">
+        <div class="tech-dot"></div>
+        <span class="tech-name">Anthropic Claude API</span>
+        <span class="tech-role">Nieuws context & diepte analyse</span>
+      </div>
+      <div class="tech-item">
+        <div class="tech-dot"></div>
+        <span class="tech-name">MetaTrader 5 Python</span>
+        <span class="tech-role">Automatisch trade import (WIP)</span>
+      </div>
+      <div class="tech-item">
+        <div class="tech-dot"></div>
+        <span class="tech-name">Raspberry Pi 5 (16GB)</span>
+        <span class="tech-role">Self-hosted infrastructuur</span>
+      </div>
+    </div>
+
+    <div class="code-block reveal">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#febc2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-file">ai.py · pre_trade_check()</span>
+      </div>
+      <div class="code-body">
 <span class="c-key">def</span> <span class="c-fn">pre_trade_check</span>(trade_data):
-  <span class="c-text">prompt</span> = <span class="c-fn">f</span><span class="c-str">"""
-  Trading plan rules:
+  prompt = <span class="c-str">f"""
+  Trading plan:
   - Only XAUUSD, min R:R 1:2
   - Stoch RSI confirmation required
   - Max 2 trades per day
   - No trading during news
 
   Evaluate this trade:
-  Direction: </span><span class="c-text">{trade_data[</span><span class="c-str">'richting'</span><span class="c-text">]}</span><span class="c-str">
-  Entry: </span><span class="c-text">{trade_data[</span><span class="c-str">'entry'</span><span class="c-text">]}</span><span class="c-str">
-  SL: </span><span class="c-text">{trade_data[</span><span class="c-str">'stop_loss'</span><span class="c-text">]}</span><span class="c-str">
-  TP: </span><span class="c-text">{trade_data[</span><span class="c-str">'take_profit'</span><span class="c-text">]}</span><span class="c-str">
-  Emotion: </span><span class="c-text">{trade_data[</span><span class="c-str">'emotie_voor'</span><span class="c-text">]}</span><span class="c-str">
+  Direction: <span class="c-text">{trade_data['richting']}</span>
+  Entry: <span class="c-text">{trade_data['entry']}</span>
+  SL: <span class="c-text">{trade_data['stop_loss']}</span>
+  TP: <span class="c-text">{trade_data['take_profit']}</span>
+  Emotie: <span class="c-text">{trade_data['emotie']}</span>
 
   Return: APPROVED or WARNING + reason
   """</span>
@@ -1127,224 +493,208 @@
                <span class="c-str">'content'</span>: prompt}]
   )
   <span class="c-key">return</span> response[<span class="c-str">'message'</span>][<span class="c-str">'content'</span>]
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ─── AI SECTION ─── -->
-    <section class="ai-section" id="ai">
-        <div class="section-tag">AI Architecture</div>
-        <h2 class="section-title reveal">Three models,<br>one purpose.</h2>
-
-        <div class="ai-grid">
-            <div class="ai-flow reveal">
-                <div class="flow-step">
-                    <div class="flow-num">01</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Pre-trade validation</div>
-                        <p class="flow-desc">Qwen2.5:14b checks the setup against your strategy rules locally. Fast, private, free.</p>
-                    </div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-num">02</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Trade is executed</div>
-                        <p class="flow-desc">You trade in MetaTrader 5. The journal logs psychology and market conditions in real-time.</p>
-                    </div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-num">03</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Post-trade analysis</div>
-                        <p class="flow-desc">Qwen2.5:14b analyses the result. If news context is needed, Claude API fetches current market data.</p>
-                    </div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-num">04</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Weekly coaching report</div>
-                        <p class="flow-desc">All trades + psychology patterns → one actionable coaching plan every Sunday.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ai-models reveal">
-                <div class="model-card">
-                    <div class="model-header">
-                        <div class="model-icon" style="background:rgba(0,255,136,0.08)">🦙</div>
-                        <div class="model-name">Qwen2.5:14b</div>
-                        <span class="model-badge badge-local">Local</span>
-                    </div>
-                    <p class="model-desc">Runs on the Pi via Ollama. Handles all daily pre/post-trade analysis. 9GB RAM, ~45s response. Zero cost, zero data leaving the network.</p>
-                </div>
-
-                <div class="model-card">
-                    <div class="model-header">
-                        <div class="model-icon" style="background:rgba(96,165,250,0.08)">⚡</div>
-                        <div class="model-name">Claude (Anthropic API)</div>
-                        <span class="model-badge badge-api">API</span>
-                    </div>
-                    <p class="model-desc">Used selectively for deep analysis with real-time web search. Fetches news context for failed trades — NFP, CPI, Fed announcements.</p>
-                </div>
-
-                <div class="model-card">
-                    <div class="model-header">
-                        <div class="model-icon" style="background:rgba(245,158,11,0.08)">🔍</div>
-                        <div class="model-name">Perplexity API</div>
-                        <span class="model-badge" style="background:rgba(245,158,11,0.1);color:#f59e0b">Search</span>
-                    </div>
-                    <p class="model-desc">Real-time financial news search for market context. Included via Revolut Metal plan — zero additional cost.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ─── AKAI INTEGRATION ─── -->
-    <section class="ai-section" id="akai" style="border-top: 1px solid var(--border);">
-        <div class="section-tag">AKAI Integration</div>
-        <h2 class="section-title reveal">Your journal.<br>Always in your pocket.</h2>
-        <p style="font-size:15px; color:var(--muted); line-height:1.75; max-width:620px; margin-bottom:48px;" class="reveal">
-            The Trading Journal runs on Nexus. Thanks to AKAI, my personal AI assistant on Telegram, I don't need to open a browser to use it. I can log a trade, check my stats or ask for analysis with a simple message. AKAI knows the journal, knows my strategy and knows my history.
-        </p>
-        <div class="ai-grid reveal">
-            <div class="ai-flow">
-                <div class="flow-step">
-                    <div class="flow-num">01</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Message AKAI on Telegram</div>
-                        <p class="flow-desc">"Log trade: XAUUSD long 2648, SL 2638, TP 2668." AKAI understands and formats it correctly.</p>
-                    </div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-num">02</div>
-                    <div class="flow-content">
-                        <div class="flow-title">AKAI calls the Journal API</div>
-                        <p class="flow-desc">AKAI has a tool that connects to the Trading Journal Flask API on Nexus. The trade is logged instantly, including the pre-trade check.</p>
-                    </div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-num">03</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Pre-trade check runs automatically</div>
-                        <p class="flow-desc">Strategy rules are checked locally via Ollama. AKAI replies with APPROVED or WARNING with reasoning, before you even open the app.</p>
-                    </div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-num">04</div>
-                    <div class="flow-content">
-                        <div class="flow-title">Ask for your stats anytime</div>
-                        <p class="flow-desc">"What's my winrate this week?" or "Show my last 5 trades." AKAI queries the journal and replies directly in Telegram. No app needed.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="ai-models">
-                <div class="model-card" style="border-color: rgba(0,255,136,0.15);">
-                    <div class="model-header">
-                        <div class="model-icon" style="background:rgba(0,255,136,0.08)">🤖</div>
-                        <div class="model-name">AKAI via Telegram</div>
-                        <span class="model-badge badge-local">Live</span>
-                    </div>
-                    <p class="model-desc">Log trades, check stats and get analysis: all via Telegram. No app, no browser. AKAI translates your messages into Journal API calls and replies with formatted results.</p>
-                </div>
-                <div class="model-card">
-                    <div class="model-header">
-                        <div class="model-icon" style="background:rgba(0,255,136,0.08)">🦙</div>
-                        <div class="model-name">Qwen 2.5 via Ollama</div>
-                        <span class="model-badge badge-local">Local</span>
-                    </div>
-                    <p class="model-desc">Pre-trade validation and post-trade analysis run entirely on-device. 0€ per analysis, no internet required, maximum privacy.</p>
-                </div>
-                <div class="model-card">
-                    <div class="model-header">
-                        <div class="model-icon" style="background:rgba(96,165,250,0.08)">⚡</div>
-                        <div class="model-name">Claude API</div>
-                        <span class="model-badge badge-api">API</span>
-                    </div>
-                    <p class="model-desc">Called selectively for deep post-trade analysis with real-time market news context (NFP, CPI, Fed decisions) when a trade needs more than local analysis can provide.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ─── FOOTER ─── -->
-    <footer>
-    <div class="footer-left">© 2026 <span>Alano Kricha</span></div>
-    <div class="footer-right" style="display:flex; gap:24px;">
-        <a href="index.html">← Portfolio</a>
-        <a href="akai.html">AKAI →</a>
-        <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- AI ARCHITECTURE -->
+<section id="ai">
+  <div class="sec-eyebrow" id="ai-eyebrow">AI Architectuur</div>
+  <h2 class="sec-title reveal"><span id="ai-title">Drie modellen,<br><span class="it">één doel.</span></span></h2>
+
+  <div class="ai-grid">
+    <div class="flow-steps reveal">
+      <div class="flow-step">
+        <span class="flow-num">01</span>
+        <div>
+          <div class="flow-title" id="flow1-title">Pre-trade validatie</div>
+          <p class="flow-desc" id="flow1-desc">Qwen2.5:14b controleert het setup lokaal aan de hand van je strategie regels. Snel, privé en gratis.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">02</span>
+        <div>
+          <div class="flow-title" id="flow2-title">Trade wordt gezet</div>
+          <p class="flow-desc" id="flow2-desc">Je handelt in MetaTrader 5. Het journal logt psychologie en marktomstandigheden in real-time.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">03</span>
+        <div>
+          <div class="flow-title" id="flow3-title">Post-trade analyse</div>
+          <p class="flow-desc" id="flow3-desc">Qwen2.5:14b analyseert het resultaat. Indien nieuws context nodig is, haalt Claude API actuele marktdata op.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">04</span>
+        <div>
+          <div class="flow-title" id="flow4-title">Wekelijks coachingrapport</div>
+          <p class="flow-desc" id="flow4-desc">Alle trades en psychologiepatronen vormen elke zondag een concreet actieplan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-cards reveal">
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-icon" style="background:rgba(0,232,122,0.08)">🦙</div>
+          <span class="model-name">Qwen2.5:14b</span>
+          <span class="model-badge badge-local">Lokaal</span>
+        </div>
+        <p class="model-desc" id="m1-desc">Draait op de Pi via Ollama. Verwerkt alle dagelijkse pre/post-trade analyses. 9GB RAM, ca. 45s respons. Nul kosten, geen data buiten het netwerk.</p>
+      </div>
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-icon" style="background:rgba(120,160,250,0.08)">⚡</div>
+          <span class="model-name">Claude (Anthropic API)</span>
+          <span class="model-badge badge-api">API</span>
+        </div>
+        <p class="model-desc" id="m2-desc">Selectief ingezet voor diepte analyse met realtime websearch. Haalt nieuws context op voor mislukte trades: NFP, CPI, Fed aankondigingen.</p>
+      </div>
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-icon" style="background:rgba(240,165,0,0.08)">🔍</div>
+          <span class="model-name">Perplexity API</span>
+          <span class="model-badge badge-search">Search</span>
+        </div>
+        <p class="model-desc" id="m3-desc">Realtime financieel nieuws voor markt context. Inbegrepen via Revolut Metal plan, geen extra kosten.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<div class="insights">
+  <div class="sec-eyebrow" id="ins-eyebrow">Inzichten</div>
+  <h2 class="sec-title reveal" style="margin-bottom:0" id="ins-title">Wat ik leerde van dit project</h2>
+  <div class="insights-grid">
+    <div class="insight-item reveal">
+      <div class="insight-num">01</div>
+      <p class="insight-text"><strong id="ins1-title">SQLite is genoeg</strong><span id="ins1-desc">Voor persoonlijk gebruik met duizenden trades heb je geen PostgreSQL nodig. SQLite met goede indices is snel, simpel en zero-ops.</span></p>
+    </div>
+    <div class="insight-item reveal">
+      <div class="insight-num">02</div>
+      <p class="insight-text"><strong id="ins2-title">Qwen2.5:14b op Pi 5</strong><span id="ins2-desc">14B parameter model op een Pi met 16GB RAM werkt. 45 seconden per analyse is acceptabel voor een trading tool die niet real-time hoeft te zijn.</span></p>
+    </div>
+    <div class="insight-item reveal">
+      <div class="insight-num">03</div>
+      <p class="insight-text"><strong id="ins3-title">Psychologie boven techniek</strong><span id="ins3-desc">Na het loggen van 50+ trades bleek FOMO de grootste verliesfactor, niet een slecht systeem. Data bracht de emotionele patronen pas echt zichtbaar.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left"><span id="footer-name">AK</span> · AI Trading Journal · <span>2025</span></div>
+  <div class="footer-right"><a href="index.html" id="footer-back">← Portfolio</a></div>
 </footer>
 
-    <script>
-        // Scroll reveal
-        const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, i * 80);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+<script>
+  // Cursor
+  const cur = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+  (function loop() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
 
-        reveals.forEach(el => observer.observe(el));
+  // Header scroll
+  window.addEventListener('scroll', () => document.getElementById('header').classList.toggle('scrolled', scrollY > 40));
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                const href = a.getAttribute('href');
-                if (!href || href === '#') return;
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-        // Header scroll
-    const siteHeader = document.getElementById('site-header');
-    if (siteHeader) {
-        window.addEventListener('scroll', () => {
-            siteHeader.classList.toggle('scrolled', window.scrollY > 30);
-        });
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // i18n
+  let lang = 'nl';
+  const T = {
+    nl: {
+      'back-link': '← Portfolio',
+      'hero-eyebrow': 'Project 03 · Trading Journal',
+      'hero-line1': 'AI Trading',
+      'hero-line2': 'Journal',
+      'hero-sub': 'Een zelfgehost AI coaching systeem voor traders. Pre-trade validatie, psychologie tracking, post-trade analyse en wekelijkse coaching, allemaal op een Raspberry Pi 5.',
+      'pill-wip': 'In ontwikkeling',
+      'status-label': 'In ontwikkeling',
+      'stat1-lbl': 'Core Features', 'stat2-lbl': 'AI Modellen', 'stat3-lbl': 'Per maand', 'stat4-lbl': 'Self-hosted', 'stat5-lbl': 'Privé',
+      'feat-eyebrow': 'Functionaliteit',
+      'feat-title': 'Gebouwd voor discipline, niet alleen data.',
+      'f1-title': 'Pre-Trade Validatie',
+      'f1-desc': 'AI controleert elke trade aan de hand van jouw persoonlijke strategie voordat je instapt. R:R check, trend alignment, Stoch RSI bevestiging. Geen plan, geen trade.',
+      'f2-title': 'Psychologie Tracking',
+      'f2-desc': "Log je emotie voor elke trade: Rustig, Confident, FOMO, Gehaast. AI detecteert patronen: slechtere resultaten na verlies, betere resultaten 's ochtends.",
+      'f3-title': 'Post-Trade Analyse',
+      'f3-desc': 'Na het sluiten krijg je een directe AI breakdown: heb je het plan gevolgd? Was het resultaat geluk of skill? 2-3 concrete verbeteringen voor hetzelfde setup.',
+      'f4-title': 'Nieuws Context',
+      'f4-desc': 'Als een trade misgaat, haalt Claude API realtime marktnieuws op om externe factoren te verklaren en scheidt marktimpact van gedragsfouten.',
+      'f5-title': 'Wekelijkse Coaching',
+      'f5-desc': 'Elke week een volledig AI rapport: winrate per dag/tijd, emotionele triggers, patroonherkenning. Output: een concreet coachingplan met duidelijke acties.',
+      'f6-title': '100% Privé',
+      'f6-desc': 'Alles draait op een Raspberry Pi 5 thuis. Geen cloud, geen abonnementen, geen data die het netwerk verlaat. Lokale Ollama modellen voor dagelijkse analyse.',
+      'tech-eyebrow': 'Tech Stack', 'tech-title': 'Gebouwd from scratch.',
+      'ai-eyebrow': 'AI Architectuur', 'ai-title': 'Drie modellen, één doel.',
+      'flow1-title': 'Pre-trade validatie', 'flow1-desc': 'Qwen2.5:14b controleert het setup lokaal aan de hand van je strategie regels. Snel, privé en gratis.',
+      'flow2-title': 'Trade wordt gezet', 'flow2-desc': 'Je handelt in MetaTrader 5. Het journal logt psychologie en marktomstandigheden in real-time.',
+      'flow3-title': 'Post-trade analyse', 'flow3-desc': 'Qwen2.5:14b analyseert het resultaat. Indien nieuws context nodig is, haalt Claude API actuele marktdata op.',
+      'flow4-title': 'Wekelijks coachingrapport', 'flow4-desc': 'Alle trades en psychologiepatronen vormen elke zondag een concreet actieplan.',
+      'm1-desc': 'Draait op de Pi via Ollama. Verwerkt alle dagelijkse pre/post-trade analyses. 9GB RAM, ca. 45s respons. Nul kosten, geen data buiten het netwerk.',
+      'm2-desc': 'Selectief ingezet voor diepte analyse met realtime websearch. Haalt nieuws context op voor mislukte trades: NFP, CPI, Fed aankondigingen.',
+      'm3-desc': 'Realtime financieel nieuws voor markt context. Inbegrepen via Revolut Metal plan, geen extra kosten.',
+      'ins-eyebrow': 'Inzichten', 'ins-title': 'Wat ik leerde van dit project',
+      'ins1-title': 'SQLite is genoeg', 'ins1-desc': 'Voor persoonlijk gebruik met duizenden trades heb je geen PostgreSQL nodig. SQLite met goede indices is snel, simpel en zero-ops.',
+      'ins2-title': 'Qwen2.5:14b op Pi 5', 'ins2-desc': '14B parameter model op een Pi met 16GB RAM werkt. 45 seconden per analyse is acceptabel voor een trading tool die niet real-time hoeft te zijn.',
+      'ins3-title': 'Psychologie boven techniek', 'ins3-desc': 'Na het loggen van 50+ trades bleek FOMO de grootste verliesfactor, niet een slecht systeem. Data bracht de emotionele patronen pas echt zichtbaar.',
+      'footer-back': '← Portfolio'
+    },
+    en: {
+      'back-link': '← Portfolio',
+      'hero-eyebrow': 'Project 03 · Trading Journal',
+      'hero-line1': 'AI Trading',
+      'hero-line2': 'Journal',
+      'hero-sub': 'A self-hosted AI coaching system for traders. Pre-trade validation, psychology tracking, post-trade analysis and weekly coaching reports, all running on a Raspberry Pi 5.',
+      'pill-wip': 'In Development',
+      'status-label': 'In Development',
+      'stat1-lbl': 'Core Features', 'stat2-lbl': 'AI Models', 'stat3-lbl': 'Per month', 'stat4-lbl': 'Self-hosted', 'stat5-lbl': 'Private',
+      'feat-eyebrow': 'Features',
+      'feat-title': 'Built for discipline, not just data.',
+      'f1-title': 'Pre-Trade Validation',
+      'f1-desc': 'AI validates every trade against your personal strategy rules before you enter. R:R check, trend alignment, Stoch RSI confirmation. No plan, no trade.',
+      'f2-title': 'Psychology Tracking',
+      'f2-desc': 'Log your emotional state before every trade: Calm, Confident, FOMO, Rushed. AI detects patterns: worse results when trading after a loss, better results in the morning.',
+      'f3-title': 'Post-Trade Analysis',
+      'f3-desc': 'After closing, get an instant AI breakdown: did you follow the plan? Was the result luck or skill? 2-3 concrete improvements for the same setup next time.',
+      'f4-title': 'News Context',
+      'f4-desc': 'When a trade goes wrong, Claude API fetches real-time market news to explain external factors and separates market impact from behavioral errors.',
+      'f5-title': 'Weekly Coaching',
+      'f5-desc': 'Every week, get a full AI report: winrate by day/time, emotional triggers, pattern recognition. Output: a concrete coaching plan with clear actions for next week.',
+      'f6-title': '100% Private',
+      'f6-desc': 'Everything runs on a Raspberry Pi 5 at home. No cloud, no subscriptions, no data leaving your network. Local Ollama models for daily analysis, Claude API only when needed.',
+      'tech-eyebrow': 'Tech Stack', 'tech-title': 'Built from scratch.',
+      'ai-eyebrow': 'AI Architecture', 'ai-title': 'Three models, one purpose.',
+      'flow1-title': 'Pre-trade validation', 'flow1-desc': 'Qwen2.5:14b checks the setup against your strategy rules locally. Fast, private, free.',
+      'flow2-title': 'Trade is executed', 'flow2-desc': 'You trade in MetaTrader 5. The journal logs psychology and market conditions in real-time.',
+      'flow3-title': 'Post-trade analysis', 'flow3-desc': 'Qwen2.5:14b analyses the result. If news context is needed, Claude API fetches current market data.',
+      'flow4-title': 'Weekly coaching report', 'flow4-desc': 'All trades and psychology patterns form a concrete action plan every Sunday.',
+      'm1-desc': 'Runs on the Pi via Ollama. Handles all daily pre/post-trade analysis. 9GB RAM, ~45s response. Zero cost, zero data leaving the network.',
+      'm2-desc': 'Used selectively for deep analysis with real-time web search. Fetches news context for failed trades: NFP, CPI, Fed announcements.',
+      'm3-desc': 'Real-time financial news for market context. Included via Revolut Metal plan, zero additional cost.',
+      'ins-eyebrow': 'Insights', 'ins-title': 'What I learned from this project',
+      'ins1-title': 'SQLite is enough', 'ins1-desc': 'For personal use with thousands of trades you do not need PostgreSQL. SQLite with good indices is fast, simple and zero-ops.',
+      'ins2-title': 'Qwen2.5:14b on Pi 5', 'ins2-desc': '14B parameter model on a Pi with 16GB RAM works. 45 seconds per analysis is acceptable for a trading tool that does not need to be real-time.',
+      'ins3-title': 'Psychology over technique', 'ins3-desc': 'After logging 50+ trades, FOMO turned out to be the biggest loss factor, not a bad system. Data made the emotional patterns clearly visible.',
+      'footer-back': '← Portfolio'
     }
+  };
 
-    // Cursor (only when elements exist; hidden on touch/mobile via CSS)
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    if (cursor && ring) {
-        let mx = 0, my = 0, rx = 0, ry = 0;
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX;
-            my = e.clientY;
-            cursor.style.left = mx + 'px';
-            cursor.style.top = my + 'px';
-        });
-        (function animRing() {
-            rx += (mx - rx) * 0.12;
-            ry += (my - ry) * 0.12;
-            ring.style.left = rx + 'px';
-            ring.style.top = ry + 'px';
-            requestAnimationFrame(animRing);
-        })();
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                ring.style.width = '52px';
-                ring.style.height = '52px';
-                ring.style.borderColor = 'rgba(0,255,136,0.6)';
-            });
-            el.addEventListener('mouseleave', () => {
-                ring.style.width = '36px';
-                ring.style.height = '36px';
-                ring.style.borderColor = 'rgba(0,255,136,0.4)';
-            });
-        });
-    }
+  function toggleLang() {
+    lang = lang === 'nl' ? 'en' : 'nl';
+    document.getElementById('langToggle').textContent = lang === 'nl' ? 'EN' : 'NL';
+    document.documentElement.lang = lang;
+    const t = T[lang];
+    Object.keys(t).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = t[id];
+    });
+  }
 </script>
 </body>
 </html>
