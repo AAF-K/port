@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjEzIiByeT0iNSIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iMTMiIHJ5PSI5LjUiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjUiIHJ5PSIxMyIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSIyOSIgeTI9IjE2IiBzdHJva2U9IiMwMGU4N2EiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE2IiB5MT0iMyIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+">
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alano Kricha</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,10 +60,6 @@
             transform: translate(-50%, -50%);
             transition: transform 0.12s ease, width 0.3s, height 0.3s, border-color 0.3s;
         }
-
-        body:hover .cursor { opacity: 1; }
-
-
 
         /* ─── HEADER ─── */
         header {
@@ -134,16 +130,15 @@
 
         /* ─── HERO ─── */
         .hero {
-            min-height: 40vh;
+            min-height: 42vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 100px 48px 48px;
+            padding: 120px 48px 56px;
             position: relative;
             overflow: visible;
         }
 
-        /* Animated grid background */
         .hero-grid {
             position: absolute;
             inset: 0;
@@ -154,18 +149,10 @@
             mask-image: radial-gradient(ellipse at 30% 60%, black 30%, transparent 70%);
         }
 
-        
-        /* Glow orbs */
-        
-
-        
-
-        
-
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 1000px;
+            max-width: 1100px;
         }
 
         .hero-eyebrow {
@@ -192,12 +179,11 @@
         }
 
         .hero-title {
-            font-size: clamp(36px, 5.5vw, 72px);
+            font-size: clamp(38px, 5.8vw, 76px);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.08;
             letter-spacing: -4px;
-            margin-bottom: 40px;
-            padding-bottom: 12px;
+            margin-bottom: 32px;
             opacity: 0;
             animation: slideUp 0.8s ease 0.35s forwards;
         }
@@ -214,47 +200,18 @@
             color: var(--dim);
         }
 
-        .hero-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+        .hero-sub {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 440px;
             opacity: 0;
             animation: slideUp 0.8s ease 0.5s forwards;
         }
 
-        .hero-desc {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 380px;
-        }
-
-        .hero-desc strong {
+        .hero-sub strong {
             color: var(--text);
             font-weight: 600;
-        }
-
-        .hero-scroll {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--accent), transparent);
-            animation: scrollPulse 2s ease infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
         }
 
         /* ─── STATUS BAR ─── */
@@ -308,13 +265,6 @@
             margin-bottom: 60px;
         }
 
-        .label-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 1px;
-        }
-
         .label-line {
             flex: 1;
             height: 1px;
@@ -355,7 +305,6 @@
         }
 
         .project-card:hover::after { transform: scaleX(1); }
-
         .project-card:last-child { border-bottom: 1px solid var(--border); }
 
         .project-num {
@@ -462,13 +411,33 @@
             border-color: var(--accent);
         }
 
-        .cta-arrow {
-            transition: transform 0.2s;
-        }
-
+        .cta-arrow { transition: transform 0.2s; }
         .project-cta:hover .cta-arrow { transform: translateX(4px); }
 
-        /* ─── TRADING JOURNAL PROJECT CARD ─── */
+        /* ─── BADGES ─── */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(0,232,122,0.08);
+            border: 1px solid rgba(0,232,122,0.2);
+            border-radius: 3px;
+            padding: 3px 8px;
+            margin-bottom: 12px;
+        }
+
+        .live-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 1.5s ease infinite;
+        }
 
         .wip-badge {
             display: inline-flex;
@@ -554,9 +523,8 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 900px) {
             header { padding: 20px 24px; }
-            .hero { padding: 60px 24px 32px; min-height: auto; }
-            .hero-title { font-size: clamp(32px, 10vw, 64px); letter-spacing: -2px; word-break: break-word; overflow-wrap: break-word; }
-            .hero-bottom { flex-direction: column; gap: 32px; align-items: flex-start; }
+            .hero { padding: 80px 24px 40px; min-height: auto; }
+            .hero-title { font-size: clamp(32px, 10vw, 64px); letter-spacing: -2px; }
             .status-bar { padding: 0 24px; flex-direction: column; }
             .status-item { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 0; }
             .status-item:last-child { border-bottom: none; }
@@ -571,7 +539,6 @@
 </head>
 <body>
 
-    <!-- Custom cursor -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-ring" id="cursorRing"></div>
 
@@ -587,38 +554,39 @@
     <!-- ─── HERO ─── -->
     <section class="hero">
         <div class="hero-grid"></div>
-
         <div class="hero-content">
             <div class="hero-eyebrow">
-                
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Alano Kricha — Den Haag</span>
             </div>
-
-            <h1 class="hero-title" id="hero-title">
-                Hardware<br>
-                <span class="italic">tot</span><br>
-                Intelligentie
+            <h1 class="hero-title">
+                Van idee<br>
+                <span class="italic" id="hero-preposition">tot</span> systeem<br>
+                dat werkt
             </h1>
-        </div>
+            <p class="hero-sub">
+                <span data-i18n="hero-sub-pre">Ik bouw </span><strong data-i18n="hero-sub-strong">slimme, self-hosted oplossingen</strong><span data-i18n="hero-sub-post"> — van een Raspberry Pi server tot een persoonlijke AI assistent die altijd voor mij klaarstaat.</span>
+            </p>
         </div>
     </section>
 
     <!-- ─── STATUS BAR ─── -->
     <div class="status-bar reveal">
         <div class="status-item">
-            <span class="status-num">3+</span>
-            <span class="status-label" data-i18n="stat1">Projecten gebouwd</span>
+            <span class="status-num">24/7</span>
+            <span class="status-label" data-i18n="stat1">Uptime Nexus server</span>
+        </div>
+        <div class="status-item">
+            <span class="status-num">17</span>
+            <span class="status-label" data-i18n="stat2">Actieve services</span>
         </div>
         <div class="status-item">
             <span class="status-num">0€</span>
-            <span class="status-label" data-i18n="stat2">Maandelijkse AI kosten</span>
+            <span class="status-label" data-i18n="stat3">Maandelijkse AI kosten</span>
         </div>
         <div class="status-item">
-            <span class="status-num">16GB</span>
-            <span class="status-label" data-i18n="stat3">Nexus infrastructuur</span>
-        </div>
-        <div class="status-item">
-            <span class="status-num">95%</span>
-            <span class="status-label" data-i18n="stat4">Security score</span>
+            <span class="status-num">AKAI</span>
+            <span class="status-label" data-i18n="stat4">Persoonlijke AI assistent</span>
         </div>
     </div>
 
@@ -629,127 +597,105 @@
             <div class="label-line"></div>
         </div>
 
-        <!-- Project 1 -->
+        <!-- Project 01 — AKAI -->
         <div class="project-card reveal">
             <div class="project-num">01</div>
             <div class="project-left">
-                <h3 data-i18n="p1-title">Raspberry Pi AI Infrastructuur</h3>
-                <p class="project-sub" data-i18n="p1-subtitle">Self-hosted server voor AI, automation en monitoring</p>
+                <div class="live-badge">
+                    <div class="live-dot"></div>
+                    <span data-i18n="p1-badge">Live</span>
+                </div>
+                <h3 data-i18n="p1-title">AKAI — Persoonlijke AI Assistent</h3>
+                <p class="project-sub" data-i18n="p1-subtitle">Self-hosted AI die praat, denkt en handelt</p>
                 <div class="tech-row">
                     <span class="tech-pill">Raspberry Pi 5</span>
                     <span class="tech-pill">Python</span>
+                    <span class="tech-pill">Telegram</span>
+                    <span class="tech-pill">Twilio</span>
                     <span class="tech-pill">Ollama</span>
-                    <span class="tech-pill">Flask</span>
-                    <span class="tech-pill">Cloudflare</span>
+                    <span class="tech-pill">Claude API</span>
                 </div>
             </div>
             <div class="project-right">
                 <p class="project-desc" data-i18n="p1-desc">
-                    Complete infrastructuur met lokale AI modellen (Qwen 2.5), Flask dashboard, Homebridge smart home hub en zero-trust beveiliging. Draait 24/7 met 99.9% uptime.
+                    AKAI is mijn persoonlijke AI assistent die draait op mijn eigen Raspberry Pi server — geen abonnement, geen cloud, geen data-deling. Hij reageert op Telegram berichten, neemt gesprekken aan via mijn telefoon en heeft toegang tot tools zoals mijn kalender en notities. AKAI kent mijn context en werkt 24/7.
                 </p>
                 <ul class="features-list">
-                    <li data-i18n="p1-f1">Lokale AI inference met Ollama</li>
-                    <li data-i18n="p1-f2">Zero-trust security architectuur</li>
-                    <li data-i18n="p1-f3">Apple HomeKit integratie</li>
-                    <li data-i18n="p1-f4">Real-time monitoring dashboard</li>
+                    <li data-i18n="p1-f1">Reageert op Telegram berichten — dag en nacht</li>
+                    <li data-i18n="p1-f2">Voicegespreken via Twilio, doorgesteld naar mijn nummer</li>
+                    <li data-i18n="p1-f3">Toegang tot tools: kalender, systeem, notities, Trading Journal</li>
+                    <li data-i18n="p1-f4">100% self-hosted — draait lokaal op Nexus</li>
                 </ul>
-                <a href="raspberry-pi.html" class="project-cta">
-                    <span data-i18n="p1-link">Bekijk project</span>
-                    <span class="cta-arrow">→</span>
-                </a>
             </div>
         </div>
 
-        <!-- Project 2 -->
+        <!-- Project 02 — Nexus Infrastructure -->
         <div class="project-card reveal">
             <div class="project-num">02</div>
             <div class="project-left">
-                <h3 data-i18n="p2-title">AK's Elektronica — AI Advisor</h3>
-                <p class="project-sub" data-i18n="p2-subtitle">E-commerce demo met Naja AI chatbot</p>
+                <div class="live-badge">
+                    <div class="live-dot"></div>
+                    <span data-i18n="p2-badge">Live</span>
+                </div>
+                <h3 data-i18n="p2-title">Nexus — Raspberry Pi 5 Server</h3>
+                <p class="project-sub" data-i18n="p2-subtitle">24/7 self-hosted infrastructuur voor AI en automation</p>
                 <div class="tech-row">
-                    <span class="tech-pill">Flask API</span>
-                    <span class="tech-pill">Qwen 2.5</span>
+                    <span class="tech-pill">Raspberry Pi 5</span>
+                    <span class="tech-pill">Docker</span>
                     <span class="tech-pill">Ollama</span>
-                    <span class="tech-pill">Rate Limiting</span>
+                    <span class="tech-pill">Pi-hole</span>
+                    <span class="tech-pill">Tailscale</span>
+                    <span class="tech-pill">UFW</span>
                 </div>
             </div>
             <div class="project-right">
                 <p class="project-desc" data-i18n="p2-desc">
-                    Interactieve productpagina met 70+ elektronica items. Naja AI chatbot draait volledig lokaal op mijn Raspberry Pi en geeft real-time productadvies via een Flask API.
+                    Nexus is de Raspberry Pi 5 die bij mij thuis staat en alles draait. AI modellen, media server, DNS filtering, smart home, monitoring — allemaal self-hosted en altijd online. Beveiligd via zero-trust networking met Tailscale VPN en een strikte firewall.
                 </p>
                 <ul class="features-list">
-                    <li data-i18n="p2-f1">AI chatbot met 10-20s response tijd</li>
-                    <li data-i18n="p2-f2">Flask REST API met rate limiting</li>
-                    <li data-i18n="p2-f3">Cloudflare Tunnel voor veilige toegang</li>
-                    <li data-i18n="p2-f4">100% self-hosted, privacy-first</li>
+                    <li data-i18n="p2-f1">17 actieve services: Jellyfin, Grafana, Prometheus, Homebridge en meer</li>
+                    <li data-i18n="p2-f2">Pi-hole blokkeert advertenties en tracking voor het hele netwerk</li>
+                    <li data-i18n="p2-f3">Zero-trust beveiliging met Tailscale VPN en UFW firewall</li>
+                    <li data-i18n="p2-f4">Apple HomeKit integratie via Homebridge</li>
                 </ul>
-                <a href="chatbot.html" class="project-cta">
-                    <span data-i18n="p2-link">Probeer live demo</span>
+                <a href="raspberry-pi.html" class="project-cta">
+                    <span data-i18n="p2-link">Bekijk project</span>
                     <span class="cta-arrow">→</span>
                 </a>
             </div>
         </div>
 
-        <!-- Project 3 -->
+        <!-- Project 03 — Trading Journal -->
         <div class="project-card reveal">
             <div class="project-num">03</div>
             <div class="project-left">
-                <h3 data-i18n="p3-title">Review Analytics Dashboard</h3>
-                <p class="project-sub" data-i18n="p3-subtitle">Data analytics met SQL, AI insights en visualisaties</p>
+                <div class="wip-badge">
+                    <div class="wip-dot"></div>
+                    <span data-i18n="p3-wip">In ontwikkeling</span>
+                </div>
+                <h3 data-i18n="p3-title">AI Trading Journal</h3>
+                <p class="project-sub" data-i18n="p3-subtitle">Self-hosted AI coaching voor XAUUSD trades</p>
                 <div class="tech-row">
-                    <span class="tech-pill">SQL</span>
-                    <span class="tech-pill">Python</span>
-                    <span class="tech-pill">Chart.js</span>
-                    <span class="tech-pill">AI Analysis</span>
+                    <span class="tech-pill">Flask</span>
+                    <span class="tech-pill">SQLite</span>
+                    <span class="tech-pill">Ollama</span>
+                    <span class="tech-pill">Claude API</span>
+                    <span class="tech-pill">MT5 Python</span>
+                    <span class="tech-pill">AKAI</span>
                 </div>
             </div>
             <div class="project-right">
                 <p class="project-desc" data-i18n="p3-desc">
-                    Interactief dashboard voor product review analyse. SQL queries voor data aggregatie, sentiment analyse, AI-gegenereerde insights en real-time visualisaties.
+                    Een persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Vóór elke trade een check tegen mijn strategie, daarna een analyse van wat er fout ging en waarom. AKAI geeft me directe toegang vanuit Telegram — ik kan mijn journal inzien en bijwerken zonder de app te openen.
                 </p>
                 <ul class="features-list">
-                    <li data-i18n="p3-f1">SQL-based data queries</li>
-                    <li data-i18n="p3-f2">Sentiment & trend analyse</li>
-                    <li data-i18n="p3-f3">AI-powered insights met Naja</li>
-                    <li data-i18n="p3-f4">Interactieve grafieken & metrics</li>
-                </ul>
-                <a href="dashboard.html" class="project-cta">
-                    <span data-i18n="p3-link">Bekijk dashboard</span>
-                    <span class="cta-arrow">→</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Project 4 — Trading Journal (WIP) -->
-        <div class="project-card featured reveal">
-            <div class="project-num">04</div>
-            <div class="project-left">
-                <div class="wip-badge">
-                    <div class="wip-dot"></div>
-                    <span data-i18n="p4-wip">In ontwikkeling</span>
-                </div>
-                <h3 data-i18n="p4-title">AI Trading Journal</h3>
-                <p class="project-sub" data-i18n="p4-subtitle">Self-hosted AI trading coach voor XAUUSD</p>
-                <div class="tech-row">
-                    <span class="tech-pill">Flask</span>
-                    <span class="tech-pill">SQLite</span>
-                    <span class="tech-pill">Qwen 2.5:14b</span>
-                    <span class="tech-pill">Claude API</span>
-                    <span class="tech-pill">MT5 Python</span>
-                </div>
-            </div>
-            <div class="project-right">
-                <p class="project-desc">
-                    <span data-i18n="p4-desc">Persoonlijke AI trading coach die pre-trade validatie, psychologie tracking en post-trade analyse combineert. Draait lokaal op Nexus met Ollama voor dagelijkse analyse en Claude API voor nieuwscontext bij slechte trades.</span>
-                </p>
-                <ul class="features-list">
-                    <li data-i18n="p4-f1">Pre-trade check tegen strategie regels</li>
-                    <li data-i18n="p4-f2">Emotie & psychologie tracking per trade</li>
-                    <li data-i18n="p4-f3">AI post-trade analyse met nieuwscontext</li>
-                    <li data-i18n="p4-f4">Wekelijks coaching rapport</li>
+                    <li data-i18n="p3-f1">Pre-trade validatie tegen persoonlijke strategie regels</li>
+                    <li data-i18n="p3-f2">Emotie & psychologie tracking per trade</li>
+                    <li data-i18n="p3-f3">Post-trade analyse met nieuwscontext via Claude API</li>
+                    <li data-i18n="p3-f4">Bereikbaar via AKAI op Telegram — altijd en overal</li>
                 </ul>
                 <a href="trading-journal-showcase.html" class="project-cta">
-                    <span data-i18n="p4-link">Bekijk showcase</span>
+                    <span data-i18n="p3-link">Bekijk showcase</span>
                     <span class="cta-arrow">→</span>
                 </a>
             </div>
@@ -761,7 +707,10 @@
         <div class="footer-left">
             © 2026 <span>Alano Kricha</span>
         </div>
-        <div class="footer-right"><a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a></div>
+        <div class="footer-right">
+            <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
     </footer>
 
     <script>
@@ -821,90 +770,81 @@
         reveals.forEach(el => observer.observe(el));
 
         // ─── LANGUAGE TOGGLE ───
+        // All values are plain text — no HTML — so textContent is safe and correct.
         const translations = {
             nl: {
                 "nav-contact": "Contact",
-                "hero-lead": "Ik bouw <strong>slimme, self-hosted oplossingen</strong> met Raspberry Pi en lokale AI. Van home server tot AI-powered dashboards.",
-                "stat1": "Projecten gebouwd",
-                "stat2": "Maandelijkse AI kosten",
-                "stat3": "Nexus infrastructuur",
-                "stat4": "Security score",
+                "hero-sub-pre": "Ik bouw ",
+                "hero-sub-strong": "slimme, self-hosted oplossingen",
+                "hero-sub-post": " — van een Raspberry Pi server tot een persoonlijke AI assistent die altijd voor mij klaarstaat.",
+                "stat1": "Uptime Nexus server",
+                "stat2": "Actieve services",
+                "stat3": "Maandelijkse AI kosten",
+                "stat4": "Persoonlijke AI assistent",
                 "projects-title": "Projecten",
-                "p1-title": "Raspberry Pi AI Infrastructuur",
-                "p1-subtitle": "Self-hosted server voor AI, automation en monitoring",
-                "p1-desc": "Complete infrastructuur met lokale AI modellen (Qwen 2.5), Flask dashboard, Homebridge smart home hub en zero-trust beveiliging. Draait 24/7 met 99.9% uptime.",
-                "p1-f1": "Lokale AI inference met Ollama",
-                "p1-f2": "Zero-trust security architectuur",
-                "p1-f3": "Apple HomeKit integratie",
-                "p1-f4": "Real-time monitoring dashboard",
-                "p1-link": "Bekijk project",
-                "p2-title": "AK's Elektronica — AI Advisor",
-                "p2-subtitle": "E-commerce demo met Naja AI chatbot",
-                "p2-desc": "Interactieve productpagina met 70+ elektronica items. Naja AI chatbot draait volledig lokaal op mijn Raspberry Pi en geeft real-time productadvies via een Flask API.",
-                "p2-f1": "AI chatbot met 10-20s response tijd",
-                "p2-f2": "Flask REST API met rate limiting",
-                "p2-f3": "Cloudflare Tunnel voor veilige toegang",
-                "p2-f4": "100% self-hosted, privacy-first",
-                "p2-link": "Probeer live demo",
-                "p3-title": "Review Analytics Dashboard",
-                "p3-subtitle": "Data analytics met SQL, AI insights en visualisaties",
-                "p3-desc": "Interactief dashboard voor product review analyse. SQL queries voor data aggregatie, sentiment analyse, AI-gegenereerde insights en real-time visualisaties.",
-                "p3-f1": "SQL-based data queries",
-                "p3-f2": "Sentiment & trend analyse",
-                "p3-f3": "AI-powered insights met Naja",
-                "p3-f4": "Interactieve grafieken & metrics",
-                "p3-link": "Bekijk dashboard",
-                "p4-wip": "In ontwikkeling",
-                "p4-title": "AI Trading Journal",
-                "p4-subtitle": "Self-hosted AI trading coach voor XAUUSD",
-                "p4-desc": "Persoonlijke AI trading coach die pre-trade validatie, psychologie tracking en post-trade analyse combineert. Draait lokaal op Nexus met Ollama voor dagelijkse analyse en Claude API voor nieuwscontext bij slechte trades.",
-                "p4-f1": "Pre-trade check tegen strategie regels",
-                "p4-f2": "Emotie & psychologie tracking per trade",
-                "p4-f3": "AI post-trade analyse met nieuwscontext",
-                "p4-f4": "Wekelijks coaching rapport",
-                "p4-link": "Bekijk showcase",
+                "p1-badge": "Live",
+                "p1-title": "AKAI — Persoonlijke AI Assistent",
+                "p1-subtitle": "Self-hosted AI die praat, denkt en handelt",
+                "p1-desc": "AKAI is mijn persoonlijke AI assistent die draait op mijn eigen Raspberry Pi server — geen abonnement, geen cloud, geen data-deling. Hij reageert op Telegram berichten, neemt gesprekken aan via mijn telefoon en heeft toegang tot tools zoals mijn kalender en notities. AKAI kent mijn context en werkt 24/7.",
+                "p1-f1": "Reageert op Telegram berichten — dag en nacht",
+                "p1-f2": "Voicegespreken via Twilio, doorgesteld naar mijn nummer",
+                "p1-f3": "Toegang tot tools: kalender, systeem, notities, Trading Journal",
+                "p1-f4": "100% self-hosted — draait lokaal op Nexus",
+                "p2-badge": "Live",
+                "p2-title": "Nexus — Raspberry Pi 5 Server",
+                "p2-subtitle": "24/7 self-hosted infrastructuur voor AI en automation",
+                "p2-desc": "Nexus is de Raspberry Pi 5 die bij mij thuis staat en alles draait. AI modellen, media server, DNS filtering, smart home, monitoring — allemaal self-hosted en altijd online. Beveiligd via zero-trust networking met Tailscale VPN en een strikte firewall.",
+                "p2-f1": "17 actieve services: Jellyfin, Grafana, Prometheus, Homebridge en meer",
+                "p2-f2": "Pi-hole blokkeert advertenties en tracking voor het hele netwerk",
+                "p2-f3": "Zero-trust beveiliging met Tailscale VPN en UFW firewall",
+                "p2-f4": "Apple HomeKit integratie via Homebridge",
+                "p2-link": "Bekijk project",
+                "p3-wip": "In ontwikkeling",
+                "p3-title": "AI Trading Journal",
+                "p3-subtitle": "Self-hosted AI coaching voor XAUUSD trades",
+                "p3-desc": "Een persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Vóór elke trade een check tegen mijn strategie, daarna een analyse van wat er fout ging en waarom. AKAI geeft me directe toegang vanuit Telegram — ik kan mijn journal inzien en bijwerken zonder de app te openen.",
+                "p3-f1": "Pre-trade validatie tegen persoonlijke strategie regels",
+                "p3-f2": "Emotie & psychologie tracking per trade",
+                "p3-f3": "Post-trade analyse met nieuwscontext via Claude API",
+                "p3-f4": "Bereikbaar via AKAI op Telegram — altijd en overal",
+                "p3-link": "Bekijk showcase",
             },
             en: {
                 "nav-contact": "Contact",
-                "hero-lead": "I build <strong>smart, self-hosted solutions</strong> with Raspberry Pi and local AI. From home server to AI-powered dashboards.",
-                "stat1": "Projects built",
-                "stat2": "Monthly AI costs",
-                "stat3": "Nexus infrastructure",
-                "stat4": "Security score",
+                "hero-sub-pre": "I build ",
+                "hero-sub-strong": "smart, self-hosted solutions",
+                "hero-sub-post": " — from a Raspberry Pi server to a personal AI assistant that's always there for me.",
+                "stat1": "Nexus server uptime",
+                "stat2": "Active services",
+                "stat3": "Monthly AI costs",
+                "stat4": "Personal AI assistant",
                 "projects-title": "Projects",
-                "p1-title": "Raspberry Pi AI Infrastructure",
-                "p1-subtitle": "Self-hosted server for AI, automation and monitoring",
-                "p1-desc": "Complete infrastructure with local AI models (Qwen 2.5), Flask dashboard, Homebridge smart home hub and zero-trust security. Running 24/7 with 99.9% uptime.",
-                "p1-f1": "Local AI inference with Ollama",
-                "p1-f2": "Zero-trust security architecture",
-                "p1-f3": "Apple HomeKit integration",
-                "p1-f4": "Real-time monitoring dashboard",
-                "p1-link": "View project",
-                "p2-title": "AK's Electronics — AI Advisor",
-                "p2-subtitle": "E-commerce demo with Naja AI chatbot",
-                "p2-desc": "Interactive product page with 70+ electronics items. The Naja AI chatbot runs entirely locally on my Raspberry Pi and provides real-time product advice via a Flask API.",
-                "p2-f1": "AI chatbot with 10-20s response time",
-                "p2-f2": "Flask REST API with rate limiting",
-                "p2-f3": "Cloudflare Tunnel for secure access",
-                "p2-f4": "100% self-hosted, privacy-first",
-                "p2-link": "Try live demo",
-                "p3-title": "Review Analytics Dashboard",
-                "p3-subtitle": "Data analytics with SQL, AI insights and visualisations",
-                "p3-desc": "Interactive dashboard for product review analysis. SQL queries for data aggregation, sentiment analysis, AI-generated insights and real-time visualisations.",
-                "p3-f1": "SQL-based data queries",
-                "p3-f2": "Sentiment & trend analysis",
-                "p3-f3": "AI-powered insights with Naja",
-                "p3-f4": "Interactive charts & metrics",
-                "p3-link": "View dashboard",
-                "p4-wip": "In development",
-                "p4-title": "AI Trading Journal",
-                "p4-subtitle": "Self-hosted AI trading coach for XAUUSD",
-                "p4-desc": "Personal AI trading coach combining pre-trade validation, psychology tracking and post-trade analysis. Runs locally on Nexus with Ollama for daily analysis and Claude API for news context on bad trades.",
-                "p4-f1": "Pre-trade check against strategy rules",
-                "p4-f2": "Emotion & psychology tracking per trade",
-                "p4-f3": "AI post-trade analysis with news context",
-                "p4-f4": "Weekly coaching report",
-                "p4-link": "View showcase",
+                "p1-badge": "Live",
+                "p1-title": "AKAI — Personal AI Assistant",
+                "p1-subtitle": "Self-hosted AI that talks, thinks and acts",
+                "p1-desc": "AKAI is my personal AI assistant running on my own Raspberry Pi server — no subscription, no cloud, no data sharing. He responds to Telegram messages, picks up voice calls via my phone, and has access to tools like my calendar and notes. AKAI knows my context and works 24/7.",
+                "p1-f1": "Responds to Telegram messages — day and night",
+                "p1-f2": "Voice calls via Twilio, forwarded to my number",
+                "p1-f3": "Access to tools: calendar, system, notes, Trading Journal",
+                "p1-f4": "100% self-hosted — runs locally on Nexus",
+                "p2-badge": "Live",
+                "p2-title": "Nexus — Raspberry Pi 5 Server",
+                "p2-subtitle": "24/7 self-hosted infrastructure for AI and automation",
+                "p2-desc": "Nexus is the Raspberry Pi 5 at my home that runs everything. AI models, media server, DNS filtering, smart home, monitoring — all self-hosted and always online. Secured via zero-trust networking with Tailscale VPN and a strict firewall.",
+                "p2-f1": "17 active services: Jellyfin, Grafana, Prometheus, Homebridge and more",
+                "p2-f2": "Pi-hole blocks ads and tracking for the entire network",
+                "p2-f3": "Zero-trust security with Tailscale VPN and UFW firewall",
+                "p2-f4": "Apple HomeKit integration via Homebridge",
+                "p2-link": "View project",
+                "p3-wip": "In development",
+                "p3-title": "AI Trading Journal",
+                "p3-subtitle": "Self-hosted AI coaching for XAUUSD trades",
+                "p3-desc": "A personal AI trading coach that tracks what I do and why. Before each trade a check against my strategy, after a trade an analysis of what went wrong and why. AKAI gives me direct access from Telegram — I can view and update my journal without opening the app.",
+                "p3-f1": "Pre-trade validation against personal strategy rules",
+                "p3-f2": "Emotion & psychology tracking per trade",
+                "p3-f3": "Post-trade analysis with news context via Claude API",
+                "p3-f4": "Accessible via AKAI on Telegram — anywhere, anytime",
+                "p3-link": "View showcase",
             }
         };
 
@@ -916,21 +856,41 @@
         }
 
         function applyLanguage(lang) {
+            // Use textContent — no HTML in translation strings, fully XSS-safe
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
+                const value = translations[lang][key];
+                if (value !== undefined) {
+                    el.textContent = value;
                 }
             });
-            // Hero title
-            const heroTitle = document.getElementById('hero-title');
+
+            // Hero title: only the preposition word changes
+            const prep = document.getElementById('hero-preposition');
+            if (prep) prep.textContent = lang === 'en' ? 'to' : 'tot';
+
+            // Hero title lines: update surrounding text for EN
+            const heroTitle = document.querySelector('.hero-title');
             if (heroTitle) {
-                if (lang === 'en') {
-                    heroTitle.innerHTML = 'Hardware<br><span class="italic">to</span><br>Intelligence';
-                } else {
-                    heroTitle.innerHTML = 'Hardware<br><span class="italic">tot</span><br>Intelligentie';
-                }
+                // Keep the structure: "Van idee\n[prep] systeem\ndat werkt"
+                // Only the preposition is dynamic; surrounding text stays
+                const lines = heroTitle.childNodes;
+                lines.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const text = node.textContent.trim();
+                        if (text === 'Van idee' || text === 'From idea') {
+                            node.textContent = lang === 'en' ? 'From idea' : 'Van idee';
+                        }
+                        if (text === 'systeem' || text === 'system') {
+                            node.textContent = lang === 'en' ? ' system' : ' systeem';
+                        }
+                        if (text === 'dat werkt' || text === 'that works') {
+                            node.textContent = lang === 'en' ? 'that works' : 'dat werkt';
+                        }
+                    }
+                });
             }
+
             document.getElementById('langToggle').textContent = lang === 'nl' ? 'EN' : 'NL';
             document.documentElement.lang = lang;
         }
