@@ -285,20 +285,67 @@
 
         /* RESPONSIVE */
         @media (max-width: 960px) {
-            header { padding: 18px 24px; }
-            .hero { grid-template-columns: 1fr; min-height: auto; padding: 88px 24px 48px; gap: 40px; }
+            header { padding: 16px 20px; }
+            .hero { grid-template-columns: 1fr; min-height: auto; padding: 84px 20px 40px; gap: 32px; }
             .hero-right { display: none; }
             .stats-bar { flex-wrap: wrap; }
-            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 24px; }
-            .stat-item:first-child { padding-left: 24px; }
-            .stat-item:last-child { border-bottom: none; }
-            .content { padding: 0 24px; }
+            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
+            .stat-item:first-child { padding-left: 20px; }
+            .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+            .stat-item:nth-last-child(1), .stat-item:nth-last-child(2) { border-bottom: none; }
+            .content { padding: 0 20px; }
             .section { padding: 48px 0; }
-            .bento-grid { grid-template-columns: 1fr; }
             .bento-cell.feat { display: flex; flex-direction: column; }
             .cell-inner-r { border-left: none; border-top: 1px solid var(--border); }
             .impact-grid { grid-template-columns: 1fr 1fr; }
-            footer { padding: 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+            footer { padding: 24px 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
+        }
+
+        /* Mobile: bento → horizontal carousel */
+        @media (max-width: 768px) {
+            .bento-grid {
+                display: flex !important;
+                flex-direction: row;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                overscroll-behavior-x: contain;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 12px;
+                padding: 4px 20px 20px;
+                margin: 0 -20px;
+                background: none; border: none; border-radius: 0;
+            }
+            .bento-grid::-webkit-scrollbar { display: none; }
+            .bento-cell {
+                min-width: min(300px, 82vw);
+                scroll-snap-align: start;
+                flex-shrink: 0;
+                border-radius: 14px;
+                border: 1px solid var(--border);
+            }
+            .bento-cell.feat {
+                min-width: min(340px, 92vw);
+                flex-direction: column;
+            }
+            .cell-inner-r { border-left: none; border-top: 1px solid var(--border); }
+
+            /* Arch + insights */
+            .arch-grid { gap: 12px; }
+            .arch-row { grid-template-columns: 64px 1fr; }
+            .impact-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .impact-card { padding: 20px; }
+            .impact-val { font-size: 28px; }
+
+            /* Section */
+            .section { padding: 36px 0; }
+            .section-title-main { font-size: clamp(22px, 7vw, 34px); }
+            .hero-title { font-size: clamp(34px, 10vw, 52px); }
+            .hero-sub { font-size: 14px; }
+            .hero-pills { gap: 6px; }
+
+            /* Code */
+            .code-body { font-size: 11px; }
         }
     </style>
 </head>
@@ -345,7 +392,7 @@
                     <div class="term-dot"></div>
                     <div class="term-dot g"></div>
                 </div>
-                <span class="term-title">nexus @ 192.168.2.72</span>
+                <span class="term-title">nexus · pi5</span>
                 <div class="live-chip"><div class="live-dot"></div>live</div>
             </div>
             <div class="term-body">
@@ -377,10 +424,7 @@
                     <span class="t-lbl">Uptime</span>
                     <span class="t-val ok">34d 6h ✓</span>
                 </div>
-                <div class="term-row">
-                    <span class="t-lbl">IP extern</span>
-                    <span class="t-val">100.109.6.112</span>
-                </div>
+
             </div>
             <div class="term-footer">
                 <div><div class="tf-val">17</div><div class="tf-lbl">Services</div></div>
@@ -395,9 +439,8 @@
 <div class="stats-bar reveal">
     <div class="stat-item"><span class="stat-val">17</span><span class="stat-lbl" data-i18n="stat1">Actieve services</span></div>
     <div class="stat-item"><span class="stat-val">24/7</span><span class="stat-lbl" data-i18n="stat2">Uptime</span></div>
-    <div class="stat-item"><span class="stat-val">0€</span><span class="stat-lbl" data-i18n="stat3">Maandelijkse AI kosten</span></div>
-    <div class="stat-item"><span class="stat-val">3+</span><span class="stat-lbl" data-i18n="stat4">Lokale AI modellen</span></div>
-    <div class="stat-item"><span class="stat-val">~5€</span><span class="stat-lbl" data-i18n="stat5">Stroom per maand</span></div>
+    <div class="stat-item"><span class="stat-val">3+</span><span class="stat-lbl" data-i18n="stat3">Lokale AI modellen</span></div>
+    <div class="stat-item"><span class="stat-val">~5€</span><span class="stat-lbl" data-i18n="stat4">Stroom per maand</span></div>
 </div>
 
 <div class="content">
@@ -445,25 +488,25 @@
                     <div class="cell-title" data-i18n="f1-title">Eigen AI modellen, geen cloud</div>
                     <p class="cell-desc" data-i18n="f1-desc">Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus via de OpenClaw gateway op poort 18789.</p>
                     <div class="cell-tags">
-                        <span class="cell-tag">Ollama :11434</span>
-                        <span class="cell-tag">OpenClaw :18789</span>
-                        <span class="cell-tag">Flask API :5000</span>
+                        <span class="cell-tag">Ollama</span>
+                        <span class="cell-tag">OpenClaw</span>
+                        <span class="cell-tag">Flask API</span>
                         <span class="cell-tag">0€ per query</span>
                     </div>
                 </div>
                 <div class="cell-inner-r">
                     <p class="cell-sub">Services op Nexus</p>
                     <div class="services-list">
-                        <div class="service-row"><span class="svc-name">AKAI Gateway</span><span class="svc-port">:18789</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Ollama</span><span class="svc-port">:11434</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Grafana</span><span class="svc-port">:3000</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Prometheus</span><span class="svc-port">:9090</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Pi-hole</span><span class="svc-port">:8082</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Nextcloud</span><span class="svc-port">:11000</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Jellyfin</span><span class="svc-port">:8096</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Homebridge</span><span class="svc-port">:8581</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Cowrie honeypot</span><span class="svc-port">:2222</span><span class="svc-status">✓ running</span></div>
-                        <div class="service-row"><span class="svc-name">Endlessh</span><span class="svc-port">:22</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">AKAI Gateway</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Ollama</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Grafana</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Prometheus</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Pi-hole</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Nextcloud</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Jellyfin</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Homebridge</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Cowrie honeypot</span><span class="svc-status">✓ running</span></div>
+                        <div class="service-row"><span class="svc-name">Endlessh tarpit</span><span class="svc-status">✓ running</span></div>
                     </div>
                 </div>
             </div>
@@ -476,9 +519,9 @@
                     <div class="cell-title" data-i18n="f2-title">Real-time server inzicht</div>
                     <p class="cell-desc" data-i18n="f2-desc">Grafana dashboard op poort 3000 met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API op poort 61208.</p>
                     <div class="cell-tags">
-                        <span class="cell-tag">Grafana :3000</span>
-                        <span class="cell-tag">Prometheus :9090</span>
-                        <span class="cell-tag">Glances :61208</span>
+                        <span class="cell-tag">Grafana</span>
+                        <span class="cell-tag">Prometheus</span>
+                        <span class="cell-tag">Glances</span>
                     </div>
                 </div>
             </div>
@@ -491,8 +534,8 @@
                     <div class="cell-title" data-i18n="f3-title">Eigen cloud en media server</div>
                     <p class="cell-desc" data-i18n="f3-desc">Jellyfin draait als media server op poort 8096. Films en muziek streamen naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).</p>
                     <div class="cell-tags">
-                        <span class="cell-tag">Jellyfin :8096</span>
-                        <span class="cell-tag">Nextcloud :11000</span>
+                        <span class="cell-tag">Jellyfin</span>
+                        <span class="cell-tag">Nextcloud</span>
                         <span class="cell-tag">238 GB NAS</span>
                     </div>
                 </div>
@@ -504,10 +547,10 @@
                     <span class="cell-icon">🔒</span>
                     <div class="cell-sub" data-i18n="f4-sub">Security · honeypot & firewall</div>
                     <div class="cell-title" data-i18n="f4-title">Zero-trust beveiliging</div>
-                    <p class="cell-desc" data-i18n="f4-desc">Cowrie SSH/Telnet honeypot logt aanvalspogingen. Endlessh tarpit op poort 22. UFW blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.</p>
+                    <p class="cell-desc" data-i18n="f4-desc">Cowrie SSH/Telnet honeypot logt aanvalspogingen. Endlessh tarpit vangt portscanners op. UFW blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.</p>
                     <div class="cell-tags">
-                        <span class="cell-tag">Cowrie :2222</span>
-                        <span class="cell-tag">Endlessh :22</span>
+                        <span class="cell-tag">Cowrie honeypot</span>
+                        <span class="cell-tag">Endlessh tarpit</span>
                         <span class="cell-tag">UFW + Fail2ban</span>
                         <span class="cell-tag">Canary tokens</span>
                     </div>
@@ -522,7 +565,7 @@
                     <div class="cell-title" data-i18n="f5-title">HomeKit via AKAI</div>
                     <p class="cell-desc" data-i18n="f5-desc">Homebridge verbindt alle slimme apparaten met Apple HomeKit. Bereikbaar op poort 8581. AKAI kan via tools de verlichting en apparaten aansturen via een Telegram bericht.</p>
                     <div class="cell-tags">
-                        <span class="cell-tag">Homebridge :8581</span>
+                        <span class="cell-tag">Homebridge</span>
                         <span class="cell-tag">Apple HomeKit</span>
                         <span class="cell-tag">AKAI tools</span>
                     </div>
@@ -537,9 +580,8 @@
                     <div class="cell-title" data-i18n="f6-title">Privé DNS en VPN toegang</div>
                     <p class="cell-desc" data-i18n="f6-desc">Pi-hole v6 filtert advertenties en tracking voor het hele netwerk via DNS. Tailscale VPN geeft veilige toegang tot alle services van overal ter wereld, zonder poorten open te zetten.</p>
                     <div class="cell-tags">
-                        <span class="cell-tag">Pi-hole :8082</span>
+                        <span class="cell-tag">Pi-hole</span>
                         <span class="cell-tag">Tailscale VPN</span>
-                        <span class="cell-tag">100.109.6.112</span>
                     </div>
                 </div>
             </div>
@@ -559,28 +601,28 @@
                 <div class="arch-num">LAAG 06</div>
                 <div>
                     <div class="arch-title" data-i18n="l6-title">Externe Toegang</div>
-                    <div class="arch-items">Cloudflare Tunnel → nexusakai.com · Tailscale VPN :100.109.6.112 · SSH op poort 2022 (keys only)</div>
+                    <div class="arch-items">Cloudflare Tunnel → nexusakai.com · Tailscale VPN · SSH (public key only)</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 05</div>
                 <div>
                     <div class="arch-title" data-i18n="l5-title">Security</div>
-                    <div class="arch-items">UFW (default deny) · Fail2ban (24u ban) · Cowrie honeypot :2222 · Endlessh tarpit :22 · Canary tokens</div>
+                    <div class="arch-items">UFW (default deny) · Fail2ban · Cowrie honeypot · Endlessh tarpit · Canary tokens</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 04</div>
                 <div>
                     <div class="arch-title" data-i18n="l4-title">AI & Assistent</div>
-                    <div class="arch-items">Ollama :11434 · AKAI (OpenClaw gateway) :18789 · Flask chatbot API :5000 · Trading Journal :5001</div>
+                    <div class="arch-items">Ollama · AKAI (OpenClaw gateway) · Flask chatbot API · Trading Journal</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 03</div>
                 <div>
                     <div class="arch-title" data-i18n="l3-title">Applicatie Services</div>
-                    <div class="arch-items">Pi-hole :8082 · Nextcloud :11000 · Grafana :3000 · Prometheus :9090 · Jellyfin :8096 · Homebridge :8581 · Glance :8484</div>
+                    <div class="arch-items">Pi-hole · Nextcloud · Grafana · Prometheus · Jellyfin · Homebridge · Glances</div>
                 </div>
             </div>
             <div class="arch-layer">
@@ -618,7 +660,7 @@
             </div>
             <div class="insight-item">
                 <div class="insight-dot"></div>
-                <p class="insight-text"><strong>Pi-hole via DNS forwarding:</strong> Met double NAT (KPN modem + TP-Link Deco mesh) moest de Deco geconfigureerd worden als DNS forwarder naar 192.168.2.72:53, anders kwamen queries nooit bij Pi-hole aan.</p>
+                <p class="insight-text"><strong>Pi-hole via DNS forwarding:</strong> Met double NAT (KPN modem + TP-Link Deco mesh) moest de Deco geconfigureerd worden als DNS forwarder naar de Pi, anders kwamen queries nooit bij Pi-hole aan.</p>
             </div>
             <div class="insight-item">
                 <div class="insight-dot"></div>
@@ -652,8 +694,8 @@
 <span class="c-cmd">cat</span> >> /etc/ufw/after.rules << <span class="c-str">'EOF'</span>
 <span class="c-str">*filter
 :DOCKER-USER - [0:0]
--A DOCKER-USER -i eth0 -s 192.168.2.0/24 -j RETURN
--A DOCKER-USER -i eth0 -s 100.64.0.0/10 -j RETURN
+-A DOCKER-USER -i eth0 -s <lokaal-subnet>/24 -j RETURN
+-A DOCKER-USER -i eth0 -s <tailscale-range>/10 -j RETURN
 -A DOCKER-USER -i eth0 -j DROP
 COMMIT</span>
 <span class="c-str">EOF</span>
@@ -700,7 +742,7 @@ COMMIT</span>
 </div>
 
 <footer>
-    <div class="footer-left">© 2026 <span>Alano Kricha</span> · Voorburg</div>
+    <div class="footer-left">© 2026 <span>Alano Kricha</span> · The Netherlands</div>
     <div class="footer-right">
         <a href="index.html" data-i18n="back">Portfolio</a>
         <a href="akai.html">AKAI</a>
@@ -737,16 +779,16 @@ COMMIT</span>
     const T = {
         nl: {
             "back":"← Portfolio","hero-sub":"Mijn eigen Raspberry Pi 5 die 24/7 thuis draait. AI modellen, media server, DNS filtering, smart home en beveiliging. Volledig self-hosted, volledig onder controle.",
-            "stat1":"Actieve services","stat2":"Uptime","stat3":"Maandelijkse AI kosten","stat4":"Lokale AI modellen","stat5":"Stroom per maand",
+            "stat1":"Actieve services","stat2":"Uptime","stat3":"Lokale AI modellen","stat4":"Stroom per maand",
             "s1-label":"Project overzicht","s1-title":"Nexus: alles op één Pi.",
             "s1-p1":"Nexus is de naam van mijn Raspberry Pi 5 die thuis staat te draaien. Geen cloud, geen abonnement. Gewoon mijn eigen hardware. 17 actieve services: van AI modellen en media server tot DNS filtering, honeypot en smart home automation.",
             "s1-p2":"De Pi draait op een Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. Alle services draaien als systemd services of Docker containers. Externe toegang gaat uitsluitend via Tailscale VPN of Cloudflare Tunnel, nooit direct open naar internet.",
             "s2-label":"Wat Nexus draait",
-            "f1-sub":"Lokale AI · AKAI & Ollama","f1-title":"Eigen AI modellen, geen cloud","f1-desc":"Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus via de OpenClaw gateway op poort 18789.",
-            "f2-sub":"Monitoring · Grafana & Prometheus","f2-title":"Real-time server inzicht","f2-desc":"Grafana dashboard op poort 3000 met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API op poort 61208.",
-            "f3-sub":"Media · Jellyfin & Nextcloud","f3-title":"Eigen cloud en media server","f3-desc":"Jellyfin draait als media server op poort 8096. Films en muziek streamen naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).",
-            "f4-sub":"Security · honeypot & firewall","f4-title":"Zero-trust beveiliging","f4-desc":"Cowrie SSH/Telnet honeypot logt aanvalspogingen. Endlessh tarpit op poort 22. UFW blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.",
-            "f5-sub":"Smart Home · Homebridge","f5-title":"HomeKit via AKAI","f5-desc":"Homebridge verbindt alle slimme apparaten met Apple HomeKit. Bereikbaar op poort 8581. AKAI kan via tools de verlichting en apparaten aansturen via een Telegram bericht.",
+            "f1-sub":"Lokale AI · AKAI & Ollama","f1-title":"Eigen AI modellen, geen cloud","f1-desc":"Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus via de OpenClaw gateway.",
+            "f2-sub":"Monitoring · Grafana & Prometheus","f2-title":"Real-time server inzicht","f2-desc":"Grafana dashboard met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API.",
+            "f3-sub":"Media · Jellyfin & Nextcloud","f3-title":"Eigen cloud en media server","f3-desc":"Jellyfin als media server voor films en muziek naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).",
+            "f4-sub":"Security · honeypot & firewall","f4-title":"Zero-trust beveiliging","f4-desc":"Cowrie SSH/Telnet honeypot logt aanvalspogingen. Endlessh tarpit vangt portscanners op. UFW blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.",
+            "f5-sub":"Smart Home · Homebridge","f5-title":"HomeKit via AKAI","f5-desc":"Homebridge verbindt alle slimme apparaten met Apple HomeKit. AKAI kan via tools de verlichting en apparaten aansturen via een Telegram bericht.",
             "f6-sub":"DNS · Pi-hole & Tailscale","f6-title":"Privé DNS en VPN toegang","f6-desc":"Pi-hole v6 filtert advertenties en tracking voor het hele netwerk via DNS. Tailscale VPN geeft veilige toegang tot alle services van overal ter wereld, zonder poorten open te zetten.",
             "s3-label":"Systeem architectuur","s3-title":"6 lagen, één Pi.",
             "l6-title":"Externe Toegang","l5-title":"Security","l4-title":"AI & Assistent","l3-title":"Applicatie Services","l2-title":"OS & Runtime","l1-title":"Hardware",
@@ -759,16 +801,16 @@ COMMIT</span>
         },
         en: {
             "back":"← Portfolio","hero-sub":"My own Raspberry Pi 5 running at home 24/7. AI models, media server, DNS filtering, smart home and security. Fully self-hosted, fully in control.",
-            "stat1":"Active services","stat2":"Uptime","stat3":"Monthly AI costs","stat4":"Local AI models","stat5":"Power per month",
+            "stat1":"Active services","stat2":"Uptime","stat3":"Local AI models","stat4":"Power per month",
             "s1-label":"Project overview","s1-title":"Nexus: everything on one Pi.",
             "s1-p1":"Nexus is the name of my Raspberry Pi 5 running at home. No cloud, no subscription. Just my own hardware. 17 active services: from AI models and media server to DNS filtering, honeypot and smart home automation.",
             "s1-p2":"The Pi runs on a Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. All services run as systemd services or Docker containers. External access goes exclusively via Tailscale VPN or Cloudflare Tunnel, never directly open to the internet.",
             "s2-label":"What Nexus runs",
-            "f1-sub":"Local AI · AKAI & Ollama","f1-title":"Own AI models, no cloud","f1-desc":"Ollama runs multiple AI models fully locally: Naja-Fast (1B), Naja-Smart (3.8B) and AKAI-Code. No API costs, maximum privacy. AKAI, my personal AI assistant, also runs on Nexus via the OpenClaw gateway on port 18789.",
-            "f2-sub":"Monitoring · Grafana & Prometheus","f2-title":"Real-time server insights","f2-desc":"Grafana dashboard on port 3000 with real-time charts. Prometheus scrapes CPU, RAM, temperature and disk I/O. Glances provides a quick overview via REST API on port 61208.",
-            "f3-sub":"Media · Jellyfin & Nextcloud","f3-title":"Own cloud and media server","f3-desc":"Jellyfin runs as media server on port 8096. Stream films and music to any device. Nextcloud at cloud.nexusakai.com for personal cloud storage. Everything on NAS SSD (238GB).",
-            "f4-sub":"Security · honeypot & firewall","f4-title":"Zero-trust security","f4-desc":"Cowrie SSH/Telnet honeypot logs attack attempts. Endlessh tarpit on port 22. UFW blocks everything except Tailscale and local network. Canary tokens send alerts on intrusion.",
-            "f5-sub":"Smart Home · Homebridge","f5-title":"HomeKit via AKAI","f5-desc":"Homebridge connects all smart devices to Apple HomeKit. Accessible on port 8581. AKAI can control lighting and devices via tools through a Telegram message.",
+            "f1-sub":"Local AI · AKAI & Ollama","f1-title":"Own AI models, no cloud","f1-desc":"Ollama runs multiple AI models fully locally: Naja-Fast (1B), Naja-Smart (3.8B) and AKAI-Code. No API costs, maximum privacy. AKAI, my personal AI assistant, also runs on Nexus via the OpenClaw gateway.",
+            "f2-sub":"Monitoring · Grafana & Prometheus","f2-title":"Real-time server insights","f2-desc":"Grafana dashboard with real-time charts. Prometheus scrapes CPU, RAM, temperature and disk I/O. Glances provides a quick overview via REST API.",
+            "f3-sub":"Media · Jellyfin & Nextcloud","f3-title":"Own cloud and media server","f3-desc":"Jellyfin as media server for streaming films and music to any device. Nextcloud at cloud.nexusakai.com for personal cloud storage. Everything on NAS SSD (238GB).",
+            "f4-sub":"Security · honeypot & firewall","f4-title":"Zero-trust security","f4-desc":"Cowrie SSH/Telnet honeypot logs attack attempts. Endlessh tarpit catches port scanners. UFW blocks everything except Tailscale and local network. Canary tokens send alerts on intrusion.",
+            "f5-sub":"Smart Home · Homebridge","f5-title":"HomeKit via AKAI","f5-desc":"Homebridge connects all smart devices to Apple HomeKit. AKAI can control lighting and devices via tools through a Telegram message.",
             "f6-sub":"DNS · Pi-hole & Tailscale","f6-title":"Private DNS and VPN access","f6-desc":"Pi-hole v6 filters ads and tracking for the entire network via DNS. Tailscale VPN provides secure access to all services from anywhere in the world, without opening ports.",
             "s3-label":"System architecture","s3-title":"6 layers, one Pi.",
             "l6-title":"External Access","l5-title":"Security","l4-title":"AI & Assistant","l3-title":"Application Services","l2-title":"OS & Runtime","l1-title":"Hardware",

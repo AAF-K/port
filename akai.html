@@ -467,19 +467,131 @@
         .reveal { opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
         .reveal.visible { opacity:1; transform: translateY(0); }
 
+        /* ─── MOBILE SECTION NAV ─── */
+        .mobile-sec-nav {
+            display: none;
+            position: sticky; top: 57px; z-index: 90;
+            background: rgba(9,9,15,0.95); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto; overflow-y: hidden;
+            scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            white-space: nowrap; padding: 10px 20px;
+            gap: 8px;
+        }
+        .mobile-sec-nav::-webkit-scrollbar { display: none; }
+        .mobile-sec-nav a {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: 1px; text-transform: uppercase;
+            color: var(--muted); padding: 6px 14px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; text-decoration: none;
+            transition: color .2s, border-color .2s;
+        }
+        .mobile-sec-nav a:hover, .mobile-sec-nav a.active {
+            color: var(--accent); border-color: rgba(0,232,122,0.3);
+        }
+
+        /* ─── CAROUSEL WRAPPER (shared) ─── */
+        .carousel-wrap {
+            position: relative;
+        }
+        .scroll-hint {
+            display: none;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            color: var(--dim); letter-spacing: 1px;
+            margin-top: 12px; padding-left: 4px;
+        }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 900px) {
-            header { padding: 18px 24px; }
+            header { padding: 16px 20px; }
             .hero { grid-template-columns: 1fr; min-height: auto; }
             .hero-left { padding: 100px 24px 48px; }
             .hero-right { display: none; }
             .stats-bar { grid-template-columns: repeat(2,1fr); }
             .stat-item { border-bottom: 1px solid var(--border); }
-            .content { padding: 60px 24px; }
-            .cap-grid { grid-template-columns: 1fr; }
-            .flow-step { grid-template-columns: 1fr; }
-            .flow-left { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
+            .stat-item:nth-last-child(1), .stat-item:nth-last-child(2) { border-bottom: none; }
+            .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
             footer { padding: 32px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+        }
+
+        @media (max-width: 768px) {
+            /* Show mobile nav */
+            .mobile-sec-nav { display: flex; }
+            .scroll-hint { display: block; }
+
+            /* Content */
+            .content { padding: 40px 20px 60px; }
+            .section { margin-bottom: 56px; }
+            .section-title { font-size: clamp(22px, 7vw, 36px); letter-spacing: -1px; }
+            .section-body { font-size: 14px; }
+            .section-label { margin-bottom: 24px; }
+
+            /* Cap grid → horizontal carousel */
+            .cap-grid {
+                display: flex !important;
+                flex-direction: row;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                overscroll-behavior-x: contain;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 12px;
+                background: none;
+                border: none;
+                border-radius: 0;
+                padding: 4px 20px 20px;
+                margin: 0 -20px;
+            }
+            .cap-grid::-webkit-scrollbar { display: none; }
+            .cap-card {
+                min-width: min(300px, 80vw);
+                scroll-snap-align: start;
+                flex-shrink: 0;
+                border-radius: 14px;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                padding: 24px;
+            }
+
+            /* Flow steps */
+            .flow-step {
+                grid-template-columns: 1fr;
+            }
+            .flow-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 16px 20px;
+            }
+            .flow-right { padding: 16px 20px; }
+
+            /* Model cards */
+            .model-card {
+                grid-template-columns: 40px 1fr;
+                grid-template-rows: auto auto;
+            }
+            .model-badge { grid-column: 2; margin-top: -8px; }
+
+            /* Insights */
+            .insight-item { gap: 14px; padding: 18px 0; }
+            .insight-text { font-size: 14px; }
+
+            /* Vision card */
+            .vision-card { padding: 28px 22px; }
+            .vision-quote { font-size: clamp(17px, 5vw, 22px); }
+
+            /* Code block */
+            .code-body { font-size: 11px; padding: 16px; }
+
+            /* Footer */
+            .footer-right { flex-wrap: wrap; gap: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-left { padding: 88px 20px 36px; }
+            .hero-title { font-size: clamp(36px, 11vw, 52px); }
+            .hero-sub { font-size: 14px; }
         }
     </style>
 </head>
@@ -497,6 +609,17 @@
         </div>
     </div>
 </header>
+
+<nav class="mobile-sec-nav" id="mobilenav">
+    <a href="#about">Over AKAI</a>
+    <a href="#features">Functies</a>
+    <a href="#flow">Hoe werkt het</a>
+    <a href="#models">AI Modellen</a>
+    <a href="#soul">Identiteit</a>
+    <a href="#insights">Lessen</a>
+    <a href="#openclaw">OpenClaw</a>
+    <a href="#vision">Visie</a>
+</nav>
 
 <!-- ─── HERO ─── -->
 <section class="hero">
@@ -635,7 +758,7 @@
 <div class="content">
 
     <!-- Wat is AKAI -->
-    <div class="section reveal">
+    <div class="section reveal" id="about">
         <div class="section-label">
             <span class="label-num">01</span>
             <div class="label-line"></div>
@@ -654,13 +777,14 @@
     </div>
 
     <!-- Capabilities -->
-    <div class="section reveal">
+    <div class="section reveal" id="features">
         <div class="section-label">
             <span class="label-num">02</span>
             <div class="label-line"></div>
             <span class="label-text">Wat AKAI kan</span>
         </div>
         <h2 class="section-title">Meer dan een chatbot.</h2>
+        <div class="carousel-wrap">
         <div class="cap-grid" style="margin-top: 32px;">
             <div class="cap-card">
                 <span class="cap-icon">💬</span>
@@ -725,10 +849,12 @@
                 </div>
             </div>
         </div>
+        <p class="scroll-hint">← swipe voor meer functies →</p>
+        </div>
     </div>
 
     <!-- How it works -->
-    <div class="section reveal">
+    <div class="section reveal" id="flow">
         <div class="section-label">
             <span class="label-num">03</span>
             <div class="label-line"></div>
@@ -746,7 +872,7 @@
                     <div class="flow-items">
                         <span class="flow-item">Telegram Bot API</span>
                         <span class="flow-item">Twilio Voice Webhook</span>
-                        <span class="flow-item">OpenClaw Gateway :18789</span>
+                        <span class="flow-item">OpenClaw Gateway</span>
                     </div>
                 </div>
             </div>
@@ -813,7 +939,7 @@
     </div>
 
     <!-- Model routing -->
-    <div class="section reveal">
+    <div class="section reveal" id="models">
         <div class="section-label">
             <span class="label-num">04</span>
             <div class="label-line"></div>
@@ -858,7 +984,7 @@
     </div>
 
     <!-- Code snippet -->
-    <div class="section reveal">
+    <div class="section reveal" id="soul">
         <div class="section-label">
             <span class="label-num">05</span>
             <div class="label-line"></div>
@@ -878,7 +1004,7 @@
 
 <span class="c-key">Naam:</span> <span class="c-str">AKAI</span>
 <span class="c-key">Platform:</span> <span class="c-str">OpenClaw Gateway op Nexus (Raspberry Pi 5)</span>
-<span class="c-key">Eigenaar:</span> <span class="c-str">Alano Kricha, Voorburg</span>
+<span class="c-key">Eigenaar:</span> <span class="c-str">Alano Kricha, The Netherlands</span>
 
 <span class="c-comment"># Karakter</span>
 <span class="c-fn">Ik ben direct, eerlijk en efficient.</span>
@@ -924,7 +1050,7 @@
     </div>
 
     <!-- Key decisions -->
-    <div class="section reveal">
+    <div class="section reveal" id="insights">
         <div class="section-label">
             <span class="label-num">06</span>
             <div class="label-line"></div>
@@ -956,7 +1082,7 @@
     </div>
 
     <!-- OpenClaw Platform -->
-    <div class="section reveal">
+    <div class="section reveal" id="openclaw">
         <div class="section-label">
             <span class="label-num">07</span>
             <div class="label-line"></div>
@@ -1117,7 +1243,7 @@
             </div>
             <div class="vision-card" style="padding:32px;">
                 <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Scenario · The Morning Brief</div>
-                <p style="font-size:14px; color:var(--muted); line-height:1.7;">Elke ochtend om 8:00: AKAI stuurt vanzelf een Telegram bericht met het weer in Voorburg, jouw agenda voor vandaag en de Nexus server status. Geen actie van jou nodig. Een cron job regelt het.</p>
+                <p style="font-size:14px; color:var(--muted); line-height:1.7;">Elke ochtend om 8:00: AKAI stuurt vanzelf een Telegram bericht met het weer in The Netherlands, jouw agenda voor vandaag en de Nexus server status. Geen actie van jou nodig. Een cron job regelt het.</p>
             </div>
             <div class="vision-card" style="padding:32px;">
                 <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Scenario · The Living Dashboard</div>
@@ -1131,7 +1257,7 @@
     </div>
 
     <!-- Vision -->
-    <div class="section reveal">
+    <div class="section reveal" id="vision">
         <div class="section-label">
             <span class="label-num">08</span>
             <div class="label-line"></div>
@@ -1141,7 +1267,7 @@
             <div class="vision-quote">
                 "Iedereen zou een persoonlijke AI assistent moeten hebben die van hen is, niet van een techbedrijf. AKAI is mijn bewijs dat het kan. Een Pi, wat open-source software en een paar euro aan API credits. Meer heb je niet nodig."
             </div>
-            <div class="vision-author">— Alano Kricha · Voorburg · 2026</div>
+            <div class="vision-author">— Alano Kricha · The Netherlands · 2026</div>
         </div>
     </div>
 

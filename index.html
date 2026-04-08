@@ -432,20 +432,65 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 960px) {
-            header { padding: 18px 24px; }
-            .hero { grid-template-columns: 1fr; min-height: auto; padding: 88px 24px 48px; gap: 40px; }
+            header { padding: 16px 20px; }
+            .hero { grid-template-columns: 1fr; min-height: auto; padding: 84px 20px 44px; gap: 36px; }
             .hero-right { display: none; }
             .stats-bar { flex-wrap: wrap; }
-            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 24px; }
-            .stat-item:first-child { padding-left: 24px; }
-            .stat-item:last-child { border-bottom: none; padding-right: 24px; }
-            .bento-section { padding: 40px 24px 64px; }
-            .bento-grid { grid-template-columns: 1fr; }
+            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
+            .stat-item:first-child { padding-left: 20px; }
+            .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+            .stat-item:nth-last-child(1), .stat-item:nth-last-child(2) { border-bottom: none; }
+            .bento-section { padding: 36px 20px 56px; }
             .bento-cell.feat { display: flex; flex-direction: column; }
             .cell-inner-r { border-left: none; border-top: 1px solid var(--border); }
-            footer { padding: 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+            footer { padding: 24px 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
             body { cursor: auto; }
             .cursor, .cursor-ring { display: none; }
+        }
+
+        /* Mobile: bento → horizontal carousel */
+        @media (max-width: 768px) {
+            .hero-title { font-size: clamp(36px, 11vw, 56px); }
+            .hero-sub { font-size: 14px; max-width: 100%; }
+            .hero-pills { flex-wrap: wrap; gap: 6px; }
+
+            /* Bento cards → swipeable carousel */
+            .bento-grid {
+                display: flex !important;
+                flex-direction: row;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                overscroll-behavior-x: contain;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 12px;
+                padding: 4px 20px 20px;
+                margin: 0 -20px;
+                background: none; border-radius: 0;
+            }
+            .bento-grid::-webkit-scrollbar { display: none; }
+            .bento-cell {
+                min-width: min(290px, 82vw);
+                scroll-snap-align: start;
+                flex-shrink: 0;
+                border-radius: 14px;
+                border: 1px solid var(--border);
+            }
+            .bento-cell.feat {
+                min-width: min(340px, 92vw);
+                flex-direction: column;
+            }
+
+            .bento-section { padding-bottom: 8px; }
+            .section-label { padding: 0 4px; margin-bottom: 16px; }
+
+            nav a { display: none; }
+            nav { gap: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 80px 16px 36px; }
+            header { padding: 14px 16px; }
         }
     </style>
 </head>
@@ -471,7 +516,7 @@
     <div class="hero-left">
         <div class="hero-eyebrow">
             <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Alano Kricha &nbsp;·&nbsp; Voorburg</span>
+            <span class="eyebrow-text">Alano Kricha &nbsp;·&nbsp; The Netherlands</span>
         </div>
         <h1 class="hero-title">
             <span id="hero-line1">Van idee</span><br>
@@ -624,7 +669,7 @@
 <span class="c-comment"># SOUL.md — AKAI</span><br>
 <span class="c-key">Naam:</span>     <span class="c-str">AKAI</span><br>
 <span class="c-key">Platform:</span> <span class="c-str">OpenClaw op Nexus</span><br>
-<span class="c-key">Eigenaar:</span> <span class="c-str">Alano Kricha, Voorburg</span><br>
+<span class="c-key">Eigenaar:</span> <span class="c-str">Alano Kricha, NL</span><br>
 <br>
 <span class="c-comment"># Kernwaarden</span><br>
 <span class="c-key">Privacy:</span>  <span class="c-str">Alle data blijft op Nexus</span><br>
