@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjEzIiByeT0iNSIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iMTMiIHJ5PSI5LjUiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjUiIHJ5PSIxMyIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSIyOSIgeTI9IjE2IiBzdHJva2U9IiMwMGU4N2EiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE2IiB5MT0iMyIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alano Kricha</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #09090f;
@@ -20,12 +19,11 @@
             --text: #f0f0f8;
             --muted: #8888aa;
             --dim: #3a3a5c;
-            --red: #ff4060;
+            --blue: #60a5fa;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         a { color: inherit; text-decoration: none; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -36,501 +34,415 @@
             cursor: none;
         }
 
-        /* ─── CUSTOM CURSOR ─── */
+        /* CURSOR */
         .cursor {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+            position: fixed; width: 10px; height: 10px;
+            background: var(--accent); border-radius: 50%;
+            pointer-events: none; z-index: 99999;
+            transform: translate(-50%,-50%);
+            transition: width .15s, height .15s, background .2s;
         }
-
         .cursor-ring {
-            position: fixed;
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(0,232,122,0.4);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: transform 0.12s ease, width 0.3s, height 0.3s, border-color 0.3s;
+            position: fixed; width: 36px; height: 36px;
+            border: 1px solid rgba(0,232,122,0.4); border-radius: 50%;
+            pointer-events: none; z-index: 99998;
+            transform: translate(-50%,-50%);
+            transition: width .3s, height .3s, border-color .3s;
         }
 
-        /* ─── HEADER ─── */
+        /* HEADER */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 20px 48px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 18px 48px;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid transparent;
-            transition: border-color 0.3s, background 0.3s, backdrop-filter 0.3s;
+            transition: border-color .3s, background .3s, backdrop-filter .3s;
         }
-
         header.scrolled {
             border-color: var(--border);
-            background: rgba(9,9,15,0.85);
+            background: rgba(9,9,15,0.88);
             backdrop-filter: blur(20px);
         }
-
         .logo {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--accent);
-            letter-spacing: 1px;
-            text-decoration: none;
+            font-size: 13px; font-weight: 500;
+            color: var(--accent); letter-spacing: 1px;
         }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
+        nav { display: flex; align-items: center; gap: 28px; }
         nav a {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.2s;
+            font-size: 11px; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--muted);
+            transition: color .2s;
         }
-
         nav a:hover { color: var(--text); }
-
         .lang-btn {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            background: none;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: none;
-            transition: all 0.2s;
+            font-size: 11px; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--muted);
+            background: none; border: 1px solid var(--border);
+            border-radius: 4px; padding: 4px 10px; cursor: none;
+            transition: all .2s;
         }
+        .lang-btn:hover { color: var(--accent); border-color: rgba(0,232,122,0.3); }
 
-        .lang-btn:hover {
-            color: var(--accent);
-            border-color: rgba(0,232,122,0.3);
-        }
-
-        /* ─── HERO ─── */
+        /* ── HERO ── */
         .hero {
-            min-height: 42vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 120px 48px 56px;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 96px 48px 56px;
+            gap: 56px;
             position: relative;
-            overflow: visible;
+            overflow: hidden;
         }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
+        .hero-bg {
+            position: absolute; inset: 0;
             background-image:
                 linear-gradient(rgba(0,232,122,0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,232,122,0.03) 1px, transparent 1px);
             background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at 30% 60%, black 30%, transparent 70%);
+            mask-image: radial-gradient(ellipse at 25% 55%, black 20%, transparent 65%);
+        }
+        .hero-glow {
+            position: absolute;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,232,122,0.055) 0%, transparent 65%);
+            top: 50%; left: 28%; transform: translate(-50%,-50%);
+            pointer-events: none;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-        }
+        /* HERO LEFT */
+        .hero-left { position: relative; z-index: 1; }
 
         .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 28px;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.2s forwards;
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 32px;
+            opacity: 0; animation: fadeUp .7s ease .15s forwards;
         }
-
-        .eyebrow-line {
-            width: 40px;
-            height: 1px;
-            background: var(--accent);
-        }
-
+        .eyebrow-line { width: 32px; height: 1px; background: var(--accent); }
         .eyebrow-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 11px; color: var(--accent);
+            letter-spacing: 2px; text-transform: uppercase;
         }
 
         .hero-title {
-            font-size: clamp(38px, 5.8vw, 76px);
-            font-weight: 800;
-            line-height: 1.08;
-            letter-spacing: -4px;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.35s forwards;
+            font-size: clamp(40px, 5.2vw, 74px);
+            font-weight: 800; line-height: 1.05;
+            letter-spacing: -3.5px; margin-bottom: 28px;
+            opacity: 0; animation: fadeUp .7s ease .3s forwards;
         }
-
         .hero-title .italic {
             font-family: 'Fraunces', serif;
-            font-style: italic;
-            font-weight: 300;
-            color: var(--accent);
-            letter-spacing: -2px;
+            font-style: italic; font-weight: 300;
+            color: var(--accent); letter-spacing: -2px;
         }
-
-        .hero-title .dim {
-            color: var(--dim);
-        }
+        .hero-title .dim { color: var(--dim); }
 
         .hero-sub {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 440px;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.5s forwards;
+            font-size: 15px; color: var(--muted);
+            line-height: 1.7; max-width: 400px;
+            margin-bottom: 36px;
+            opacity: 0; animation: fadeUp .7s ease .45s forwards;
         }
+        .hero-sub strong { color: var(--text); font-weight: 600; }
 
-        .hero-sub strong {
-            color: var(--text);
-            font-weight: 600;
+        .hero-pills {
+            display: flex; flex-wrap: wrap; gap: 7px;
+            opacity: 0; animation: fadeUp .7s ease .58s forwards;
         }
-
-        /* ─── STATUS BAR ─── */
-        .status-bar {
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 0 48px;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .status-item {
-            flex: 1;
-            padding: 28px 0;
-            border-right: 1px solid var(--border);
-            padding-right: 40px;
-            padding-left: 40px;
-            transition: background 0.3s;
-        }
-
-        .status-item:first-child { padding-left: 0; }
-        .status-item:last-child { border-right: none; }
-        .status-item:hover { background: rgba(0,232,122,0.02); }
-
-        .status-num {
+        .hero-pill {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 36px;
-            font-weight: 500;
-            color: var(--accent);
-            line-height: 1;
-            margin-bottom: 6px;
-            display: block;
+            font-size: 10px; letter-spacing: .5px;
+            padding: 5px 12px; border-radius: 99px;
+            border: 1px solid var(--border);
+            color: var(--muted); background: var(--surface);
+            transition: all .2s;
         }
+        .hero-pill.on { border-color: rgba(0,232,122,0.3); color: var(--accent); background: rgba(0,232,122,0.05); }
 
-        .status-label {
-            font-size: 12px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+        /* HERO RIGHT — terminal */
+        .hero-right {
+            position: relative; z-index: 1;
+            opacity: 0; animation: fadeUp .7s ease .4s forwards;
         }
-
-        /* ─── PROJECTS ─── */
-        .projects {
-            padding: 100px 48px;
-        }
-
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 60px;
-        }
-
-        .label-line {
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .label-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Project cards */
-        .project-card {
-            border-top: 1px solid var(--border);
-            padding: 48px 0;
-            display: grid;
-            grid-template-columns: 80px 1fr 1fr;
-            gap: 48px;
-            align-items: start;
-            transition: all 0.3s;
-            position: relative;
-            cursor: none;
-        }
-
-        .project-card::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0;
-            top: -1px;
-            height: 1px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .project-card:hover::after { transform: scaleX(1); }
-        .project-card:last-child { border-bottom: 1px solid var(--border); }
-
-        .project-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--muted);
-            padding-top: 6px;
-        }
-
-        .project-left h3 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.8px;
-            line-height: 1.15;
-            margin-bottom: 12px;
-            transition: color 0.2s;
-        }
-
-        .project-card:hover .project-left h3 { color: var(--accent); }
-
-        .project-sub {
-            font-size: 14px;
-            color: var(--muted);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .tech-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tech-pill {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 3px;
+        .terminal-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            color: var(--muted);
-            letter-spacing: 0.5px;
-            transition: all 0.2s;
+            border-radius: 14px; overflow: hidden;
+        }
+        .term-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 18px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+        }
+        .term-dots { display: flex; gap: 6px; }
+        .term-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--dim); }
+        .term-dot.g { background: var(--accent); }
+        .term-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; color: var(--muted); letter-spacing: .8px;
+        }
+        .live-chip {
+            display: flex; align-items: center; gap: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; color: var(--accent);
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+        .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease infinite; }
+
+        .term-body { padding: 20px 18px; display: flex; flex-direction: column; gap: 16px; }
+        .term-line { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; }
+        .t-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); padding-top: 2px; }
+        .t-msg { font-size: 13px; color: var(--muted); line-height: 1.55; }
+        .t-who {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+            display: block; margin-bottom: 3px;
+        }
+        .t-who.akai { color: var(--accent); }
+        .t-who.user { color: var(--blue); }
+        .t-sep { border: none; border-top: 1px solid var(--border); }
+
+        .term-cursor {
+            display: inline-block; width: 7px; height: 13px;
+            background: var(--accent); vertical-align: text-bottom;
+            margin-left: 1px; animation: blink 1s step-start infinite;
         }
 
-        .project-card:hover .tech-pill {
-            border-color: rgba(0,232,122,0.2);
-            color: var(--text);
+        .term-footer {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            padding: 14px 18px;
+            border-top: 1px solid var(--border);
+            background: rgba(0,232,122,0.02);
         }
-
-        .project-right {
-            padding-top: 6px;
+        .tf-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px; font-weight: 500; color: var(--accent); line-height: 1;
         }
+        .tf-label { font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
 
-        .project-desc {
-            font-size: 15px;
-            color: var(--muted);
-            line-height: 1.75;
+        /* Staggered terminal reveal */
+        .term-line { opacity: 0; animation: fadeIn .4s ease forwards; }
+        .term-line:nth-child(1) { animation-delay: .9s; }
+        .term-line:nth-child(2) { animation-delay: 1.3s; }
+        .t-sep       { opacity: 0; animation: fadeIn .3s ease 1.65s forwards; }
+        .term-line:nth-child(4) { animation-delay: 1.9s; }
+        .term-line:nth-child(5) { animation-delay: 2.3s; }
+
+        /* ── STATS BAR ── */
+        .stats-bar {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            display: flex; overflow: hidden;
+        }
+        .stat-item {
+            flex: 1; padding: 18px 40px;
+            border-right: 1px solid var(--border);
+            transition: background .2s;
+        }
+        .stat-item:first-child { padding-left: 48px; }
+        .stat-item:last-child { border-right: none; padding-right: 48px; }
+        .stat-item:hover { background: rgba(0,232,122,0.02); }
+        .stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px; font-weight: 500; color: var(--accent);
+            display: block; line-height: 1; margin-bottom: 4px;
+        }
+        .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; }
+
+        /* ── BENTO ── */
+        .bento-section { padding: 60px 48px 96px; }
+
+        .section-label {
+            display: flex; align-items: center; gap: 16px;
             margin-bottom: 28px;
         }
+        .label-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; color: var(--muted);
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .label-line { flex: 1; height: 1px; background: var(--border); }
 
-        .features-list {
-            list-style: none;
-            margin-bottom: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
         }
 
-        .features-list li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--muted);
+        .bento-cell {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px; overflow: hidden;
+            position: relative;
+            transition: border-color .3s;
         }
+        .bento-cell:hover { border-color: rgba(0,232,122,0.22); }
 
-        .features-list li::before {
+        /* Featured AKAI — full width, 2-panel */
+        .bento-cell.feat {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .bento-cell.feat::before {
             content: '';
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--accent);
-            flex-shrink: 0;
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0; transition: opacity .3s;
+        }
+        .bento-cell.feat:hover::before { opacity: 1; }
+
+        .cell-inner {
+            padding: 36px;
+            display: flex; flex-direction: column;
+        }
+        .cell-inner-r {
+            padding: 36px;
+            display: flex; flex-direction: column;
+            background: var(--surface2);
+            border-left: 1px solid var(--border);
         }
 
-        .project-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+        /* Badge */
+        .cell-badge {
+            display: inline-flex; align-items: center; gap: 6px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+            border-radius: 3px; padding: 3px 8px;
+            margin-bottom: 18px; align-self: flex-start;
+        }
+        .cell-badge.live { color: var(--accent); background: rgba(0,232,122,0.08); border: 1px solid rgba(0,232,122,0.2); }
+        .cell-badge.wip { color: var(--warm); background: rgba(240,165,0,0.08); border: 1px solid rgba(240,165,0,0.2); }
+        .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: pulse 1.5s ease infinite; }
+
+        .cell-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; color: var(--dim); margin-bottom: 6px;
+        }
+        .cell-title {
+            font-size: 28px; font-weight: 700; letter-spacing: -.5px;
+            line-height: 1.12; margin-bottom: 6px;
+        }
+        .cell-sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+
+        .cell-desc {
+            font-size: 14px; color: var(--muted); line-height: 1.75;
+            margin-bottom: 22px; flex: 1;
+        }
+
+        .cell-feats { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 24px; }
+        .cell-feats li {
+            display: flex; align-items: flex-start; gap: 9px;
+            font-size: 13px; color: var(--muted); line-height: 1.45;
+        }
+        .cell-feats li::before {
+            content: ''; width: 4px; height: 4px; border-radius: 50%;
+            background: var(--accent); flex-shrink: 0; margin-top: 6px;
+        }
+
+        .tech-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 26px; }
+        .tech-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px; padding: 3px 9px; border-radius: 3px;
+            background: var(--surface2); border: 1px solid var(--border);
+            color: var(--muted); letter-spacing: .5px; transition: all .2s;
+        }
+        .bento-cell:hover .tech-pill { border-color: rgba(0,232,122,0.18); color: var(--text); }
+
+        .cell-cta {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
             color: var(--accent);
-            text-decoration: none;
-            padding-bottom: 4px;
             border-bottom: 1px solid rgba(0,232,122,0.3);
-            transition: all 0.2s;
+            padding-bottom: 3px; transition: all .2s;
+            align-self: flex-start; margin-top: auto;
         }
+        .cell-cta:hover { gap: 14px; border-color: var(--accent); }
+        .cta-arrow { transition: transform .2s; }
+        .cell-cta:hover .cta-arrow { transform: translateX(4px); }
 
-        .project-cta:hover {
-            gap: 16px;
-            border-color: var(--accent);
-        }
-
-        .cta-arrow { transition: transform 0.2s; }
-        .project-cta:hover .cta-arrow { transform: translateX(4px); }
-
-        /* ─── BADGES ─── */
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        /* Right panel — AKAI stats + code */
+        .visual-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--accent);
-            background: rgba(0,232,122,0.08);
-            border: 1px solid rgba(0,232,122,0.2);
-            border-radius: 3px;
-            padding: 3px 8px;
-            margin-bottom: 12px;
+            font-size: 10px; color: var(--dim); letter-spacing: 2px;
+            text-transform: uppercase; margin-bottom: 16px;
         }
-
-        .live-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: pulse 1.5s ease infinite;
+        .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+        .mini-stat {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 8px; padding: 14px 15px;
         }
-
-        .wip-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .mini-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--warm);
-            background: rgba(240,165,0,0.08);
-            border: 1px solid rgba(240,165,0,0.2);
-            border-radius: 3px;
-            padding: 3px 8px;
-            margin-bottom: 12px;
+            font-size: 20px; color: var(--accent); font-weight: 500;
+            line-height: 1; margin-bottom: 4px;
         }
+        .mini-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
-        .wip-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--warm);
-            animation: pulse 1.5s ease infinite;
+        .code-block {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 8px; padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; line-height: 1.75; color: var(--muted);
+            flex: 1;
         }
+        .c-comment { color: var(--dim); }
+        .c-key { color: var(--accent); }
+        .c-str { color: var(--warm); }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* ─── FOOTER ─── */
+        /* ── FOOTER ── */
         footer {
             border-top: 1px solid var(--border);
-            padding: 48px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 36px 48px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
         .footer-left {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 1px;
+            font-size: 11px; color: var(--muted); letter-spacing: 1px;
         }
-
         .footer-left span { color: var(--accent); }
-
-        .footer-right {
-            display: flex;
-            gap: 32px;
-        }
-
+        .footer-right { display: flex; gap: 28px; }
         .footer-right a {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: color 0.2s;
+            font-size: 11px; color: var(--muted);
+            letter-spacing: 1.5px; text-transform: uppercase; transition: color .2s;
         }
-
         .footer-right a:hover { color: var(--accent); }
 
-        /* ─── ANIMATIONS ─── */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+        @keyframes blink { 50%{opacity:0} }
 
         .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            opacity: 0; transform: translateY(18px);
+            transition: opacity .65s ease, transform .65s ease;
         }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 900px) {
-            header { padding: 20px 24px; }
-            .hero { padding: 80px 24px 40px; min-height: auto; }
-            .hero-title { font-size: clamp(32px, 10vw, 64px); letter-spacing: -2px; }
-            .status-bar { padding: 0 24px; flex-direction: column; }
-            .status-item { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 0; }
-            .status-item:last-child { border-bottom: none; }
-            .projects { padding: 60px 24px; }
-            .project-card { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
-            .project-num { display: none; }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 960px) {
+            header { padding: 18px 24px; }
+            .hero { grid-template-columns: 1fr; min-height: auto; padding: 88px 24px 48px; gap: 40px; }
+            .hero-right { display: none; }
+            .stats-bar { flex-wrap: wrap; }
+            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 24px; }
+            .stat-item:first-child { padding-left: 24px; }
+            .stat-item:last-child { border-bottom: none; padding-right: 24px; }
+            .bento-section { padding: 40px 24px 64px; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-cell.feat { display: flex; flex-direction: column; }
+            .cell-inner-r { border-left: none; border-top: 1px solid var(--border); }
             footer { padding: 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
             body { cursor: auto; }
             .cursor, .cursor-ring { display: none; }
@@ -539,74 +451,141 @@
 </head>
 <body>
 
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-    <!-- ─── HEADER ─── -->
-    <header id="header">
-        <a href="/" class="logo">Alano Kricha</a>
-        <nav>
-            <a href="#contact" data-i18n="nav-contact">Contact</a>
-            <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">EN</button>
-        </nav>
-    </header>
+<!-- HEADER -->
+<header id="header">
+    <a href="/" class="logo">Alano Kricha</a>
+    <nav>
+        <a href="#contact" data-i18n="nav-contact">Contact</a>
+        <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">EN</button>
+    </nav>
+</header>
 
-    <!-- ─── HERO ─── -->
-    <section class="hero">
-        <div class="hero-grid"></div>
-        <div class="hero-content">
-            <div class="hero-eyebrow">
-                <div class="eyebrow-line"></div>
-                <span class="eyebrow-text">Alano Kricha — Voorburg</span>
-            </div>
-            <h1 class="hero-title">
-                Van idee<br>
-                <span class="italic" id="hero-preposition">tot</span> systeem<br>
-                dat werkt
-            </h1>
-            <p class="hero-sub">
-                <span data-i18n="hero-sub-pre">Ik bouw </span><strong data-i18n="hero-sub-strong">slimme, self-hosted oplossingen</strong><span data-i18n="hero-sub-post"> — van een Raspberry Pi server tot een persoonlijke AI assistent die altijd voor mij klaarstaat.</span>
-            </p>
-        </div>
-    </section>
+<!-- ── HERO ── -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
 
-    <!-- ─── STATUS BAR ─── -->
-    <div class="status-bar reveal">
-        <div class="status-item">
-            <span class="status-num">24/7</span>
-            <span class="status-label" data-i18n="stat1">Uptime Nexus server</span>
+    <div class="hero-left">
+        <div class="hero-eyebrow">
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Alano Kricha &nbsp;·&nbsp; Voorburg</span>
         </div>
-        <div class="status-item">
-            <span class="status-num">17</span>
-            <span class="status-label" data-i18n="stat2">Actieve services</span>
-        </div>
-        <div class="status-item">
-            <span class="status-num">0€</span>
-            <span class="status-label" data-i18n="stat3">Maandelijkse AI kosten</span>
-        </div>
-        <div class="status-item">
-            <span class="status-num">AKAI</span>
-            <span class="status-label" data-i18n="stat4">Persoonlijke AI assistent</span>
+        <h1 class="hero-title">
+            <span id="hero-line1">Van idee</span><br>
+            <span class="italic" id="hero-preposition">tot</span><span id="hero-line2"> systeem</span><br>
+            <span class="dim" id="hero-line3">dat werkt</span>
+        </h1>
+        <p class="hero-sub">
+            <span data-i18n="hero-sub-pre">Ik bouw </span><strong data-i18n="hero-sub-strong">slimme, self-hosted systemen.</strong><span data-i18n="hero-sub-post"> Van Raspberry Pi server tot persoonlijke AI assistent.</span>
+        </p>
+        <div class="hero-pills">
+            <span class="hero-pill on">Python</span>
+            <span class="hero-pill on">Raspberry Pi</span>
+            <span class="hero-pill">Docker</span>
+            <span class="hero-pill">AI / LLM</span>
+            <span class="hero-pill">Self-hosted</span>
+            <span class="hero-pill">Linux</span>
         </div>
     </div>
 
-    <!-- ─── PROJECTS ─── -->
-    <section class="projects" id="projecten">
-        <div class="section-label reveal">
-            <span class="label-text" data-i18n="projects-title">Projecten</span>
-            <div class="label-line"></div>
-        </div>
-
-        <!-- Project 01 — AKAI -->
-        <div class="project-card reveal">
-            <div class="project-num">01</div>
-            <div class="project-left">
-                <div class="live-badge">
-                    <div class="live-dot"></div>
-                    <span data-i18n="p1-badge">Live</span>
+    <!-- HERO RIGHT — AKAI terminal -->
+    <div class="hero-right">
+        <div class="terminal-card">
+            <div class="term-header">
+                <div class="term-dots">
+                    <div class="term-dot"></div>
+                    <div class="term-dot"></div>
+                    <div class="term-dot g"></div>
                 </div>
-                <h3 data-i18n="p1-title">AKAI — Persoonlijke AI Assistent</h3>
-                <p class="project-sub" data-i18n="p1-subtitle">Self-hosted AI die praat, denkt en handelt</p>
+                <span class="term-title">AKAI @ nexus</span>
+                <div class="live-chip"><div class="live-dot"></div>live</div>
+            </div>
+            <div class="term-body">
+                <div class="term-line">
+                    <span class="t-time">08:14</span>
+                    <div class="t-msg">
+                        <span class="t-who user">Alano</span>
+                        wat is de stand van Nexus?
+                    </div>
+                </div>
+                <div class="term-line">
+                    <span class="t-time">08:14</span>
+                    <div class="t-msg">
+                        <span class="t-who akai">AKAI</span>
+                        Alles groen. 17 services actief, CPU 12%, geheugen 4.2 GB. Goedemorgen.
+                    </div>
+                </div>
+                <hr class="t-sep">
+                <div class="term-line">
+                    <span class="t-time">09:31</span>
+                    <div class="t-msg">
+                        <span class="t-who user">Alano</span>
+                        voeg dark mode toe aan mijn portfolio
+                    </div>
+                </div>
+                <div class="term-line">
+                    <span class="t-time">09:32</span>
+                    <div class="t-msg">
+                        <span class="t-who akai">AKAI</span>
+                        Coding Agent gestart. Toggle toegevoegd, gecommit naar main.<span class="term-cursor"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="term-footer">
+                <div><div class="tf-val">91M</div><div class="tf-label">Tokens</div></div>
+                <div><div class="tf-val">€3.76</div><div class="tf-label">Totaal</div></div>
+                <div><div class="tf-val">24/7</div><div class="tf-label">Online</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar reveal">
+    <div class="stat-item">
+        <span class="stat-val">24/7</span>
+        <span class="stat-label" data-i18n="stat1">Uptime Nexus server</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-val">17</span>
+        <span class="stat-label" data-i18n="stat2">Actieve services</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-val">0€</span>
+        <span class="stat-label" data-i18n="stat3">Maandelijkse AI kosten</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-val">AKAI</span>
+        <span class="stat-label" data-i18n="stat4">Persoonlijke AI assistent</span>
+    </div>
+</div>
+
+<!-- ── BENTO GRID ── -->
+<section class="bento-section" id="projecten">
+    <div class="section-label reveal">
+        <span class="label-text" data-i18n="projects-title">Projecten</span>
+        <div class="label-line"></div>
+    </div>
+
+    <div class="bento-grid">
+
+        <!-- 01 AKAI — featured full width -->
+        <div class="bento-cell feat reveal">
+            <div class="cell-inner">
+                <div class="cell-badge live"><div class="badge-dot"></div><span data-i18n="p1-badge">Live</span></div>
+                <span class="cell-num">01</span>
+                <h3 class="cell-title" data-i18n="p1-title">AKAI</h3>
+                <p class="cell-sub" data-i18n="p1-subtitle">Persoonlijke AI assistent op Nexus</p>
+                <p class="cell-desc" data-i18n="p1-desc">AKAI draait op mijn eigen Raspberry Pi server. Geen abonnement. Geen cloud. Geen data-deling. Reageert op Telegram, voert voice calls uit en heeft toegang tot mijn kalender, Trading Journal en server scripts.</p>
+                <ul class="cell-feats">
+                    <li data-i18n="p1-f1">24/7 bereikbaar via Telegram</li>
+                    <li data-i18n="p1-f2">Voicegesprekken via Twilio, doorgesteld naar mijn nummer</li>
+                    <li data-i18n="p1-f3">Toegang tot kalender, systeem, notities en Trading Journal</li>
+                    <li data-i18n="p1-f4">100% self-hosted op Nexus</li>
+                </ul>
                 <div class="tech-row">
                     <span class="tech-pill">Raspberry Pi 5</span>
                     <span class="tech-pill">Python</span>
@@ -614,72 +593,91 @@
                     <span class="tech-pill">Twilio</span>
                     <span class="tech-pill">Ollama</span>
                     <span class="tech-pill">Claude API</span>
+                    <span class="tech-pill">OpenClaw</span>
                 </div>
-            </div>
-            <div class="project-right">
-                <p class="project-desc" data-i18n="p1-desc">
-                    AKAI is mijn persoonlijke AI assistent die draait op mijn eigen Raspberry Pi server — geen abonnement, geen cloud, geen data-deling. Hij reageert op Telegram berichten, neemt gesprekken aan via mijn telefoon en heeft toegang tot tools zoals mijn kalender en notities. AKAI kent mijn context en werkt 24/7.
-                </p>
-                <ul class="features-list">
-                    <li data-i18n="p1-f1">Reageert op Telegram berichten — dag en nacht</li>
-                    <li data-i18n="p1-f2">Voicegespreken via Twilio, doorgesteld naar mijn nummer</li>
-                    <li data-i18n="p1-f3">Toegang tot tools: kalender, systeem, notities, Trading Journal</li>
-                    <li data-i18n="p1-f4">100% self-hosted — draait lokaal op Nexus</li>
-                </ul>
-                <a href="akai.html" class="project-cta">
+                <a href="akai.html" class="cell-cta">
                     <span data-i18n="p1-link">Bekijk AKAI</span>
                     <span class="cta-arrow">→</span>
                 </a>
             </div>
-        </div>
-
-        <!-- Project 02 — Nexus Infrastructure -->
-        <div class="project-card reveal">
-            <div class="project-num">02</div>
-            <div class="project-left">
-                <div class="live-badge">
-                    <div class="live-dot"></div>
-                    <span data-i18n="p2-badge">Live</span>
+            <div class="cell-inner-r">
+                <p class="visual-label">AKAI in cijfers</p>
+                <div class="mini-grid">
+                    <div class="mini-stat">
+                        <div class="mini-val">91M</div>
+                        <div class="mini-label">Tokens verwerkt</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-val">€3.76</div>
+                        <div class="mini-label">Totale kosten ooit</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-val">25+</div>
+                        <div class="mini-label">Messaging kanalen</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-val">0s</div>
+                        <div class="mini-label">Setup vereist</div>
+                    </div>
                 </div>
-                <h3 data-i18n="p2-title">Nexus — Raspberry Pi 5 Server</h3>
-                <p class="project-sub" data-i18n="p2-subtitle">24/7 self-hosted infrastructuur voor AI en automation</p>
-                <div class="tech-row">
-                    <span class="tech-pill">Raspberry Pi 5</span>
-                    <span class="tech-pill">Docker</span>
-                    <span class="tech-pill">Ollama</span>
-                    <span class="tech-pill">Pi-hole</span>
-                    <span class="tech-pill">Tailscale</span>
-                    <span class="tech-pill">UFW</span>
+                <div class="code-block">
+<span class="c-comment"># SOUL.md — AKAI</span><br>
+<span class="c-key">Naam:</span>     <span class="c-str">AKAI</span><br>
+<span class="c-key">Platform:</span> <span class="c-str">OpenClaw op Nexus</span><br>
+<span class="c-key">Eigenaar:</span> <span class="c-str">Alano Kricha, Voorburg</span><br>
+<br>
+<span class="c-comment"># Kernwaarden</span><br>
+<span class="c-key">Privacy:</span>  <span class="c-str">Alle data blijft op Nexus</span><br>
+<span class="c-key">Controle:</span> <span class="c-str">Alano heeft volledige controle</span><br>
+<span class="c-key">Nut:</span>      <span class="c-str">Elke interactie voegt waarde toe</span>
                 </div>
             </div>
-            <div class="project-right">
-                <p class="project-desc" data-i18n="p2-desc">
-                    Nexus is de Raspberry Pi 5 die bij mij thuis staat en alles draait. AI modellen, media server, DNS filtering, smart home, monitoring — allemaal self-hosted en altijd online. Beveiligd via zero-trust networking met Tailscale VPN en een strikte firewall.
-                </p>
-                <ul class="features-list">
-                    <li data-i18n="p2-f1">17 actieve services: Jellyfin, Grafana, Prometheus, Homebridge en meer</li>
-                    <li data-i18n="p2-f2">Pi-hole blokkeert advertenties en tracking voor het hele netwerk</li>
-                    <li data-i18n="p2-f3">Zero-trust beveiliging met Tailscale VPN en UFW firewall</li>
+        </div>
+
+        <!-- 02 Nexus -->
+        <div class="bento-cell reveal">
+            <div class="cell-inner" style="height:100%">
+                <div class="cell-badge live"><div class="badge-dot"></div><span data-i18n="p2-badge">Live</span></div>
+                <span class="cell-num">02</span>
+                <h3 class="cell-title" data-i18n="p2-title">Nexus</h3>
+                <p class="cell-sub" data-i18n="p2-subtitle">Raspberry Pi 5 homelab server</p>
+                <p class="cell-desc" data-i18n="p2-desc">Nexus is de Raspberry Pi 5 thuis die alles draait. AI modellen, media server, DNS filtering, smart home en monitoring. Beveiligd via zero-trust networking met Tailscale en UFW.</p>
+                <ul class="cell-feats">
+                    <li data-i18n="p2-f1">17 actieve services: Jellyfin, Grafana, Homebridge en meer</li>
+                    <li data-i18n="p2-f2">Pi-hole blokkeert advertenties voor het hele netwerk</li>
+                    <li data-i18n="p2-f3">Zero-trust beveiliging via Tailscale en UFW</li>
                     <li data-i18n="p2-f4">Apple HomeKit integratie via Homebridge</li>
                 </ul>
-                <a href="raspberry-pi.html" class="project-cta">
+                <div class="tech-row" style="margin-top:auto; padding-top:20px;">
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">Pi-hole</span>
+                    <span class="tech-pill">Tailscale</span>
+                    <span class="tech-pill">Grafana</span>
+                    <span class="tech-pill">Jellyfin</span>
+                    <span class="tech-pill">Nextcloud</span>
+                </div>
+                <a href="raspberry-pi.html" class="cell-cta">
                     <span data-i18n="p2-link">Bekijk project</span>
                     <span class="cta-arrow">→</span>
                 </a>
             </div>
         </div>
 
-        <!-- Project 03 — Trading Journal -->
-        <div class="project-card reveal">
-            <div class="project-num">03</div>
-            <div class="project-left">
-                <div class="wip-badge">
-                    <div class="wip-dot"></div>
-                    <span data-i18n="p3-wip">In ontwikkeling</span>
-                </div>
-                <h3 data-i18n="p3-title">AI Trading Journal</h3>
-                <p class="project-sub" data-i18n="p3-subtitle">Self-hosted AI coaching voor XAUUSD trades</p>
-                <div class="tech-row">
+        <!-- 03 Trading Journal -->
+        <div class="bento-cell reveal">
+            <div class="cell-inner" style="height:100%">
+                <div class="cell-badge wip"><div class="badge-dot"></div><span data-i18n="p3-wip">In ontwikkeling</span></div>
+                <span class="cell-num">03</span>
+                <h3 class="cell-title" data-i18n="p3-title">AI Trading Journal</h3>
+                <p class="cell-sub" data-i18n="p3-subtitle">AI coaching voor XAUUSD trades</p>
+                <p class="cell-desc" data-i18n="p3-desc">Persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Pre-trade check, post-trade analyse en psychologie tracking. Bereikbaar via AKAI op Telegram.</p>
+                <ul class="cell-feats">
+                    <li data-i18n="p3-f1">Pre-trade validatie tegen persoonlijke strategie regels</li>
+                    <li data-i18n="p3-f2">Emotie en psychologie tracking per trade</li>
+                    <li data-i18n="p3-f3">Post-trade analyse met nieuwscontext via Claude API</li>
+                    <li data-i18n="p3-f4">Bereikbaar via AKAI op Telegram</li>
+                </ul>
+                <div class="tech-row" style="margin-top:auto; padding-top:20px;">
                     <span class="tech-pill">Flask</span>
                     <span class="tech-pill">SQLite</span>
                     <span class="tech-pill">Ollama</span>
@@ -687,219 +685,170 @@
                     <span class="tech-pill">MT5 Python</span>
                     <span class="tech-pill">AKAI</span>
                 </div>
-            </div>
-            <div class="project-right">
-                <p class="project-desc" data-i18n="p3-desc">
-                    Een persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Vóór elke trade een check tegen mijn strategie, daarna een analyse van wat er fout ging en waarom. AKAI geeft me directe toegang vanuit Telegram — ik kan mijn journal inzien en bijwerken zonder de app te openen.
-                </p>
-                <ul class="features-list">
-                    <li data-i18n="p3-f1">Pre-trade validatie tegen persoonlijke strategie regels</li>
-                    <li data-i18n="p3-f2">Emotie & psychologie tracking per trade</li>
-                    <li data-i18n="p3-f3">Post-trade analyse met nieuwscontext via Claude API</li>
-                    <li data-i18n="p3-f4">Bereikbaar via AKAI op Telegram — altijd en overal</li>
-                </ul>
-                <a href="trading-journal-showcase.html" class="project-cta">
+                <a href="trading-journal-showcase.html" class="cell-cta">
                     <span data-i18n="p3-link">Bekijk showcase</span>
                     <span class="cta-arrow">→</span>
                 </a>
             </div>
         </div>
-    </section>
 
-    <!-- ─── FOOTER ─── -->
-    <footer id="contact">
-        <div class="footer-left">
-            © 2026 <span>Alano Kricha</span>
-        </div>
-        <div class="footer-right">
-            <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-    </footer>
+    </div>
+</section>
 
-    <script>
-        // ─── CURSOR ───
-        const cursor = document.getElementById('cursor');
-        const ring = document.getElementById('cursorRing');
-        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+<!-- FOOTER -->
+<footer id="contact">
+    <div class="footer-left">© 2026 <span>Alano Kricha</span></div>
+    <div class="footer-right">
+        <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+</footer>
 
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+<script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    });
+    (function animRing() {
+        rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a, button, .bento-cell').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            ring.style.width = '52px'; ring.style.height = '52px';
+            ring.style.borderColor = 'rgba(0,232,122,0.6)';
         });
-
-        function animateRing() {
-            ringX += (mouseX - ringX) * 0.12;
-            ringY += (mouseY - ringY) * 0.12;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-            requestAnimationFrame(animateRing);
-        }
-        animateRing();
-
-        document.querySelectorAll('a, button, .project-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.width = '6px';
-                cursor.style.height = '6px';
-                ring.style.width = '52px';
-                ring.style.height = '52px';
-                ring.style.borderColor = 'rgba(0,232,122,0.6)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.width = '10px';
-                cursor.style.height = '10px';
-                ring.style.width = '36px';
-                ring.style.height = '36px';
-                ring.style.borderColor = 'rgba(0,232,122,0.4)';
-            });
+        el.addEventListener('mouseleave', () => {
+            ring.style.width = '36px'; ring.style.height = '36px';
+            ring.style.borderColor = 'rgba(0,232,122,0.4)';
         });
+    });
 
-        // ─── HEADER SCROLL ───
-        window.addEventListener('scroll', () => {
-            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
-        });
+    // Header scroll
+    window.addEventListener('scroll', () => {
+        document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
 
-        // ─── SCROLL REVEAL ───
-        const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('visible'), i * 100);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        reveals.forEach(el => observer.observe(el));
-
-        // ─── LANGUAGE TOGGLE ───
-        // All values are plain text — no HTML — so textContent is safe and correct.
-        const translations = {
-            nl: {
-                "nav-contact": "Contact",
-                "hero-sub-pre": "Ik bouw ",
-                "hero-sub-strong": "slimme, self-hosted oplossingen",
-                "hero-sub-post": " — van een Raspberry Pi server tot een persoonlijke AI assistent die altijd voor mij klaarstaat.",
-                "stat1": "Uptime Nexus server",
-                "stat2": "Actieve services",
-                "stat3": "Maandelijkse AI kosten",
-                "stat4": "Persoonlijke AI assistent",
-                "projects-title": "Projecten",
-                "p1-badge": "Live",
-                "p1-title": "AKAI — Persoonlijke AI Assistent",
-                "p1-subtitle": "Self-hosted AI die praat, denkt en handelt",
-                "p1-desc": "AKAI is mijn persoonlijke AI assistent die draait op mijn eigen Raspberry Pi server — geen abonnement, geen cloud, geen data-deling. Hij reageert op Telegram berichten, neemt gesprekken aan via mijn telefoon en heeft toegang tot tools zoals mijn kalender en notities. AKAI kent mijn context en werkt 24/7.",
-                "p1-f1": "Reageert op Telegram berichten — dag en nacht",
-                "p1-f2": "Voicegespreken via Twilio, doorgesteld naar mijn nummer",
-                "p1-f3": "Toegang tot tools: kalender, systeem, notities, Trading Journal",
-                "p1-f4": "100% self-hosted — draait lokaal op Nexus",
-                "p1-link": "Bekijk AKAI",
-                "p2-badge": "Live",
-                "p2-title": "Nexus — Raspberry Pi 5 Server",
-                "p2-subtitle": "24/7 self-hosted infrastructuur voor AI en automation",
-                "p2-desc": "Nexus is de Raspberry Pi 5 die bij mij thuis staat en alles draait. AI modellen, media server, DNS filtering, smart home, monitoring — allemaal self-hosted en altijd online. Beveiligd via zero-trust networking met Tailscale VPN en een strikte firewall.",
-                "p2-f1": "17 actieve services: Jellyfin, Grafana, Prometheus, Homebridge en meer",
-                "p2-f2": "Pi-hole blokkeert advertenties en tracking voor het hele netwerk",
-                "p2-f3": "Zero-trust beveiliging met Tailscale VPN en UFW firewall",
-                "p2-f4": "Apple HomeKit integratie via Homebridge",
-                "p2-link": "Bekijk project",
-                "p3-wip": "In ontwikkeling",
-                "p3-title": "AI Trading Journal",
-                "p3-subtitle": "Self-hosted AI coaching voor XAUUSD trades",
-                "p3-desc": "Een persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Vóór elke trade een check tegen mijn strategie, daarna een analyse van wat er fout ging en waarom. AKAI geeft me directe toegang vanuit Telegram — ik kan mijn journal inzien en bijwerken zonder de app te openen.",
-                "p3-f1": "Pre-trade validatie tegen persoonlijke strategie regels",
-                "p3-f2": "Emotie & psychologie tracking per trade",
-                "p3-f3": "Post-trade analyse met nieuwscontext via Claude API",
-                "p3-f4": "Bereikbaar via AKAI op Telegram — altijd en overal",
-                "p3-link": "Bekijk showcase",
-            },
-            en: {
-                "nav-contact": "Contact",
-                "hero-sub-pre": "I build ",
-                "hero-sub-strong": "smart, self-hosted solutions",
-                "hero-sub-post": " — from a Raspberry Pi server to a personal AI assistant that's always there for me.",
-                "stat1": "Nexus server uptime",
-                "stat2": "Active services",
-                "stat3": "Monthly AI costs",
-                "stat4": "Personal AI assistant",
-                "projects-title": "Projects",
-                "p1-badge": "Live",
-                "p1-title": "AKAI — Personal AI Assistant",
-                "p1-subtitle": "Self-hosted AI that talks, thinks and acts",
-                "p1-desc": "AKAI is my personal AI assistant running on my own Raspberry Pi server — no subscription, no cloud, no data sharing. He responds to Telegram messages, picks up voice calls via my phone, and has access to tools like my calendar and notes. AKAI knows my context and works 24/7.",
-                "p1-f1": "Responds to Telegram messages — day and night",
-                "p1-f2": "Voice calls via Twilio, forwarded to my number",
-                "p1-f3": "Access to tools: calendar, system, notes, Trading Journal",
-                "p1-f4": "100% self-hosted — runs locally on Nexus",
-                "p1-link": "View AKAI",
-                "p2-badge": "Live",
-                "p2-title": "Nexus — Raspberry Pi 5 Server",
-                "p2-subtitle": "24/7 self-hosted infrastructure for AI and automation",
-                "p2-desc": "Nexus is the Raspberry Pi 5 at my home that runs everything. AI models, media server, DNS filtering, smart home, monitoring — all self-hosted and always online. Secured via zero-trust networking with Tailscale VPN and a strict firewall.",
-                "p2-f1": "17 active services: Jellyfin, Grafana, Prometheus, Homebridge and more",
-                "p2-f2": "Pi-hole blocks ads and tracking for the entire network",
-                "p2-f3": "Zero-trust security with Tailscale VPN and UFW firewall",
-                "p2-f4": "Apple HomeKit integration via Homebridge",
-                "p2-link": "View project",
-                "p3-wip": "In development",
-                "p3-title": "AI Trading Journal",
-                "p3-subtitle": "Self-hosted AI coaching for XAUUSD trades",
-                "p3-desc": "A personal AI trading coach that tracks what I do and why. Before each trade a check against my strategy, after a trade an analysis of what went wrong and why. AKAI gives me direct access from Telegram — I can view and update my journal without opening the app.",
-                "p3-f1": "Pre-trade validation against personal strategy rules",
-                "p3-f2": "Emotion & psychology tracking per trade",
-                "p3-f3": "Post-trade analysis with news context via Claude API",
-                "p3-f4": "Accessible via AKAI on Telegram — anywhere, anytime",
-                "p3-link": "View showcase",
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('visible'), i * 90);
+                observer.unobserve(e.target);
             }
-        };
+        });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        let currentLang = 'nl';
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'nl' ? 'en' : 'nl';
-            applyLanguage(currentLang);
+    // Language toggle
+    // All values are plain text — no HTML — fully XSS-safe, textContent only.
+    const translations = {
+        nl: {
+            "nav-contact":    "Contact",
+            "hero-sub-pre":   "Ik bouw ",
+            "hero-sub-strong":"slimme, self-hosted systemen.",
+            "hero-sub-post":  " Van Raspberry Pi server tot persoonlijke AI assistent.",
+            "stat1": "Uptime Nexus server",
+            "stat2": "Actieve services",
+            "stat3": "Maandelijkse AI kosten",
+            "stat4": "Persoonlijke AI assistent",
+            "projects-title": "Projecten",
+            "p1-badge":   "Live",
+            "p1-title":   "AKAI",
+            "p1-subtitle":"Persoonlijke AI assistent op Nexus",
+            "p1-desc":    "AKAI draait op mijn eigen Raspberry Pi server. Geen abonnement. Geen cloud. Geen data-deling. Reageert op Telegram, voert voice calls uit en heeft toegang tot mijn kalender, Trading Journal en server scripts.",
+            "p1-f1": "24/7 bereikbaar via Telegram",
+            "p1-f2": "Voicegesprekken via Twilio, doorgesteld naar mijn nummer",
+            "p1-f3": "Toegang tot kalender, systeem, notities en Trading Journal",
+            "p1-f4": "100% self-hosted op Nexus",
+            "p1-link": "Bekijk AKAI",
+            "p2-badge":   "Live",
+            "p2-title":   "Nexus",
+            "p2-subtitle":"Raspberry Pi 5 homelab server",
+            "p2-desc":    "Nexus is de Raspberry Pi 5 thuis die alles draait. AI modellen, media server, DNS filtering, smart home en monitoring. Beveiligd via zero-trust networking met Tailscale en UFW.",
+            "p2-f1": "17 actieve services: Jellyfin, Grafana, Homebridge en meer",
+            "p2-f2": "Pi-hole blokkeert advertenties voor het hele netwerk",
+            "p2-f3": "Zero-trust beveiliging via Tailscale en UFW",
+            "p2-f4": "Apple HomeKit integratie via Homebridge",
+            "p2-link": "Bekijk project",
+            "p3-wip":     "In ontwikkeling",
+            "p3-title":   "AI Trading Journal",
+            "p3-subtitle":"AI coaching voor XAUUSD trades",
+            "p3-desc":    "Persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Pre-trade check, post-trade analyse en psychologie tracking. Bereikbaar via AKAI op Telegram.",
+            "p3-f1": "Pre-trade validatie tegen persoonlijke strategie regels",
+            "p3-f2": "Emotie en psychologie tracking per trade",
+            "p3-f3": "Post-trade analyse met nieuwscontext via Claude API",
+            "p3-f4": "Bereikbaar via AKAI op Telegram",
+            "p3-link": "Bekijk showcase",
+        },
+        en: {
+            "nav-contact":    "Contact",
+            "hero-sub-pre":   "I build ",
+            "hero-sub-strong":"smart, self-hosted systems.",
+            "hero-sub-post":  " From Raspberry Pi server to personal AI assistant.",
+            "stat1": "Nexus server uptime",
+            "stat2": "Active services",
+            "stat3": "Monthly AI costs",
+            "stat4": "Personal AI assistant",
+            "projects-title": "Projects",
+            "p1-badge":   "Live",
+            "p1-title":   "AKAI",
+            "p1-subtitle":"Personal AI assistant on Nexus",
+            "p1-desc":    "AKAI runs on my own Raspberry Pi server. No subscription. No cloud. No data sharing. Responds on Telegram, handles voice calls and has access to my calendar, Trading Journal and server scripts.",
+            "p1-f1": "24/7 accessible via Telegram",
+            "p1-f2": "Voice calls via Twilio, forwarded to my number",
+            "p1-f3": "Access to calendar, system, notes and Trading Journal",
+            "p1-f4": "100% self-hosted on Nexus",
+            "p1-link": "View AKAI",
+            "p2-badge":   "Live",
+            "p2-title":   "Nexus",
+            "p2-subtitle":"Raspberry Pi 5 homelab server",
+            "p2-desc":    "Nexus is the Raspberry Pi 5 at home that runs everything. AI models, media server, DNS filtering, smart home and monitoring. Secured via zero-trust networking with Tailscale and UFW.",
+            "p2-f1": "17 active services: Jellyfin, Grafana, Homebridge and more",
+            "p2-f2": "Pi-hole blocks ads for the entire network",
+            "p2-f3": "Zero-trust security via Tailscale and UFW",
+            "p2-f4": "Apple HomeKit integration via Homebridge",
+            "p2-link": "View project",
+            "p3-wip":     "In development",
+            "p3-title":   "AI Trading Journal",
+            "p3-subtitle":"AI coaching for XAUUSD trades",
+            "p3-desc":    "Personal AI trading coach that tracks what I do and why. Pre-trade check, post-trade analysis and psychology tracking. Accessible via AKAI on Telegram.",
+            "p3-f1": "Pre-trade validation against personal strategy rules",
+            "p3-f2": "Emotion and psychology tracking per trade",
+            "p3-f3": "Post-trade analysis with news context via Claude API",
+            "p3-f4": "Accessible via AKAI on Telegram",
+            "p3-link": "View showcase",
         }
+    };
 
-        function applyLanguage(lang) {
-            // Use textContent — no HTML in translation strings, fully XSS-safe
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                const value = translations[lang][key];
-                if (value !== undefined) {
-                    el.textContent = value;
-                }
-            });
+    let currentLang = 'nl';
 
-            // Hero title: only the preposition word changes
-            const prep = document.getElementById('hero-preposition');
-            if (prep) prep.textContent = lang === 'en' ? 'to' : 'tot';
+    function toggleLanguage() {
+        currentLang = currentLang === 'nl' ? 'en' : 'nl';
+        document.getElementById('langToggle').textContent = currentLang === 'nl' ? 'EN' : 'NL';
+        applyLanguage(currentLang);
+    }
 
-            // Hero title lines: update surrounding text for EN
-            const heroTitle = document.querySelector('.hero-title');
-            if (heroTitle) {
-                // Keep the structure: "Van idee\n[prep] systeem\ndat werkt"
-                // Only the preposition is dynamic; surrounding text stays
-                const lines = heroTitle.childNodes;
-                lines.forEach(node => {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        const text = node.textContent.trim();
-                        if (text === 'Van idee' || text === 'From idea') {
-                            node.textContent = lang === 'en' ? 'From idea' : 'Van idee';
-                        }
-                        if (text === 'systeem' || text === 'system') {
-                            node.textContent = lang === 'en' ? ' system' : ' systeem';
-                        }
-                        if (text === 'dat werkt' || text === 'that works') {
-                            node.textContent = lang === 'en' ? 'that works' : 'dat werkt';
-                        }
-                    }
-                });
-            }
-
-            document.getElementById('langToggle').textContent = lang === 'nl' ? 'EN' : 'NL';
-            document.documentElement.lang = lang;
-        }
-    </script>
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const val = translations[lang][key];
+            if (val !== undefined) el.textContent = val;
+        });
+        const prep = document.getElementById('hero-preposition');
+        if (prep) prep.textContent = lang === 'en' ? 'to' : 'tot';
+        const l1 = document.getElementById('hero-line1');
+        const l2 = document.getElementById('hero-line2');
+        const l3 = document.getElementById('hero-line3');
+        if (l1) l1.textContent = lang === 'en' ? 'From idea' : 'Van idee';
+        if (l2) l2.textContent = lang === 'en' ? ' system' : ' systeem';
+        if (l3) l3.textContent = lang === 'en' ? 'that works' : 'dat werkt';
+    }
+</script>
 </body>
 </html>
