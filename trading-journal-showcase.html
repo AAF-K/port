@@ -1200,10 +1200,82 @@
         </div>
     </section>
 
+    <!-- ─── AKAI INTEGRATION ─── -->
+    <section class="ai-section" id="akai" style="border-top: 1px solid var(--border);">
+        <div class="section-tag">AKAI Integration</div>
+        <h2 class="section-title reveal">Your journal.<br>Always in your pocket.</h2>
+        <p style="font-size:15px; color:var(--muted); line-height:1.75; max-width:620px; margin-bottom:48px;" class="reveal">
+            The Trading Journal runs on Nexus, but thanks to AKAI — my personal AI assistant on Telegram — I don't need to open a browser to use it. I can log a trade, check my stats or ask for analysis with a simple message. AKAI knows the journal, knows my strategy and knows my history.
+        </p>
+        <div class="ai-grid reveal">
+            <div class="ai-flow">
+                <div class="flow-step">
+                    <div class="flow-num">01</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Message AKAI on Telegram</div>
+                        <p class="flow-desc">"Log trade — XAUUSD long 2648, SL 2638, TP 2668" — AKAI understands and formats it correctly.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">02</div>
+                    <div class="flow-content">
+                        <div class="flow-title">AKAI calls the Journal API</div>
+                        <p class="flow-desc">AKAI has a tool that connects to the Trading Journal Flask API on Nexus. The trade is logged instantly, including the pre-trade check.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">03</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Pre-trade check runs automatically</div>
+                        <p class="flow-desc">Strategy rules are checked locally via Ollama. AKAI replies with the result — APPROVED or WARNING with reasoning — before you even open the app.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">04</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Ask for your stats anytime</div>
+                        <p class="flow-desc">"What's my winrate this week?" or "Show my last 5 trades" — AKAI queries the journal and replies directly in Telegram. No app needed.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-models">
+                <div class="model-card" style="border-color: rgba(0,255,136,0.15);">
+                    <div class="model-header">
+                        <div class="model-icon" style="background:rgba(0,255,136,0.08)">🤖</div>
+                        <div class="model-name">AKAI via Telegram</div>
+                        <span class="model-badge badge-local">Live</span>
+                    </div>
+                    <p class="model-desc">Log trades, check stats and get analysis — all via Telegram. No app, no browser. AKAI translates your messages into Journal API calls and replies with formatted results.</p>
+                </div>
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-icon" style="background:rgba(0,255,136,0.08)">🦙</div>
+                        <div class="model-name">Qwen 2.5 via Ollama</div>
+                        <span class="model-badge badge-local">Local</span>
+                    </div>
+                    <p class="model-desc">Pre-trade validation and post-trade analysis run entirely on-device. 0€ per analysis, no internet required, maximum privacy.</p>
+                </div>
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-icon" style="background:rgba(96,165,250,0.08)">⚡</div>
+                        <div class="model-name">Claude API</div>
+                        <span class="model-badge badge-api">API</span>
+                    </div>
+                    <p class="model-desc">Called selectively for deep post-trade analysis with real-time market news context — NFP, CPI, Fed decisions — when a trade needs more than local analysis can provide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ─── FOOTER ─── -->
     <footer>
     <div class="footer-left">© 2026 <span>Alano Kricha</span></div>
-    <div class="footer-right"><a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a></div>
+    <div class="footer-right" style="display:flex; gap:24px;">
+        <a href="index.html">← Portfolio</a>
+        <a href="akai.html">AKAI →</a>
+        <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
 </footer>
 
     <script>

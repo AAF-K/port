@@ -431,12 +431,13 @@
         <span class="italic">AI</span> Infrastructuur
     </h1>
     <div class="hero-meta">
-        <p class="hero-desc" data-i18n="hero-sub">Een self-hosted AI en automatiserings platform met focus op privacy, prestaties en schaalbaarheid.</p>
+        <p class="hero-desc" data-i18n="hero-sub">De Raspberry Pi 5 die bij mij thuis staat en 24/7 alles draait — AI, media, monitoring, smart home en beveiliging. Volledig self-hosted, volledig onder controle.</p>
         <div class="badge-row">
-            <span class="badge">Raspberry Pi 5</span>
-            <span class="badge">16GB RAM</span>
+            <span class="badge">Raspberry Pi 5 · 16GB</span>
+            <span class="badge">Samsung T7 SSD 1TB</span>
             <span class="badge">Ollama AI</span>
-            <span class="badge">Python</span>
+            <span class="badge">Docker</span>
+            <span class="badge">Tailscale VPN</span>
             <span class="badge" data-i18n="badge-security">Zero-Trust</span>
         </div>
     </div>
@@ -444,11 +445,11 @@
 
 <!-- Stats -->
 <div class="stats-bar reveal">
-    <div class="stat-item"><span class="stat-num">5</span><span class="stat-label" data-i18n="stat1">Architectuur Lagen</span></div>
-    <div class="stat-item"><span class="stat-num">8+</span><span class="stat-label" data-i18n="stat2">Actieve Services</span></div>
-    <div class="stat-item"><span class="stat-num">99.9%</span><span class="stat-label">Uptime</span></div>
-    <div class="stat-item"><span class="stat-num">3</span><span class="stat-label" data-i18n="stat4">AI Modellen</span></div>
-    <div class="stat-item"><span class="stat-num">~15s</span><span class="stat-label" data-i18n="stat5">Gem. Reactietijd</span></div>
+    <div class="stat-item"><span class="stat-num">17</span><span class="stat-label" data-i18n="stat1">Actieve Services</span></div>
+    <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label" data-i18n="stat2">Uptime</span></div>
+    <div class="stat-item"><span class="stat-num">0€</span><span class="stat-label" data-i18n="stat3">Maandelijkse AI kosten</span></div>
+    <div class="stat-item"><span class="stat-num">3+</span><span class="stat-label" data-i18n="stat4">AI Modellen lokaal</span></div>
+    <div class="stat-item"><span class="stat-num">~5€</span><span class="stat-label" data-i18n="stat5">Stroom per maand</span></div>
 </div>
 
 <div class="content">
@@ -460,23 +461,24 @@
             <div class="label-line"></div>
             <span class="label-text" data-i18n="overview-title">Project overzicht</span>
         </div>
-        <h2 class="section-title" data-i18n="overview-heading">Gebouwd voor privacy.<br>Geoptimaliseerd voor AI.</h2>
-        <p class="section-body" data-i18n="overview-p1">Een zelfgebouwde server op een Raspberry Pi 5, waar ik AI modellen lokaal kan draaien, mijn smart home apparaten kan bedienen en data kan opslaan. Het hele systeem draait 24/7 en is van buitenaf veilig te bereiken.</p>
-        <p class="section-body" data-i18n="overview-p2">Door alle services alleen op localhost te draaien en externe toegang via een beveiligde tunnel te regelen, blijft alles privé en veilig. Alle AI modellen draaien lokaal — mijn data gaat nergens naartoe.</p>
+        <h2 class="section-title" data-i18n="overview-heading">Nexus — alles op één Pi.</h2>
+        <p class="section-body" data-i18n="overview-p1">Nexus is de naam van mijn Raspberry Pi 5 die thuis staat te draaien. Geen cloud, geen abonnement — gewoon mijn eigen hardware. 17 actieve services: van AI modellen en media server tot DNS filtering, honeypot en smart home automation.</p>
+        <p class="section-body" data-i18n="overview-p2">De Pi draait op een Samsung T7 SSD (1TB, ~340 MB/s) via USB 3.2. Alle services draaien als systemd services of Docker containers. Externe toegang gaat uitsluitend via Tailscale VPN of Cloudflare Tunnel — nooit direct open naar internet.</p>
         <div class="tech-row">
-            <span class="tech-pill">Raspberry Pi 5</span>
-            <span class="tech-pill">Python 3.13</span>
+            <span class="tech-pill">Raspberry Pi 5 · 16GB</span>
+            <span class="tech-pill">Debian 13 Trixie</span>
+            <span class="tech-pill">Docker</span>
             <span class="tech-pill">Ollama</span>
-            <span class="tech-pill">Flask</span>
-            <span class="tech-pill">FastAPI</span>
-            <span class="tech-pill">LangChain</span>
-            <span class="tech-pill">ChromaDB</span>
-            <span class="tech-pill">Cloudflare Tunnel</span>
+            <span class="tech-pill">Pi-hole v6</span>
+            <span class="tech-pill">Grafana</span>
+            <span class="tech-pill">Prometheus</span>
+            <span class="tech-pill">Jellyfin</span>
+            <span class="tech-pill">Nextcloud</span>
+            <span class="tech-pill">Homebridge</span>
             <span class="tech-pill">Tailscale VPN</span>
             <span class="tech-pill">UFW Firewall</span>
             <span class="tech-pill">Fail2ban</span>
-            <span class="tech-pill">Homebridge</span>
-            <span class="tech-pill">systemd</span>
+            <span class="tech-pill">Cloudflare Tunnel</span>
         </div>
     </div>
 
@@ -490,33 +492,33 @@
         <div class="features-grid">
             <div class="feature-card">
                 <span class="feature-icon">🤖</span>
-                <div class="feature-title" data-i18n="f1-title">Lokale AI</div>
-                <p class="feature-desc" data-i18n="f1-desc">Ollama draait AI modellen (Qwen 2.5) volledig lokaal. Gecombineerd met ChromaDB voor slimme context. Alles blijft op Nexus, geen cloud nodig.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🛡️</span>
-                <div class="feature-title" data-i18n="f2-title">Beveiliging</div>
-                <p class="feature-desc" data-i18n="f2-desc">Alle diensten draaien alleen op localhost. Firewall blokkeert alles van buitenaf. SSH werkt alleen met keys. Cloudflare Tunnel voor veilige externe toegang.</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">🌐</span>
-                <div class="feature-title" data-i18n="f3-title">Publieke AI Chat</div>
-                <p class="feature-desc" data-i18n="f3-desc">Flask API met rate limiting zodat niemand het kan misbruiken. Bereikbaar via naja.nexusakai.com met SSL encryptie.</p>
+                <div class="feature-title" data-i18n="f1-title">Lokale AI — AKAI & Ollama</div>
+                <p class="feature-desc" data-i18n="f1-desc">Ollama draait meerdere AI modellen volledig lokaal: Naja-Fast (1B), Naja-Smart (3.8B) en AKAI-Code. Geen API kosten, maximale privacy. AKAI, mijn persoonlijke AI assistent, draait ook op Nexus.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">📊</span>
-                <div class="feature-title" data-i18n="f4-title">Monitoring Dashboard</div>
-                <p class="feature-desc" data-i18n="f4-desc">FastAPI dashboard voor live Nexus prestaties. CPU, geheugen, temperatuur — alles in real-time.</p>
+                <div class="feature-title" data-i18n="f2-title">Monitoring — Grafana & Prometheus</div>
+                <p class="feature-desc" data-i18n="f2-desc">Grafana dashboard op poort 3000 met real-time grafieken. Prometheus scrapt CPU, RAM, temperatuur en disk I/O. Glances geeft een snel overzicht via REST API op poort 61208.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📺</span>
+                <div class="feature-title" data-i18n="f3-title">Media — Jellyfin & Nextcloud</div>
+                <p class="feature-desc" data-i18n="f3-desc">Jellyfin draait als media server op poort 8096 — films en muziek streamen naar elk apparaat. Nextcloud op cloud.nexusakai.com voor persoonlijke cloud opslag. Alles op NAS SSD (238GB).</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <div class="feature-title" data-i18n="f4-title">Security — honeypot & firewall</div>
+                <p class="feature-desc" data-i18n="f4-desc">Cowrie SSH/Telnet honeypot (Docker) logt aanvalspogingen. Endlessh tarpit op poort 22. UFW firewall blokkeert alles behalve Tailscale en lokaal netwerk. Canary tokens sturen alerts bij inbraak.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">🏠</span>
-                <div class="feature-title" data-i18n="f5-title">Smart Home</div>
-                <p class="feature-desc" data-i18n="f5-desc">Homebridge verbindt alle slimme apparaten met Apple HomeKit. Philips Hue, IKEA — alles via één systeem.</p>
+                <div class="feature-title" data-i18n="f5-title">Smart Home — Homebridge</div>
+                <p class="feature-desc" data-i18n="f5-desc">Homebridge verbindt alle slimme apparaten met Apple HomeKit. Bereikbaar op poort 8581. AKAI kan via tools de verlichting en apparaten aansturen — gewoon via een Telegram bericht.</p>
             </div>
             <div class="feature-card">
-                <span class="feature-icon">💻</span>
-                <div class="feature-title" data-i18n="f6-title">Development Setup</div>
-                <p class="feature-desc" data-i18n="f6-desc">VS Code Remote SSH om vanaf de Mac op Nexus te programmeren. Continue.dev voor AI-powered code suggesties.</p>
+                <span class="feature-icon">🌐</span>
+                <div class="feature-title" data-i18n="f6-title">DNS — Pi-hole & Tailscale</div>
+                <p class="feature-desc" data-i18n="f6-desc">Pi-hole v6 filtert advertenties en tracking voor het hele netwerk via DNS. Tailscale VPN geeft veilige toegang tot alle services van overal ter wereld, zonder poorten open te zetten.</p>
             </div>
         </div>
     </div>
@@ -530,38 +532,45 @@
         </div>
         <div class="arch-layers">
             <div class="arch-layer">
+                <div class="arch-num">LAAG 06</div>
+                <div class="arch-content">
+                    <div class="arch-title">Externe Toegang</div>
+                    <div class="arch-items">Cloudflare Tunnel → nexusakai.com · Tailscale VPN :100.109.6.112 · SSH op poort 2022 (keys only)</div>
+                </div>
+            </div>
+            <div class="arch-layer">
                 <div class="arch-num">LAAG 05</div>
                 <div class="arch-content">
-                    <div class="arch-title" data-i18n="layer5">Externe Toegang & Beveiliging</div>
-                    <div class="arch-items">Cloudflare Tunnel (SSL/TLS) · Tailscale VPN · UFW Firewall</div>
+                    <div class="arch-title">Security</div>
+                    <div class="arch-items">UFW (default deny) · Fail2ban (24u ban) · Cowrie honeypot :2222 · Endlessh tarpit :22 · Canary tokens</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 04</div>
                 <div class="arch-content">
-                    <div class="arch-title" data-i18n="layer4">Beveiligingslaag</div>
-                    <div class="arch-items">Fail2ban · SSH hardened (keys only) · <span data-i18n="auto-updates">Automatische security updates</span></div>
+                    <div class="arch-title">AI & Assistent</div>
+                    <div class="arch-items">Ollama :11434 · AKAI (OpenClaw gateway) :18789 · Flask chatbot API :5000 · Trading Journal :5001</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 03</div>
                 <div class="arch-content">
-                    <div class="arch-title" data-i18n="layer3">Applicatie Services</div>
-                    <div class="arch-items">Ollama :11434 · Flask API :5000 · FastAPI :8050 · Homebridge · Glances · Continue.dev</div>
+                    <div class="arch-title">Applicatie Services (Docker)</div>
+                    <div class="arch-items">Pi-hole :8082 · Nextcloud :11000 · Grafana :3000 · Prometheus :9090 · Jellyfin :8096 · Homebridge :8581 · Glance :8484 · qBittorrent · Cowrie</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 02</div>
                 <div class="arch-content">
-                    <div class="arch-title" data-i18n="layer2">OS & Runtime</div>
-                    <div class="arch-items">Raspberry Pi OS (Debian) · Python 3.13 · Node.js · systemd</div>
+                    <div class="arch-title">OS & Runtime</div>
+                    <div class="arch-items">Debian 13 Trixie · Python 3.13 · Node.js 22 · Docker · systemd · NetworkManager</div>
                 </div>
             </div>
             <div class="arch-layer">
                 <div class="arch-num">LAAG 01</div>
                 <div class="arch-content">
-                    <div class="arch-title" data-i18n="layer1">Hardware</div>
-                    <div class="arch-items">Raspberry Pi 5 (Quad-core ARM) · 16GB RAM · <span data-i18n="active-cooling">Actieve koeling</span> · Gigabit LAN</div>
+                    <div class="arch-title">Hardware</div>
+                    <div class="arch-items">Raspberry Pi 5 (Cortex-A76, 2.4GHz) · 16GB LPDDR4X · Samsung T7 SSD 1TB (boot) · NEXUS-NAS SSD 238GB · Gigabit LAN</div>
                 </div>
             </div>
         </div>
@@ -576,11 +585,11 @@
         </div>
         <h2 class="section-title" data-i18n="insights-title">Belangrijke keuzes</h2>
         <div class="insights-list">
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text" data-i18n="insight1"><strong>Alles op localhost:</strong> Geen enkele service is direct vanaf internet te bereiken. Alleen via Cloudflare Tunnel of Tailscale VPN.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text" data-i18n="insight2"><strong>Automatisch herstarten:</strong> Als een service crasht, start systemd hem automatisch opnieuw op.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text" data-i18n="insight3"><strong>Kleinere AI modellen:</strong> Qwen 2.5 met 1.5B of 3B parameters draaien goed op Nexus. Antwoorden komen binnen 10-20 seconden.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text" data-i18n="insight4"><strong>Rate limiting:</strong> Maximum 100 API requests per uur per IP adres, zodat niemand het kan overbelasten.</p></div>
-            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text" data-i18n="insight5"><strong>Geheugen beheer:</strong> Elke service heeft een maximum geheugen limiet, zodat de 16GB RAM niet vol loopt.</p></div>
+            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Docker bypass UFW:</strong> Docker heeft de nare eigenschap dat het iptables regels toevoegt die UFW omzeilen. De oplossing: een DOCKER-USER chain in /etc/ufw/after.rules die expliciet alleen het lokale subnet en Tailscale doorlaat.</p></div>
+            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>UAS quirk voor NAS SSD:</strong> De Samsung T7 NAS SSD had ~44 resets per sessie door een bug in de JMicron USB bridge (152d:0583). Fix: usb-storage.quirks=152d:0583:u in cmdline.txt forceert UAS-modus uit.</p></div>
+            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Pi-hole via DNS forwarding:</strong> Met double NAT (KPN modem + TP-Link Deco mesh) moest de Deco geconfigureerd worden als DNS forwarder naar 192.168.2.72:53 — anders kwamen queries nooit bij Pi-hole aan.</p></div>
+            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Statisch IP via NetworkManager:</strong> De Pi gebruikt NetworkManager (niet dhcpcd). Statisch IP instellen via nmcli, niet via dhcpcd.conf — dat bestand wordt volledig genegeerd.</p></div>
+            <div class="insight-item"><div class="insight-dot"></div><p class="insight-text"><strong>Honeypot data is waardevol:</strong> Cowrie logt elk SSH aanvalspatroon. Frequente aanvallers proberen standaard credentials (root/123456, admin/admin) binnen 3 seconden. Endlessh houdt ze uren vast op poort 22.</p></div>
         </div>
     </div>
 
@@ -596,32 +605,33 @@
                 <div class="code-dot" style="background:#ff5f57"></div>
                 <div class="code-dot" style="background:#febc2e"></div>
                 <div class="code-dot" style="background:#28c840"></div>
-                <span class="code-filename">api.py — Flask Chatbot API</span>
+                <span class="code-filename">firewall_fix.sh — Docker UFW bypass oplossing</span>
             </div>
             <div class="code-body">
-<span class="c-key">from</span> flask <span class="c-key">import</span> Flask, request, jsonify
-<span class="c-key">from</span> flask_cors <span class="c-key">import</span> CORS
-<span class="c-key">from</span> flask_limiter <span class="c-key">import</span> Limiter
-<span class="c-key">import</span> requests
+<span class="c-comment"># UFW default deny + essentiële regels</span>
+ufw default deny incoming
+ufw default allow outgoing
 
-app = <span class="c-fn">Flask</span>(__name__)
+<span class="c-comment"># SSH alleen van lokaal netwerk + Tailscale</span>
+ufw allow from <span class="c-str">192.168.2.0/24</span> to any port <span class="c-fn">22</span>
+ufw allow from <span class="c-str">100.64.0.0/10</span>  <span class="c-comment"># Tailscale VPN</span>
 
-<span class="c-comment"># CORS — only allowed domains</span>
-<span class="c-fn">CORS</span>(app, resources={<span class="c-str">r"/*"</span>: {<span class="c-str">"origins"</span>: [<span class="c-str">"https://www.nexusakai.com"</span>]}})
+<span class="c-comment"># Fix: Docker omzeilt UFW via eigen iptables regels.</span>
+<span class="c-comment"># Oplossing: DOCKER-USER chain in after.rules</span>
+cat >> /etc/ufw/after.rules << <span class="c-str">'EOF'</span>
+*filter
+:DOCKER-USER - [0:0]
+-I DOCKER-USER -i eth0 -j DROP
+-I DOCKER-USER -i eth0 -s <span class="c-str">192.168.2.0/24</span> -j ACCEPT
+-I DOCKER-USER -i tailscale0 -j ACCEPT
+COMMIT
+<span class="c-str">EOF</span>
 
-<span class="c-comment"># Rate limiting — 100 requests per hour per IP</span>
-limiter = <span class="c-fn">Limiter</span>(app=app, default_limits=[<span class="c-str">"100 per hour"</span>])
+<span class="c-comment"># Honeypot: Cowrie vangt aanvallers op 2222, Endlessh tart ze op 22</span>
+ufw allow <span class="c-fn">2222</span>/tcp  <span class="c-comment"># Cowrie SSH honeypot</span>
+ufw allow <span class="c-fn">2223</span>/tcp  <span class="c-comment"># Cowrie Telnet honeypot</span>
 
-<span class="c-key">@app</span>.route(<span class="c-str">"/chat"</span>, methods=[<span class="c-str">"POST"</span>])
-<span class="c-key">@limiter</span>.limit(<span class="c-str">"20 per minute"</span>)
-<span class="c-key">def</span> <span class="c-fn">chat</span>():
-    data = request.json
-    response = requests.<span class="c-fn">post</span>(<span class="c-str">"http://localhost:11434/api/generate"</span>,
-        json={<span class="c-str">"model"</span>: <span class="c-str">"qwen2.5:3b"</span>, <span class="c-str">"prompt"</span>: data[<span class="c-str">"message"</span>]})
-    <span class="c-key">return</span> <span class="c-fn">jsonify</span>(response.json())
-
-<span class="c-key">if</span> __name__ == <span class="c-str">"__main__"</span>:
-    app.<span class="c-fn">run</span>(host=<span class="c-str">"127.0.0.1"</span>, port=<span class="c-str">5000</span>)
+ufw --force enable
             </div>
         </div>
     </div>
@@ -635,24 +645,24 @@ limiter = <span class="c-fn">Limiter</span>(app=app, default_limits=[<span class
         </div>
         <div class="impact-grid">
             <div class="impact-card">
-                <span class="impact-icon">🎯</span>
-                <div class="impact-title" data-i18n="i1t">Snelheid</div>
-                <p class="impact-desc" data-i18n="i1d">AI antwoorden binnen 10-20 seconden. Indrukwekkend voor een Pi die normaal voor hobbyprojecten wordt gebruikt.</p>
+                <span class="impact-icon">🤖</span>
+                <div class="impact-title">AKAI draait erop</div>
+                <p class="impact-desc">Mijn persoonlijke AI assistent AKAI draait 24/7 op Nexus. Bereikbaar via Telegram, reageert op berichten, plant afspraken, monitort de server zelf. Zonder Nexus bestaat AKAI niet.</p>
             </div>
             <div class="impact-card">
                 <span class="impact-icon">🔒</span>
-                <div class="impact-title" data-i18n="i2t">Veiligheid</div>
-                <p class="impact-desc" data-i18n="i2d">Geen enkel beveiligingsprobleem gehad. Firewall en Fail2ban doen hun werk. Security score van 70% naar 95%.</p>
+                <div class="impact-title">95% security score</div>
+                <p class="impact-desc">Geen beveiligingsincidenten. UFW, Fail2ban, Cowrie honeypot en Endlessh werken samen. Aanvalspogingen worden gelogd en aanvallers worden minuten- tot uren vastgehouden in de tarpit.</p>
             </div>
             <div class="impact-card">
-                <span class="impact-icon">📈</span>
-                <div class="impact-title" data-i18n="i3t">Uitbreidbaar</div>
-                <p class="impact-desc" data-i18n="i3d">Dezelfde setup is te verhuizen naar een echte server zonder alles opnieuw te bouwen.</p>
+                <span class="impact-icon">📊</span>
+                <div class="impact-title">Complete monitoring</div>
+                <p class="impact-desc">Grafana toont real-time grafieken van CPU, RAM, temperatuur en disk I/O. Prometheus scrapt elke 15 seconden. Pi-hole toont DNS statistieken. Alles zichtbaar op één dashboard.</p>
             </div>
             <div class="impact-card">
                 <span class="impact-icon">💰</span>
-                <div class="impact-title" data-i18n="i4t">Goedkoop</div>
-                <p class="impact-desc" data-i18n="i4d">~5 euro per maand aan stroom. Geen cloud kosten, volledige controle over eigen data.</p>
+                <div class="impact-title">~5€ per maand</div>
+                <p class="impact-desc">17 services draaien voor de stroomkosten van één kop koffie per maand. Geen Dropbox abonnement, geen cloud AI kosten, geen betaalde media service. Alles self-hosted.</p>
             </div>
         </div>
     </div>

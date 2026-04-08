@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTMiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjEzIiByeT0iNSIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iMTMiIHJ5PSI5LjUiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8ZWxsaXBzZSBjeD0iMTYiIGN5PSIxNiIgcng9IjUiIHJ5PSIxMyIgc3Ryb2tlPSIjMDBlODdhIiBzdHJva2Utd2lkdGg9IjAuOCIvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSIyOSIgeTI9IjE2IiBzdHJva2U9IiMwMGU4N2EiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPGxpbmUgeDE9IjE2IiB5MT0iMyIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iIzAwZTg3YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KPC9zdmc+">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKAI — Persoonlijke AI Assistent — Alano Kricha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090f;
+            --surface: #0f0f1a;
+            --surface2: #141422;
+            --border: #1c1c30;
+            --accent: #00e87a;
+            --accent2: #00b860;
+            --warm: #f0a500;
+            --text: #f0f0f8;
+            --muted: #8888aa;
+            --dim: #3a3a5c;
+            --blue: #60a5fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        a { color: inherit; text-decoration: none; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ─── CURSOR ─── */
+        .cursor { position: fixed; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+        .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(0,232,122,0.4); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: width .3s, height .3s, border-color .3s; }
+        @media (max-width: 768px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 48px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid transparent;
+            transition: border-color .3s, background .3s, backdrop-filter .3s;
+        }
+        header.scrolled {
+            border-color: var(--border);
+            background: rgba(9,9,15,0.88);
+            backdrop-filter: blur(20px);
+        }
+        .back-link {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--muted); transition: color .2s;
+        }
+        .back-link:hover { color: var(--accent); }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .live-pill {
+            display: flex; align-items: center; gap: 7px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(0,232,122,0.08);
+            border: 1px solid rgba(0,232,122,0.2);
+            border-radius: 20px; padding: 5px 12px;
+        }
+        .live-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent); animation: pulse 1.5s ease infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.3; } }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(0,232,122,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,232,122,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at 30% 50%, black 20%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-glow {
+            position: absolute; top: -200px; left: -200px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,232,122,0.05) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-left {
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 100px 60px 80px 80px;
+            position: relative; z-index: 1;
+        }
+
+        .hero-eyebrow {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 28px;
+            animation: fadeUp .7s ease .1s both;
+        }
+        .eyebrow-line { width: 32px; height: 1px; background: var(--accent); }
+        .eyebrow-text {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+            color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: clamp(52px, 7vw, 96px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -5px;
+            margin-bottom: 8px;
+            animation: fadeUp .7s ease .2s both;
+        }
+        .hero-title .italic {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--accent);
+            letter-spacing: -3px;
+        }
+        .hero-tagline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--muted);
+            letter-spacing: 1px;
+            margin-bottom: 36px;
+            animation: fadeUp .7s ease .3s both;
+        }
+        .hero-desc {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 420px;
+            margin-bottom: 40px;
+            animation: fadeUp .7s ease .4s both;
+        }
+        .hero-desc strong { color: var(--text); font-weight: 600; }
+
+        .channel-row {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            animation: fadeUp .7s ease .5s both;
+        }
+        .channel-pill {
+            display: flex; align-items: center; gap: 7px;
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            letter-spacing: 1px; color: var(--muted);
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 4px; padding: 6px 12px;
+        }
+        .channel-pill.active { border-color: rgba(0,232,122,0.25); color: var(--accent); }
+        .channel-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+        /* ─── PHONE / CHAT MOCKUP ─── */
+        .hero-right {
+            display: flex; align-items: center; justify-content: center;
+            padding: 80px 80px 80px 40px;
+            position: relative; z-index: 1;
+            animation: fadeUp .9s ease .3s both;
+        }
+
+        .phone-wrap { position: relative; }
+
+        .phone-glow {
+            position: absolute; inset: -60px;
+            background: radial-gradient(ellipse, rgba(0,232,122,0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .phone {
+            width: 290px;
+            background: #0a0a14;
+            border-radius: 44px;
+            border: 1px solid rgba(255,255,255,0.07);
+            overflow: hidden;
+            box-shadow:
+                0 0 0 8px rgba(255,255,255,0.02),
+                0 48px 96px rgba(0,0,0,0.7),
+                0 0 80px rgba(0,232,122,0.04);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0) rotate(-1deg); }
+            50%      { transform: translateY(-14px) rotate(1deg); }
+        }
+
+        .phone-notch {
+            width: 90px; height: 22px;
+            background: #0a0a14;
+            border-radius: 0 0 16px 16px;
+            margin: 0 auto;
+        }
+
+        /* Telegram-style chat */
+        .tg-header {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: #0d0d18;
+        }
+        .tg-avatar {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: linear-gradient(135deg, #00e87a, #00b860);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 12px; color: #000; flex-shrink: 0;
+        }
+        .tg-info { flex: 1; min-width: 0; }
+        .tg-name { font-size: 12px; font-weight: 700; color: var(--text); }
+        .tg-status {
+            font-size: 10px; color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .tg-online { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+
+        .chat-body {
+            padding: 10px 10px;
+            display: flex; flex-direction: column; gap: 8px;
+            background: #0a0a12;
+            min-height: 420px;
+        }
+
+        .msg { display: flex; flex-direction: column; max-width: 85%; }
+        .msg.user { align-self: flex-end; align-items: flex-end; }
+        .msg.akai { align-self: flex-start; }
+
+        .msg-bubble {
+            border-radius: 16px;
+            padding: 8px 12px;
+            font-size: 11px;
+            line-height: 1.55;
+        }
+        .msg.user .msg-bubble {
+            background: #2d5a3d;
+            color: #e8f5e9;
+            border-radius: 16px 16px 4px 16px;
+        }
+        .msg.akai .msg-bubble {
+            background: #1a1a28;
+            color: var(--text);
+            border-radius: 16px 16px 16px 4px;
+            border: 1px solid rgba(0,232,122,0.12);
+        }
+        .msg-time {
+            font-size: 9px; color: var(--dim);
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 2px; padding: 0 4px;
+        }
+        .msg-code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0,232,122,0.08);
+            border: 1px solid rgba(0,232,122,0.15);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 10px;
+            margin-top: 4px;
+            line-height: 1.7;
+        }
+        .msg-green { color: var(--accent); }
+        .msg-muted { color: var(--muted); }
+        .typing { display: flex; align-items: center; gap: 3px; padding: 6px 10px; }
+        .typing-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); animation: typingBounce 1.2s ease infinite; }
+        .typing-dot:nth-child(2) { animation-delay: .2s; }
+        .typing-dot:nth-child(3) { animation-delay: .4s; }
+        @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+
+        /* ─── STATS BAR ─── */
+        .stats-bar {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .stat-item {
+            padding: 28px 36px;
+            border-right: 1px solid var(--border);
+            transition: background .3s;
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-item:hover { background: rgba(0,232,122,0.02); }
+        .stat-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px; font-weight: 500;
+            color: var(--accent); display: block; margin-bottom: 4px;
+        }
+        .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+
+        /* ─── CONTENT ─── */
+        .content { padding: 80px 48px; max-width: 1300px; margin: 0 auto; }
+        .section { margin-bottom: 88px; }
+
+        .section-label {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 40px;
+        }
+        .label-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+        .label-line { flex: 1; height: 1px; background: var(--border); }
+        .label-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+        .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 20px; }
+        .section-body { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 680px; margin-bottom: 14px; }
+        .section-body strong { color: var(--text); font-weight: 600; }
+
+        /* ─── CAPABILITIES GRID ─── */
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .cap-card {
+            background: var(--bg);
+            padding: 32px;
+            transition: background .3s;
+        }
+        .cap-card:hover { background: var(--surface); }
+        .cap-icon { font-size: 26px; margin-bottom: 18px; display: block; }
+        .cap-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; letter-spacing: -.3px; }
+        .cap-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+        .cap-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+        .cap-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 9px;
+            padding: 3px 8px; border-radius: 3px;
+            background: var(--surface2); border: 1px solid var(--border);
+            color: var(--muted); letter-spacing: .5px;
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .flow { display: flex; flex-direction: column; gap: 0; }
+        .flow-step {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            border: 1px solid var(--border);
+            border-bottom: none;
+            transition: background .2s;
+        }
+        .flow-step:first-child { border-radius: 12px 12px 0 0; }
+        .flow-step:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 12px 12px; }
+        .flow-step:hover { background: var(--surface); }
+        .flow-left {
+            padding: 24px 28px;
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .flow-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; color: var(--accent); letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .flow-label { font-size: 14px; font-weight: 700; }
+        .flow-right { padding: 24px 28px; }
+        .flow-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+        .flow-items {
+            display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+        }
+        .flow-item {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            padding: 3px 10px; border-radius: 3px;
+            background: var(--surface2); border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        /* ─── MODEL ROUTING ─── */
+        .models-grid { display: flex; flex-direction: column; gap: 12px; }
+        .model-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: grid;
+            grid-template-columns: 44px 1fr auto;
+            gap: 16px;
+            align-items: center;
+            transition: border-color .2s, transform .2s;
+        }
+        .model-card:hover { border-color: rgba(0,232,122,0.2); transform: translateX(4px); }
+        .model-emoji { font-size: 22px; }
+        .model-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+        .model-use { font-size: 12px; color: var(--muted); }
+        .model-badge {
+            font-family: 'JetBrains Mono', monospace; font-size: 9px;
+            padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .badge-local { background: rgba(0,232,122,0.1); color: var(--accent); border: 1px solid rgba(0,232,122,0.2); }
+        .badge-api { background: rgba(96,165,250,0.1); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); }
+        .badge-free { background: rgba(240,165,0,0.1); color: var(--warm); border: 1px solid rgba(240,165,0,0.2); }
+
+        /* ─── INSIGHTS (KEY DECISIONS) ─── */
+        .insights-list { display: flex; flex-direction: column; gap: 0; }
+        .insight-item {
+            display: grid; grid-template-columns: 40px 1fr;
+            gap: 20px; padding: 24px 0;
+            border-bottom: 1px solid var(--border); align-items: start;
+        }
+        .insight-item:first-child { border-top: 1px solid var(--border); }
+        .insight-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 7px; justify-self: center; }
+        .insight-text { font-size: 15px; color: var(--muted); line-height: 1.7; }
+        .insight-text strong { color: var(--text); font-weight: 700; }
+
+        /* ─── CODE ─── */
+        .code-wrap { background: #06060e; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .code-header { display: flex; align-items: center; gap: 6px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surface); }
+        .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .code-filename { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: 8px; }
+        .code-body { padding: 24px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9; overflow-x: auto; color: #8888aa; }
+        .c-comment { color: #3a3a5c; }
+        .c-key { color: #7c6af7; }
+        .c-str { color: #00e87a; }
+        .c-fn { color: #60a5fa; }
+        .c-val { color: #f0a500; }
+
+        /* ─── VISION ─── */
+        .vision-card {
+            background: var(--surface);
+            border: 1px solid rgba(0,232,122,0.15);
+            border-radius: 16px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .vision-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        .vision-quote {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: clamp(20px, 2.5vw, 28px);
+            font-weight: 300;
+            line-height: 1.5;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+        .vision-author {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer { border-top: 1px solid var(--border); padding: 48px; display: flex; justify-content: space-between; align-items: center; }
+        .footer-left { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+        .footer-left span { color: var(--accent); }
+        .footer-right { display: flex; gap: 28px; }
+        .footer-right a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; transition: color .2s; }
+        .footer-right a:hover { color: var(--accent); }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+        .reveal { opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.visible { opacity:1; transform: translateY(0); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            header { padding: 18px 24px; }
+            .hero { grid-template-columns: 1fr; min-height: auto; }
+            .hero-left { padding: 100px 24px 48px; }
+            .hero-right { display: none; }
+            .stats-bar { grid-template-columns: repeat(2,1fr); }
+            .stat-item { border-bottom: 1px solid var(--border); }
+            .content { padding: 60px 24px; }
+            .cap-grid { grid-template-columns: 1fr; }
+            .flow-step { grid-template-columns: 1fr; }
+            .flow-left { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
+            footer { padding: 32px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header id="header">
+    <a href="index.html" class="back-link">← Portfolio</a>
+    <div class="header-right">
+        <div class="live-pill">
+            <div class="live-dot"></div>
+            Live op Nexus
+        </div>
+    </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-left">
+        <div class="hero-eyebrow">
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Project 01 — AI Assistent</span>
+        </div>
+        <h1 class="hero-title">
+            AK<span class="italic">AI</span>
+        </h1>
+        <p class="hero-tagline">Jouw AI, jouw regels, jouw server.</p>
+        <p class="hero-desc">
+            AKAI is mijn <strong>persoonlijke AI assistent</strong> die draait op mijn eigen Raspberry Pi — thuis, 24/7, zonder cloud abonnement. Hij luistert via Telegram, neemt gesprekken aan via Twilio en heeft toegang tot mijn tools, kalender en projecten.
+        </p>
+        <div class="channel-row">
+            <div class="channel-pill active">
+                <div class="channel-dot"></div>
+                Telegram
+            </div>
+            <div class="channel-pill active">
+                <div class="channel-dot"></div>
+                Voice (Twilio)
+            </div>
+            <div class="channel-pill">
+                <span style="color:var(--dim)">■</span>
+                Web
+            </div>
+        </div>
+    </div>
+
+    <!-- Telegram chat mockup -->
+    <div class="hero-right">
+        <div class="phone-wrap">
+            <div class="phone-glow"></div>
+            <div class="phone">
+                <div class="phone-notch"></div>
+                <div class="tg-header">
+                    <div class="tg-avatar">AK</div>
+                    <div class="tg-info">
+                        <div class="tg-name">AKAI</div>
+                        <div class="tg-status">
+                            <div class="tg-online"></div>
+                            online
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-body">
+                    <div class="msg user">
+                        <div class="msg-bubble">hey akai hoe doet nexus het</div>
+                        <div class="msg-time">09:14</div>
+                    </div>
+                    <div class="msg akai">
+                        <div class="msg-bubble">
+                            <div class="msg-code">
+                                <span class="msg-green">▸ Nexus status</span><br>
+                                CPU &nbsp;&nbsp;&nbsp;23% ████░░░░░<br>
+                                RAM &nbsp;&nbsp;&nbsp;8.4 / 16 GB<br>
+                                Temp &nbsp;&nbsp;52°C ✓<br>
+                                <span class="msg-green">17 services ✓ all running</span>
+                            </div>
+                        </div>
+                        <div class="msg-time">09:14</div>
+                    </div>
+                    <div class="msg user">
+                        <div class="msg-bubble">log een trade — xauusd long 2648, sl 2638, tp 2668</div>
+                        <div class="msg-time">09:17</div>
+                    </div>
+                    <div class="msg akai">
+                        <div class="msg-bubble">
+                            Trade gelogd ✓<br>
+                            <div class="msg-code">
+                                XAUUSD LONG @ 2648<br>
+                                SL 2638 · TP 2668<br>
+                                R:R <span class="msg-green">1:2</span> · Risk $100<br>
+                                <span class="msg-green">Pre-check: strategie ✓</span>
+                            </div>
+                        </div>
+                        <div class="msg-time">09:17</div>
+                    </div>
+                    <div class="msg user">
+                        <div class="msg-bubble">wat staat er in mn agenda vandaag</div>
+                        <div class="msg-time">10:02</div>
+                    </div>
+                    <div class="msg akai">
+                        <div class="msg-bubble">
+                            <div class="msg-code">
+                                <span class="msg-green">▸ Vandaag — 8 april</span><br>
+                                11:00 Standup (30m)<br>
+                                14:00 Gym<br>
+                                <span class="msg-muted">Verder vrij 🙌</span>
+                            </div>
+                        </div>
+                        <div class="msg-time">10:02</div>
+                    </div>
+                    <div class="msg akai">
+                        <div class="msg-bubble typing">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<div class="stats-bar reveal">
+    <div class="stat-item">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">Altijd beschikbaar</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num">0s</span>
+        <span class="stat-label">Setup per gesprek</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Integraties & tools</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num">€3.76</span>
+        <span class="stat-label">Totale kosten ooit</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num">91M</span>
+        <span class="stat-label">Tokens verwerkt</span>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Wat is AKAI -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">01</span>
+            <div class="label-line"></div>
+            <span class="label-text">Wat is AKAI</span>
+        </div>
+        <h2 class="section-title">Een AI die écht van mij is.</h2>
+        <p class="section-body">
+            De meeste AI assistenten — Siri, ChatGPT, Google Assistant — draaien op servers van grote bedrijven. Jouw gesprekken, jouw vragen, jouw data: allemaal opgeslagen ergens in een datacenter waar je geen controle over hebt.
+        </p>
+        <p class="section-body">
+            <strong>AKAI is anders.</strong> Hij draait op de Raspberry Pi 5 die bij mij thuis staat. Elk gesprek blijft lokaal. Elke tool die hij aanroept draait op mijn eigen server. En toch is hij net zo bereikbaar als elke andere chatbot — gewoon via Telegram, dag en nacht.
+        </p>
+        <p class="section-body">
+            AKAI kent mij. Hij weet hoe ik heet, wat mijn projecten zijn, welke AI modellen ik gebruik en hoe mijn trading strategie eruitziet. Die context staat in bestanden op Nexus — niet in een cloud database van een derde partij.
+        </p>
+    </div>
+
+    <!-- Capabilities -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">02</span>
+            <div class="label-line"></div>
+            <span class="label-text">Wat AKAI kan</span>
+        </div>
+        <h2 class="section-title">Meer dan een chatbot.</h2>
+        <div class="cap-grid" style="margin-top: 32px;">
+            <div class="cap-card">
+                <span class="cap-icon">💬</span>
+                <div class="cap-title">Telegram — altijd bereikbaar</div>
+                <p class="cap-desc">Stuur een bericht op elk moment van de dag. AKAI reageert razendsnel en onthoudt de context van het gesprek. Geen app die je moet openen, geen account aanmaken — gewoon berichten sturen.</p>
+                <div class="cap-tags">
+                    <span class="cap-tag">Telegram Bot API</span>
+                    <span class="cap-tag">24/7</span>
+                    <span class="cap-tag">Sessie geheugen</span>
+                </div>
+            </div>
+            <div class="cap-card">
+                <span class="cap-icon">📞</span>
+                <div class="cap-title">Voice — hij neemt op</div>
+                <p class="cap-desc">Bel mijn telefoonnummer en AKAI neemt op. Via Twilio wordt de stem-naar-tekst omgezet, AKAI denkt na, en spreekt de respons voor. Handig onderweg of als typen niet lukt.</p>
+                <div class="cap-tags">
+                    <span class="cap-tag">Twilio</span>
+                    <span class="cap-tag">STT/TTS</span>
+                    <span class="cap-tag">voice.nexusakai.com</span>
+                </div>
+            </div>
+            <div class="cap-card">
+                <span class="cap-icon">🧠</span>
+                <div class="cap-title">Geheugen — hij kent mij</div>
+                <p class="cap-desc">AKAI heeft een persistent geheugen systeem: SOUL.md, IDENTITY.md, USER.md, MEMORY.md. Hij weet wie ik ben, wat mijn doelen zijn en wat we vorige keer besproken hebben.</p>
+                <div class="cap-tags">
+                    <span class="cap-tag">Persistent geheugen</span>
+                    <span class="cap-tag">Context bestanden</span>
+                    <span class="cap-tag">Workspace</span>
+                </div>
+            </div>
+            <div class="cap-card">
+                <span class="cap-icon">🛠️</span>
+                <div class="cap-title">Tools — hij handelt</div>
+                <p class="cap-desc">AKAI kan meer dan praten. Hij pakt mijn Google Calendar op, monitort Nexus in real-time, logt trades in het Trading Journal, voert scripts uit en kan bestanden lezen en schrijven op de server.</p>
+                <div class="cap-tags">
+                    <span class="cap-tag">Google Calendar</span>
+                    <span class="cap-tag">Nexus monitoring</span>
+                    <span class="cap-tag">Trading Journal</span>
+                    <span class="cap-tag">Scripts</span>
+                </div>
+            </div>
+            <div class="cap-card">
+                <span class="cap-icon">🤖</span>
+                <div class="cap-title">Multi-model — slim schakelen</div>
+                <p class="cap-desc">Niet één AI model maar meerdere. Snelle vragen gaan naar goedkope modellen, complexe taken naar Claude. Lokale modellen via Ollama voor maximale privacy. AKAI kiest zelf het beste model voor de taak.</p>
+                <div class="cap-tags">
+                    <span class="cap-tag">Ollama</span>
+                    <span class="cap-tag">Claude API</span>
+                    <span class="cap-tag">OpenRouter</span>
+                    <span class="cap-tag">Step 3.5 Flash</span>
+                </div>
+            </div>
+            <div class="cap-card">
+                <span class="cap-icon">🔐</span>
+                <div class="cap-title">Privacy — lokaal en veilig</div>
+                <p class="cap-desc">Alle data blijft op mijn eigen Pi. De gateway service draait als systemd service, API keys staan in een beveiligd .env bestand (chmod 600) en externe toegang gaat alleen via Tailscale VPN.</p>
+                <div class="cap-tags">
+                    <span class="cap-tag">Self-hosted</span>
+                    <span class="cap-tag">Tailscale</span>
+                    <span class="cap-tag">Geen cloud data</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">03</span>
+            <div class="label-line"></div>
+            <span class="label-text">Hoe het werkt</span>
+        </div>
+        <h2 class="section-title">Van bericht tot antwoord.</h2>
+        <div class="flow" style="margin-top: 32px;">
+            <div class="flow-step">
+                <div class="flow-left">
+                    <div class="flow-num">STAP 01</div>
+                    <div class="flow-label">Kanaal ontvangt bericht</div>
+                </div>
+                <div class="flow-right">
+                    <p class="flow-desc">Een bericht komt binnen via Telegram of een telefoongesprek via Twilio. De OpenClaw gateway luistert op poort 18789 en ontvangt het event via een webhook of long-polling connectie.</p>
+                    <div class="flow-items">
+                        <span class="flow-item">Telegram Bot API</span>
+                        <span class="flow-item">Twilio Voice Webhook</span>
+                        <span class="flow-item">OpenClaw Gateway :18789</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-left">
+                    <div class="flow-num">STAP 02</div>
+                    <div class="flow-label">Context laden</div>
+                </div>
+                <div class="flow-right">
+                    <p class="flow-desc">AKAI laadt zijn identiteit en geheugen: SOUL.md (karakter), IDENTITY.md (wie hij is), USER.md (wie ik ben), MEMORY.md (wat hij onthouden heeft), TOOLS.md (wat hij kan doen). Dit vormt de system prompt.</p>
+                    <div class="flow-items">
+                        <span class="flow-item">SOUL.md</span>
+                        <span class="flow-item">IDENTITY.md</span>
+                        <span class="flow-item">USER.md</span>
+                        <span class="flow-item">MEMORY.md</span>
+                        <span class="flow-item">TOOLS.md</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-left">
+                    <div class="flow-num">STAP 03</div>
+                    <div class="flow-label">Model selectie & denken</div>
+                </div>
+                <div class="flow-right">
+                    <p class="flow-desc">De gateway selecteert het juiste AI model op basis van de taak. Standaard gesprekken gaan naar Step 3.5 Flash via OpenRouter (razend snel, vrijwel gratis). Complexe taken of code naar Claude via de API. Maximale privacy naar lokale Ollama modellen.</p>
+                    <div class="flow-items">
+                        <span class="flow-item">Step 3.5 Flash (default)</span>
+                        <span class="flow-item">Claude Sonnet (complex)</span>
+                        <span class="flow-item">Ollama lokaal (privacy)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-left">
+                    <div class="flow-num">STAP 04</div>
+                    <div class="flow-label">Tools uitvoeren</div>
+                </div>
+                <div class="flow-right">
+                    <p class="flow-desc">Als AKAI een tool wil gebruiken — bijv. kalender checken, trade loggen of server status ophalen — voert hij die direct uit op Nexus via scripts of API calls naar lokale services. Geen externe afhankelijkheid.</p>
+                    <div class="flow-items">
+                        <span class="flow-item">gog (Google Calendar)</span>
+                        <span class="flow-item">Nexus scripts</span>
+                        <span class="flow-item">Trading Journal API</span>
+                        <span class="flow-item">Bash tools</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-left">
+                    <div class="flow-num">STAP 05</div>
+                    <div class="flow-label">Antwoord & geheugen</div>
+                </div>
+                <div class="flow-right">
+                    <p class="flow-desc">AKAI stuurt het antwoord terug via het kanaal (Telegram bericht of gesproken stem via Twilio). Als er iets is om te onthouden, schrijft hij dat weg naar MEMORY.md voor toekomstige gesprekken.</p>
+                    <div class="flow-items">
+                        <span class="flow-item">Telegram reply</span>
+                        <span class="flow-item">Twilio TTS</span>
+                        <span class="flow-item">MEMORY.md update</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model routing -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">04</span>
+            <div class="label-line"></div>
+            <span class="label-text">AI Modellen</span>
+        </div>
+        <h2 class="section-title">Het juiste model voor de taak.</h2>
+        <p class="section-body">AKAI gebruikt geen enkel AI model — hij heeft toegang tot meerdere en kiest afhankelijk van snelheid, kosten en privacy. Resultaat: 91 miljoen tokens verwerkt voor in totaal €3,76.</p>
+        <div class="models-grid" style="margin-top: 32px;">
+            <div class="model-card">
+                <span class="model-emoji">⚡</span>
+                <div>
+                    <div class="model-name">Step 3.5 Flash (StepFun)</div>
+                    <div class="model-use">Dagelijkse gesprekken, snelle vragen — vrijwel gratis via OpenRouter</div>
+                </div>
+                <span class="model-badge badge-free">Gratis</span>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🧠</span>
+                <div>
+                    <div class="model-name">Claude Sonnet (Anthropic)</div>
+                    <div class="model-use">Complexe redenering, code reviews, nieuwsanalyse voor trades</div>
+                </div>
+                <span class="model-badge badge-api">API</span>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🏠</span>
+                <div>
+                    <div class="model-name">Qwen 2.5 / Naja-Smart (Ollama)</div>
+                    <div class="model-use">Maximale privacy — draait 100% lokaal op Nexus, geen externe API call</div>
+                </div>
+                <span class="model-badge badge-local">Lokaal</span>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🌐</span>
+                <div>
+                    <div class="model-name">Gemini Flash / andere OpenRouter modellen</div>
+                    <div class="model-use">Experimenteren met nieuwe modellen, multimodale taken (afbeeldingen)</div>
+                </div>
+                <span class="model-badge badge-api">API</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code snippet -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">05</span>
+            <div class="label-line"></div>
+            <span class="label-text">Technisch</span>
+        </div>
+        <h2 class="section-title">Hoe AKAI zichzelf omschrijft.</h2>
+        <p class="section-body">De kern van AKAI's identiteit staat in tekstbestanden op de server. Dit is een fragment uit SOUL.md — de file die bepaalt wie AKAI is en hoe hij denkt.</p>
+        <div class="code-wrap" style="margin-top: 32px;">
+            <div class="code-header">
+                <div class="code-dot" style="background:#ff5f57"></div>
+                <div class="code-dot" style="background:#febc2e"></div>
+                <div class="code-dot" style="background:#28c840"></div>
+                <span class="code-filename">~/.openclaw/workspace/SOUL.md</span>
+            </div>
+            <div class="code-body">
+<span class="c-comment"># AKAI — Kern identiteit</span>
+
+<span class="c-key">Naam:</span> <span class="c-str">AKAI</span>
+<span class="c-key">Platform:</span> <span class="c-str">OpenClaw Gateway op Nexus (Raspberry Pi 5)</span>
+<span class="c-key">Eigenaar:</span> <span class="c-str">Alano Kricha, Den Haag</span>
+
+<span class="c-comment"># Karakter</span>
+<span class="c-fn">Ik ben direct, eerlijk en efficient.</span>
+<span class="c-fn">Ik zeg wat ik denk zonder onnodige woorden.</span>
+<span class="c-fn">Ik ken Alano's projecten, doelen en voorkeuren.</span>
+
+<span class="c-comment"># Kernwaarden</span>
+<span class="c-key">Privacy:</span>   <span class="c-str">Alle data blijft op Nexus. Geen cloud. Geen tracking.</span>
+<span class="c-key">Controle:</span> <span class="c-str">Alano heeft volledige controle over mij en mijn config.</span>
+<span class="c-key">Nut:</span>      <span class="c-str">Ik bespaar tijd. Elke interactie moet waarde toevoegen.</span>
+
+<span class="c-comment"># Wat ik weet</span>
+<span class="c-fn">— Nexus infrastructuur (17 services, alles draaiend)</span>
+<span class="c-fn">— Trading Journal (XAUUSD strategie, psychologie tracking)</span>
+<span class="c-fn">— Alano's kalender, notities en projecten</span>
+<span class="c-fn">— Hoe ik tools moet aanroepen en scripts moet uitvoeren</span>
+            </div>
+        </div>
+
+        <div class="code-wrap" style="margin-top: 16px;">
+            <div class="code-header">
+                <div class="code-dot" style="background:#ff5f57"></div>
+                <div class="code-dot" style="background:#febc2e"></div>
+                <div class="code-dot" style="background:#28c840"></div>
+                <span class="code-filename">/etc/systemd/system/openclaw-gateway.service</span>
+            </div>
+            <div class="code-body">
+[Unit]
+<span class="c-key">Description</span>=<span class="c-str">AKAI — OpenClaw Gateway</span>
+<span class="c-key">After</span>=<span class="c-str">network.target</span>
+
+[Service]
+<span class="c-key">User</span>=<span class="c-str">ak</span>
+<span class="c-key">ExecStart</span>=<span class="c-str">/home/ak/.npm-global/bin/openclaw gateway --port 18789</span>
+<span class="c-key">Restart</span>=<span class="c-str">always</span>
+<span class="c-key">RestartSec</span>=<span class="c-val">5</span>
+<span class="c-key">EnvironmentFile</span>=<span class="c-str">/home/ak/.openclaw/gateway.env</span>
+
+[Install]
+<span class="c-key">WantedBy</span>=<span class="c-str">multi-user.target</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key decisions -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">06</span>
+            <div class="label-line"></div>
+            <span class="label-text">Interessante keuzes</span>
+        </div>
+        <h2 class="section-title">Wat ik heb geleerd.</h2>
+        <div class="insights-list">
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Context is exponentieel duur.</strong> Elke API call stuurt de volledige gespreksgeschiedenis mee. Na 6 dagen zonder reset had één gesprek 40 miljoen tokens — maar Step 3.5 Flash is zo goedkoop dat dit maar $1.33 kostte.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Identiteitsbestanden zijn krachtig.</strong> SOUL.md, MEMORY.md en USER.md zijn geen technisch trucje — ze zijn wat AKAI maakt tot een assistent die écht nuttig is. Zonder die context is het gewoon een generieke chatbot.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Nooit doctor --fix uitvoeren.</strong> OpenClaw heeft een commando dat zichzelf zou moeten herstellen maar in de praktijk de hele configuratie wist. Twee keer geleerd: 7 april 2026 en al eerder op 2 april.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Meerdere modellen zijn beter dan één.</strong> Door verschillende modellen te kunnen inzetten voor verschillende taken bespaar ik geld, verhoog ik privacy en haal ik het beste uit elke situatie. Het beste model wisselt ook nog elk kwartaal.</p>
+            </div>
+            <div class="insight-item">
+                <div class="insight-dot"></div>
+                <p class="insight-text"><strong>Self-hosted AI is rijp voor productiegebruik.</strong> 24/7 uptime, sub-seconde Telegram responses, voice calls via Twilio — alles draait stabiel op een Pi die 5 euro stroom per maand kost. De technologie is er.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vision -->
+    <div class="section reveal">
+        <div class="section-label">
+            <span class="label-num">07</span>
+            <div class="label-line"></div>
+            <span class="label-text">Visie</span>
+        </div>
+        <div class="vision-card">
+            <div class="vision-quote">
+                "Iedereen zou een persoonlijke AI assistent moeten hebben die van hen is — niet van een techbedrijf. AKAI is mijn bewijs dat het kan. Een Pi, wat open-source software en een paar euro aan API credits. Meer heb je niet nodig."
+            </div>
+            <div class="vision-author">— Alano Kricha · Den Haag · 2026</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <div class="footer-left">© 2026 <span>Alano Kricha</span></div>
+    <div class="footer-right">
+        <a href="index.html">← Portfolio</a>
+        <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+</footer>
+
+<script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    });
+    (function animRing() {
+        rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a, button, .cap-card, .model-card, .flow-step').forEach(el => {
+        el.addEventListener('mouseenter', () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.borderColor = 'rgba(0,232,122,0.6)'; });
+        el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.borderColor = 'rgba(0,232,122,0.4)'; });
+    });
+
+    // Header scroll
+    window.addEventListener('scroll', () => {
+        document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('visible'), i * 80);
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
