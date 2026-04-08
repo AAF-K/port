@@ -31,97 +31,149 @@
             color: var(--text);
             font-family: 'Syne', sans-serif;
             overflow-x: hidden;
-            cursor: none;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* CURSOR */
-        .cursor {
-            position: fixed; width: 10px; height: 10px;
-            background: var(--accent); border-radius: 50%;
-            pointer-events: none; z-index: 99999;
-            transform: translate(-50%,-50%);
-            transition: width .15s, height .15s, background .2s;
+        @media (pointer: fine) {
+            body { cursor: none; }
+            .cursor {
+                position: fixed; width: 8px; height: 8px;
+                background: var(--accent); border-radius: 50%;
+                pointer-events: none; z-index: 99999;
+                transform: translate(-50%,-50%);
+                transition: width .12s, height .12s, opacity .2s;
+                mix-blend-mode: difference;
+            }
+            .cursor-ring {
+                position: fixed; width: 32px; height: 32px;
+                border: 1px solid rgba(0,232,122,0.35); border-radius: 50%;
+                pointer-events: none; z-index: 99998;
+                transform: translate(-50%,-50%);
+                transition: width .25s, height .25s, border-color .25s;
+            }
         }
-        .cursor-ring {
-            position: fixed; width: 36px; height: 36px;
-            border: 1px solid rgba(0,232,122,0.4); border-radius: 50%;
-            pointer-events: none; z-index: 99998;
-            transform: translate(-50%,-50%);
-            transition: width .3s, height .3s, border-color .3s;
+        @media (pointer: coarse), (max-width: 768px) {
+            .cursor, .cursor-ring { display: none !important; }
+            body { cursor: auto !important; }
         }
 
-        /* HEADER */
+        /* ── HEADER ── */
         header {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 18px 48px;
+            padding: 0 clamp(16px, 4vw, 48px);
+            height: 56px;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid transparent;
             transition: border-color .3s, background .3s, backdrop-filter .3s;
         }
         header.scrolled {
             border-color: var(--border);
-            background: rgba(9,9,15,0.88);
-            backdrop-filter: blur(20px);
+            background: rgba(9,9,15,0.85);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
         }
         .logo {
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px; font-weight: 500;
             color: var(--accent); letter-spacing: 1px;
         }
-        nav { display: flex; align-items: center; gap: 28px; }
-        nav a {
+        .nav-group { display: flex; align-items: center; gap: 24px; }
+        .nav-link {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 1.5px;
             text-transform: uppercase; color: var(--muted);
             transition: color .2s;
         }
-        nav a:hover { color: var(--text); }
+        .nav-link:hover { color: var(--text); }
         .lang-btn {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 1.5px;
             text-transform: uppercase; color: var(--muted);
             background: none; border: 1px solid var(--border);
-            border-radius: 4px; padding: 4px 10px; cursor: none;
-            transition: all .2s;
+            border-radius: 4px; padding: 4px 10px;
+            cursor: pointer; transition: all .2s;
         }
         .lang-btn:hover { color: var(--accent); border-color: rgba(0,232,122,0.3); }
+
+        /* Hamburger */
+        .hamburger {
+            display: none; background: none; border: none;
+            padding: 6px; cursor: pointer; z-index: 1001;
+            flex-direction: column; gap: 5px;
+        }
+        .hamburger span {
+            display: block; width: 22px; height: 1.5px;
+            background: var(--text); border-radius: 1px;
+            transition: transform .3s, opacity .2s;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+        .mobile-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0; pointer-events: none;
+            transition: opacity .3s; z-index: 998;
+        }
+        .mobile-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .mobile-menu {
+            position: fixed; top: 0; right: 0;
+            width: min(280px, 80vw); height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 80px 28px 28px;
+            transform: translateX(100%);
+            transition: transform .3s ease;
+            z-index: 999;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu a {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px; letter-spacing: 1px;
+            color: var(--muted); padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s;
+        }
+        .mobile-menu a:hover { color: var(--accent); }
 
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
+            min-height: 100svh;
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            padding: 96px 48px 56px;
-            gap: 56px;
+            padding: 80px clamp(16px, 4vw, 48px) 48px;
+            gap: 40px;
             position: relative;
             overflow: hidden;
         }
         .hero-bg {
             position: absolute; inset: 0;
             background-image:
-                linear-gradient(rgba(0,232,122,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,232,122,0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0,232,122,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,232,122,0.025) 1px, transparent 1px);
             background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at 25% 55%, black 20%, transparent 65%);
+            mask-image: radial-gradient(ellipse at 25% 55%, black 20%, transparent 60%);
         }
         .hero-glow {
             position: absolute;
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, rgba(0,232,122,0.055) 0%, transparent 65%);
-            top: 50%; left: 28%; transform: translate(-50%,-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,232,122,0.05) 0%, transparent 65%);
+            top: 50%; left: 25%; transform: translate(-50%,-50%);
             pointer-events: none;
         }
 
-        /* HERO LEFT */
         .hero-left { position: relative; z-index: 1; }
-
         .hero-eyebrow {
-            display: flex; align-items: center; gap: 12px;
-            margin-bottom: 32px;
-            opacity: 0; animation: fadeUp .7s ease .15s forwards;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 28px;
+            opacity: 0; animation: fadeUp .6s ease .1s forwards;
         }
-        .eyebrow-line { width: 32px; height: 1px; background: var(--accent); }
+        .eyebrow-line { width: 28px; height: 1px; background: var(--accent); }
         .eyebrow-text {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; color: var(--accent);
@@ -129,10 +181,10 @@
         }
 
         .hero-title {
-            font-size: clamp(40px, 5.2vw, 74px);
+            font-size: clamp(36px, 5vw, 72px);
             font-weight: 800; line-height: 1.05;
-            letter-spacing: -3.5px; margin-bottom: 28px;
-            opacity: 0; animation: fadeUp .7s ease .3s forwards;
+            letter-spacing: -3px; margin-bottom: 24px;
+            opacity: 0; animation: fadeUp .6s ease .2s forwards;
         }
         .hero-title .italic {
             font-family: 'Fraunces', serif;
@@ -144,29 +196,28 @@
         .hero-sub {
             font-size: 15px; color: var(--muted);
             line-height: 1.7; max-width: 400px;
-            margin-bottom: 36px;
-            opacity: 0; animation: fadeUp .7s ease .45s forwards;
+            margin-bottom: 32px;
+            opacity: 0; animation: fadeUp .6s ease .35s forwards;
         }
         .hero-sub strong { color: var(--text); font-weight: 600; }
 
         .hero-pills {
-            display: flex; flex-wrap: wrap; gap: 7px;
-            opacity: 0; animation: fadeUp .7s ease .58s forwards;
+            display: flex; flex-wrap: wrap; gap: 6px;
+            opacity: 0; animation: fadeUp .6s ease .45s forwards;
         }
         .hero-pill {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px; letter-spacing: .5px;
-            padding: 5px 12px; border-radius: 99px;
+            padding: 5px 11px; border-radius: 99px;
             border: 1px solid var(--border);
             color: var(--muted); background: var(--surface);
-            transition: all .2s;
         }
-        .hero-pill.on { border-color: rgba(0,232,122,0.3); color: var(--accent); background: rgba(0,232,122,0.05); }
+        .hero-pill.on { border-color: rgba(0,232,122,0.3); color: var(--accent); background: rgba(0,232,122,0.04); }
 
-        /* HERO RIGHT — terminal */
+        /* Terminal */
         .hero-right {
             position: relative; z-index: 1;
-            opacity: 0; animation: fadeUp .7s ease .4s forwards;
+            opacity: 0; animation: fadeUp .6s ease .35s forwards;
         }
         .terminal-card {
             background: var(--surface);
@@ -175,16 +226,16 @@
         }
         .term-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 13px 18px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border);
             background: var(--surface2);
         }
         .term-dots { display: flex; gap: 6px; }
-        .term-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--dim); }
+        .term-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dim); }
         .term-dot.g { background: var(--accent); }
         .term-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; color: var(--muted); letter-spacing: .8px;
+            font-size: 11px; color: var(--muted);
         }
         .live-chip {
             display: flex; align-items: center; gap: 5px;
@@ -194,72 +245,69 @@
         }
         .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease infinite; }
 
-        .term-body { padding: 20px 18px; display: flex; flex-direction: column; gap: 16px; }
-        .term-line { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; }
+        .term-body { padding: 18px 16px; display: flex; flex-direction: column; gap: 14px; }
+        .term-line { display: grid; grid-template-columns: 40px 1fr; gap: 8px; align-items: start; }
         .t-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); padding-top: 2px; }
-        .t-msg { font-size: 13px; color: var(--muted); line-height: 1.55; }
+        .t-msg { font-size: 13px; color: var(--muted); line-height: 1.5; }
         .t-who {
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-            display: block; margin-bottom: 3px;
+            display: block; margin-bottom: 2px;
         }
         .t-who.akai { color: var(--accent); }
         .t-who.user { color: var(--blue); }
         .t-sep { border: none; border-top: 1px solid var(--border); }
-
         .term-cursor {
-            display: inline-block; width: 7px; height: 13px;
+            display: inline-block; width: 6px; height: 12px;
             background: var(--accent); vertical-align: text-bottom;
             margin-left: 1px; animation: blink 1s step-start infinite;
         }
 
         .term-footer {
             display: grid; grid-template-columns: repeat(3,1fr);
-            padding: 14px 18px;
+            padding: 12px 16px;
             border-top: 1px solid var(--border);
             background: rgba(0,232,122,0.02);
         }
         .tf-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 20px; font-weight: 500; color: var(--accent); line-height: 1;
+            font-size: 18px; font-weight: 500; color: var(--accent); line-height: 1;
         }
         .tf-label { font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
 
-        /* Staggered terminal reveal */
-        .term-line { opacity: 0; animation: fadeIn .4s ease forwards; }
-        .term-line:nth-child(1) { animation-delay: .9s; }
-        .term-line:nth-child(2) { animation-delay: 1.3s; }
-        .t-sep       { opacity: 0; animation: fadeIn .3s ease 1.65s forwards; }
-        .term-line:nth-child(4) { animation-delay: 1.9s; }
-        .term-line:nth-child(5) { animation-delay: 2.3s; }
+        .term-line { opacity: 0; animation: fadeIn .3s ease forwards; }
+        .term-line:nth-child(1) { animation-delay: .8s; }
+        .term-line:nth-child(2) { animation-delay: 1.1s; }
+        .t-sep                  { opacity: 0; animation: fadeIn .3s ease 1.4s forwards; }
+        .term-line:nth-child(4) { animation-delay: 1.6s; }
+        .term-line:nth-child(5) { animation-delay: 1.9s; }
 
         /* ── STATS BAR ── */
         .stats-bar {
+            display: grid; grid-template-columns: repeat(4, 1fr);
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            display: flex; overflow: hidden;
         }
         .stat-item {
-            flex: 1; padding: 18px 40px;
+            padding: 18px clamp(16px, 3vw, 40px);
             border-right: 1px solid var(--border);
             transition: background .2s;
         }
-        .stat-item:first-child { padding-left: 48px; }
-        .stat-item:last-child { border-right: none; padding-right: 48px; }
+        .stat-item:last-child { border-right: none; }
         .stat-item:hover { background: rgba(0,232,122,0.02); }
         .stat-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 26px; font-weight: 500; color: var(--accent);
-            display: block; line-height: 1; margin-bottom: 4px;
+            font-size: clamp(20px, 2.5vw, 26px); font-weight: 500;
+            color: var(--accent); display: block; line-height: 1; margin-bottom: 4px;
         }
         .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; }
 
-        /* ── BENTO ── */
-        .bento-section { padding: 60px 48px 96px; }
+        /* ── BENTO GRID ── */
+        .bento-section { padding: 48px clamp(16px, 4vw, 48px) 72px; }
 
         .section-label {
-            display: flex; align-items: center; gap: 16px;
-            margin-bottom: 28px;
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px;
         }
         .label-text {
             font-family: 'JetBrains Mono', monospace;
@@ -271,19 +319,21 @@
         .bento-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 12px;
         }
 
         .bento-cell {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px; overflow: hidden;
+            border-radius: 12px; overflow: hidden;
             position: relative;
-            transition: border-color .3s;
+            transition: border-color .3s, box-shadow .3s;
         }
-        .bento-cell:hover { border-color: rgba(0,232,122,0.22); }
+        .bento-cell:hover {
+            border-color: rgba(0,232,122,0.2);
+            box-shadow: 0 0 40px rgba(0,232,122,0.03);
+        }
 
-        /* Featured AKAI — full width, 2-panel */
         .bento-cell.feat {
             grid-column: 1 / -1;
             display: grid;
@@ -292,29 +342,25 @@
         .bento-cell.feat::before {
             content: '';
             position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, var(--accent), transparent);
+            background: linear-gradient(90deg, var(--accent), transparent 70%);
             opacity: 0; transition: opacity .3s;
         }
         .bento-cell.feat:hover::before { opacity: 1; }
 
-        .cell-inner {
-            padding: 36px;
-            display: flex; flex-direction: column;
-        }
+        .cell-inner { padding: 28px; display: flex; flex-direction: column; }
         .cell-inner-r {
-            padding: 36px;
+            padding: 28px;
             display: flex; flex-direction: column;
             background: var(--surface2);
             border-left: 1px solid var(--border);
         }
 
-        /* Badge */
         .cell-badge {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex; align-items: center; gap: 5px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
             border-radius: 3px; padding: 3px 8px;
-            margin-bottom: 18px; align-self: flex-start;
+            margin-bottom: 14px; align-self: flex-start;
         }
         .cell-badge.live { color: var(--accent); background: rgba(0,232,122,0.08); border: 1px solid rgba(0,232,122,0.2); }
         .cell-badge.wip { color: var(--warm); background: rgba(240,165,0,0.08); border: 1px solid rgba(240,165,0,0.2); }
@@ -322,74 +368,67 @@
 
         .cell-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px; color: var(--dim); margin-bottom: 6px;
+            font-size: 10px; color: var(--dim); margin-bottom: 4px;
         }
-        .cell-title {
-            font-size: 28px; font-weight: 700; letter-spacing: -.5px;
-            line-height: 1.12; margin-bottom: 6px;
-        }
-        .cell-sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+        .cell-title { font-size: 24px; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; margin-bottom: 4px; }
+        .cell-sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
 
-        .cell-desc {
-            font-size: 14px; color: var(--muted); line-height: 1.75;
-            margin-bottom: 22px; flex: 1;
-        }
+        .cell-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; flex: 1; }
 
-        .cell-feats { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 24px; }
+        .cell-feats { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-bottom: 18px; }
         .cell-feats li {
-            display: flex; align-items: flex-start; gap: 9px;
-            font-size: 13px; color: var(--muted); line-height: 1.45;
+            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 12px; color: var(--muted); line-height: 1.45;
         }
         .cell-feats li::before {
             content: ''; width: 4px; height: 4px; border-radius: 50%;
-            background: var(--accent); flex-shrink: 0; margin-top: 6px;
+            background: var(--accent); flex-shrink: 0; margin-top: 5px;
         }
 
-        .tech-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 26px; }
+        .tech-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
         .tech-pill {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px; padding: 3px 9px; border-radius: 3px;
+            font-size: 9px; padding: 3px 8px; border-radius: 3px;
             background: var(--surface2); border: 1px solid var(--border);
-            color: var(--muted); letter-spacing: .5px; transition: all .2s;
+            color: var(--muted); letter-spacing: .5px;
         }
-        .bento-cell:hover .tech-pill { border-color: rgba(0,232,122,0.18); color: var(--text); }
 
         .cell-cta {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 7px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
             color: var(--accent);
             border-bottom: 1px solid rgba(0,232,122,0.3);
-            padding-bottom: 3px; transition: all .2s;
+            padding-bottom: 2px; transition: all .2s;
             align-self: flex-start; margin-top: auto;
         }
-        .cell-cta:hover { gap: 14px; border-color: var(--accent); }
+        .cell-cta:hover { gap: 12px; border-color: var(--accent); }
         .cta-arrow { transition: transform .2s; }
-        .cell-cta:hover .cta-arrow { transform: translateX(4px); }
+        .cell-cta:hover .cta-arrow { transform: translateX(3px); }
 
-        /* Right panel — AKAI stats + code */
+        /* Right panel — stats */
         .visual-label {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px; color: var(--dim); letter-spacing: 2px;
-            text-transform: uppercase; margin-bottom: 16px;
+            text-transform: uppercase; margin-bottom: 14px;
         }
-        .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+        .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
         .mini-stat {
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: 8px; padding: 14px 15px;
+            border-radius: 8px; padding: 12px;
         }
         .mini-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 20px; color: var(--accent); font-weight: 500;
-            line-height: 1; margin-bottom: 4px;
+            font-size: 18px; color: var(--accent); font-weight: 500;
+            line-height: 1; margin-bottom: 3px;
         }
         .mini-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
         .code-block {
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: 8px; padding: 16px;
+            border-radius: 8px; padding: 14px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; line-height: 1.75; color: var(--muted);
+            font-size: 11px; line-height: 1.7; color: var(--muted);
             flex: 1;
         }
         .c-comment { color: var(--dim); }
@@ -399,7 +438,7 @@
         /* ── FOOTER ── */
         footer {
             border-top: 1px solid var(--border);
-            padding: 36px 48px;
+            padding: 28px clamp(16px, 4vw, 48px);
             display: flex; justify-content: space-between; align-items: center;
         }
         .footer-left {
@@ -407,7 +446,7 @@
             font-size: 11px; color: var(--muted); letter-spacing: 1px;
         }
         .footer-left span { color: var(--accent); }
-        .footer-right { display: flex; gap: 28px; }
+        .footer-right { display: flex; gap: 24px; }
         .footer-right a {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px; color: var(--muted);
@@ -415,9 +454,9 @@
         }
         .footer-right a:hover { color: var(--accent); }
 
-        /* ANIMATIONS */
+        /* ── ANIMATIONS ── */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(22px); }
+            from { opacity: 0; transform: translateY(18px); }
             to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn { to { opacity: 1; } }
@@ -425,73 +464,62 @@
         @keyframes blink { 50%{opacity:0} }
 
         .reveal {
-            opacity: 0; transform: translateY(18px);
-            transition: opacity .65s ease, transform .65s ease;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity .55s ease, transform .55s ease;
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 960px) {
-            header { padding: 16px 20px; }
-            .hero { grid-template-columns: 1fr; min-height: auto; padding: 84px 20px 44px; gap: 36px; }
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding: 72px clamp(16px, 4vw, 48px) 40px;
+                gap: 32px;
+            }
             .hero-right { display: none; }
-            .stats-bar { flex-wrap: wrap; }
-            .stat-item { flex: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
-            .stat-item:first-child { padding-left: 20px; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
             .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
-            .stat-item:nth-last-child(1), .stat-item:nth-last-child(2) { border-bottom: none; }
-            .bento-section { padding: 36px 20px 56px; }
+            .stat-item:nth-child(even) { border-right: none; }
+            .stat-item:nth-child(1),
+            .stat-item:nth-child(2) { border-bottom: 1px solid var(--border); }
             .bento-cell.feat { display: flex; flex-direction: column; }
             .cell-inner-r { border-left: none; border-top: 1px solid var(--border); }
-            footer { padding: 24px 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
-            body { cursor: auto; }
-            .cursor, .cursor-ring { display: none; }
         }
 
-        /* Mobile: bento → horizontal carousel */
         @media (max-width: 768px) {
-            .hero-title { font-size: clamp(28px, 9vw, 40px); letter-spacing: -1.5px; }
-            .hero-sub { font-size: 14px; max-width: 100%; }
-            .hero-pills { flex-wrap: wrap; gap: 6px; }
+            .hamburger { display: flex; }
+            .nav-link { display: none; }
 
-            /* Bento cards → swipeable carousel */
             .bento-grid {
-                display: flex !important;
-                flex-direction: row;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                overscroll-behavior-x: contain;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
+                grid-template-columns: 1fr;
                 gap: 12px;
-                padding: 4px 20px 20px;
-                margin: 0 -20px;
-                background: none; border-radius: 0;
-            }
-            .bento-grid::-webkit-scrollbar { display: none; }
-            .bento-cell {
-                min-width: min(290px, 82vw);
-                scroll-snap-align: start;
-                flex-shrink: 0;
-                border-radius: 14px;
-                border: 1px solid var(--border);
             }
             .bento-cell.feat {
-                min-width: min(340px, 92vw);
+                grid-column: auto;
+                display: flex;
                 flex-direction: column;
             }
-            .cell-inner, .cell-inner-r { padding: 20px; }
+            .cell-inner { padding: 20px; }
+            .cell-inner-r { padding: 20px; border-left: none; border-top: 1px solid var(--border); }
+            .cell-title { font-size: 20px; }
+            .cell-desc { font-size: 12px; }
+            .cell-feats li { font-size: 12px; }
+            .bento-section { padding: 36px 16px 48px; }
+            .section-label { margin-bottom: 16px; }
 
-            .bento-section { padding-bottom: 8px; }
-            .section-label { padding: 0 4px; margin-bottom: 16px; }
+            .hero-title { letter-spacing: -1.5px; }
+            .hero-sub { font-size: 14px; max-width: 100%; }
 
-            nav a { display: none; }
-            nav { gap: 12px; }
+            footer { flex-direction: column; gap: 14px; align-items: flex-start; }
         }
 
-        @media (max-width: 480px) {
-            .hero { padding: 80px 16px 36px; }
-            header { padding: 14px 16px; }
+        @media (max-width: 420px) {
+            .hero { padding: 68px 16px 32px; }
+            .hero-title { font-size: 32px; letter-spacing: -1px; }
+            .stat-item { padding: 14px 16px; }
+            .stat-val { font-size: 20px; }
+            .mini-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -500,14 +528,24 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- HEADER -->
 <header id="header">
     <a href="/" class="logo">Alano Kricha</a>
-    <nav>
-        <a href="#contact" data-i18n="nav-contact">Contact</a>
+    <div class="nav-group">
+        <a href="#contact" class="nav-link" data-i18n="nav-contact">Contact</a>
         <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">EN</button>
-    </nav>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 </header>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#projecten" data-i18n="nav-projects-m">Projecten</a>
+    <a href="#contact" data-i18n="nav-contact-m">Contact</a>
+    <a href="https://github.com/aaf-k" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://linkedin.com/in/alanoafk" target="_blank" rel="noopener">LinkedIn</a>
+</div>
 
 <!-- ── HERO ── -->
 <section class="hero">
@@ -537,7 +575,6 @@
         </div>
     </div>
 
-    <!-- HERO RIGHT — AKAI terminal -->
     <div class="hero-right">
         <div class="terminal-card">
             <div class="term-header">
@@ -618,7 +655,7 @@
 
     <div class="bento-grid">
 
-        <!-- 01 AKAI — featured full width -->
+        <!-- 01 AKAI — featured -->
         <div class="bento-cell feat reveal">
             <div class="cell-inner">
                 <div class="cell-badge live"><div class="badge-dot"></div><span data-i18n="p1-badge">Live</span></div>
@@ -694,7 +731,7 @@
                     <li data-i18n="p2-f3">Zero-trust beveiliging via Tailscale en UFW</li>
                     <li data-i18n="p2-f4">Apple HomeKit integratie via Homebridge</li>
                 </ul>
-                <div class="tech-row" style="margin-top:auto; padding-top:20px;">
+                <div class="tech-row" style="margin-top:auto; padding-top:16px;">
                     <span class="tech-pill">Docker</span>
                     <span class="tech-pill">Pi-hole</span>
                     <span class="tech-pill">Tailscale</span>
@@ -723,7 +760,7 @@
                     <li data-i18n="p3-f3">Post-trade analyse met nieuwscontext via Claude API</li>
                     <li data-i18n="p3-f4">Bereikbaar via AKAI op Telegram</li>
                 </ul>
-                <div class="tech-row" style="margin-top:auto; padding-top:20px;">
+                <div class="tech-row" style="margin-top:auto; padding-top:16px;">
                     <span class="tech-pill">Flask</span>
                     <span class="tech-pill">SQLite</span>
                     <span class="tech-pill">Ollama</span>
@@ -751,135 +788,106 @@
 </footer>
 
 <script>
-    // Cursor
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    });
-    (function animRing() {
-        rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-        requestAnimationFrame(animRing);
-    })();
-    document.querySelectorAll('a, button, .bento-cell').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            ring.style.width = '52px'; ring.style.height = '52px';
-            ring.style.borderColor = 'rgba(0,232,122,0.6)';
+    if (cursor && ring && window.matchMedia('(pointer: fine)').matches) {
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
         });
-        el.addEventListener('mouseleave', () => {
-            ring.style.width = '36px'; ring.style.height = '36px';
-            ring.style.borderColor = 'rgba(0,232,122,0.4)';
+        (function animRing() {
+            rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            requestAnimationFrame(animRing);
+        })();
+        document.querySelectorAll('a, button, .bento-cell').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                ring.style.width = '48px'; ring.style.height = '48px';
+                ring.style.borderColor = 'rgba(0,232,122,0.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                ring.style.width = '32px'; ring.style.height = '32px';
+                ring.style.borderColor = 'rgba(0,232,122,0.35)';
+            });
         });
-    });
+    }
 
-    // Header scroll
     window.addEventListener('scroll', () => {
-        document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+        document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // Scroll reveal
     const observer = new IntersectionObserver(entries => {
         entries.forEach((e, i) => {
             if (e.isIntersecting) {
-                setTimeout(() => e.target.classList.add('visible'), i * 90);
+                setTimeout(() => e.target.classList.add('visible'), i * 80);
                 observer.unobserve(e.target);
             }
         });
-    }, { threshold: 0.06 });
+    }, { threshold: 0.05 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Language toggle
-    // All values are plain text — no HTML — fully XSS-safe, textContent only.
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    function toggleMenu() {
+        const open = mobileMenu.classList.toggle('open');
+        mobileOverlay.classList.toggle('open', open);
+        hamburger.classList.toggle('active', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    }
+    hamburger.addEventListener('click', toggleMenu);
+    mobileOverlay.addEventListener('click', toggleMenu);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('open')) toggleMenu();
+    }));
+
     const translations = {
         nl: {
-            "nav-contact":    "Contact",
-            "hero-sub-pre":   "Ik bouw ",
-            "hero-sub-strong":"slimme, self-hosted systemen.",
-            "hero-sub-post":  " Van Raspberry Pi server tot persoonlijke AI assistent.",
-            "stat1": "Uptime Nexus server",
-            "stat2": "Actieve services",
-            "stat3": "Maandelijkse AI kosten",
-            "stat4": "Persoonlijke AI assistent",
-            "projects-title": "Projecten",
-            "p1-badge":   "Live",
-            "p1-title":   "AKAI",
-            "p1-subtitle":"Persoonlijke AI assistent op Nexus",
-            "p1-desc":    "AKAI draait op mijn eigen Raspberry Pi server. Geen abonnement. Geen cloud. Geen data-deling. Reageert op Telegram, voert voice calls uit en heeft toegang tot mijn kalender, Trading Journal en server scripts.",
-            "p1-f1": "24/7 bereikbaar via Telegram",
-            "p1-f2": "Voicegesprekken via Twilio, doorgesteld naar mijn nummer",
-            "p1-f3": "Toegang tot kalender, systeem, notities en Trading Journal",
-            "p1-f4": "100% self-hosted op Nexus",
-            "p1-link": "Bekijk AKAI",
-            "p2-badge":   "Live",
-            "p2-title":   "Nexus",
-            "p2-subtitle":"Raspberry Pi 5 homelab server",
-            "p2-desc":    "Nexus is de Raspberry Pi 5 thuis die alles draait. AI modellen, media server, DNS filtering, smart home en monitoring. Beveiligd via zero-trust networking met Tailscale en UFW.",
-            "p2-f1": "17 actieve services: Jellyfin, Grafana, Homebridge en meer",
-            "p2-f2": "Pi-hole blokkeert advertenties voor het hele netwerk",
-            "p2-f3": "Zero-trust beveiliging via Tailscale en UFW",
-            "p2-f4": "Apple HomeKit integratie via Homebridge",
-            "p2-link": "Bekijk project",
-            "p3-wip":     "In ontwikkeling",
-            "p3-title":   "AI Trading Journal",
-            "p3-subtitle":"AI coaching voor XAUUSD trades",
-            "p3-desc":    "Persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Pre-trade check, post-trade analyse en psychologie tracking. Bereikbaar via AKAI op Telegram.",
-            "p3-f1": "Pre-trade validatie tegen persoonlijke strategie regels",
-            "p3-f2": "Emotie en psychologie tracking per trade",
-            "p3-f3": "Post-trade analyse met nieuwscontext via Claude API",
-            "p3-f4": "Bereikbaar via AKAI op Telegram",
-            "p3-link": "Bekijk showcase",
+            "nav-contact":"Contact","nav-projects-m":"Projecten","nav-contact-m":"Contact",
+            "hero-sub-pre":"Ik bouw ","hero-sub-strong":"slimme, self-hosted systemen.","hero-sub-post":" Van Raspberry Pi server tot persoonlijke AI assistent.",
+            "stat1":"Uptime Nexus server","stat2":"Actieve services","stat3":"Maandelijkse AI kosten","stat4":"Persoonlijke AI assistent",
+            "projects-title":"Projecten",
+            "p1-badge":"Live","p1-title":"AKAI","p1-subtitle":"Persoonlijke AI assistent op Nexus",
+            "p1-desc":"AKAI draait op mijn eigen Raspberry Pi server. Geen abonnement. Geen cloud. Geen data-deling. Reageert op Telegram, voert voice calls uit en heeft toegang tot mijn kalender, Trading Journal en server scripts.",
+            "p1-f1":"24/7 bereikbaar via Telegram","p1-f2":"Voicegesprekken via Twilio, doorgesteld naar mijn nummer",
+            "p1-f3":"Toegang tot kalender, systeem, notities en Trading Journal","p1-f4":"100% self-hosted op Nexus","p1-link":"Bekijk AKAI",
+            "p2-badge":"Live","p2-title":"Nexus","p2-subtitle":"Raspberry Pi 5 homelab server",
+            "p2-desc":"Nexus is de Raspberry Pi 5 thuis die alles draait. AI modellen, media server, DNS filtering, smart home en monitoring. Beveiligd via zero-trust networking met Tailscale en UFW.",
+            "p2-f1":"17 actieve services: Jellyfin, Grafana, Homebridge en meer","p2-f2":"Pi-hole blokkeert advertenties voor het hele netwerk",
+            "p2-f3":"Zero-trust beveiliging via Tailscale en UFW","p2-f4":"Apple HomeKit integratie via Homebridge","p2-link":"Bekijk project",
+            "p3-wip":"In ontwikkeling","p3-title":"AI Trading Journal","p3-subtitle":"AI coaching voor XAUUSD trades",
+            "p3-desc":"Persoonlijke AI trading coach die bijhoudt wat ik doe en waarom. Pre-trade check, post-trade analyse en psychologie tracking. Bereikbaar via AKAI op Telegram.",
+            "p3-f1":"Pre-trade validatie tegen persoonlijke strategie regels","p3-f2":"Emotie en psychologie tracking per trade",
+            "p3-f3":"Post-trade analyse met nieuwscontext via Claude API","p3-f4":"Bereikbaar via AKAI op Telegram","p3-link":"Bekijk showcase"
         },
         en: {
-            "nav-contact":    "Contact",
-            "hero-sub-pre":   "I build ",
-            "hero-sub-strong":"smart, self-hosted systems.",
-            "hero-sub-post":  " From Raspberry Pi server to personal AI assistant.",
-            "stat1": "Nexus server uptime",
-            "stat2": "Active services",
-            "stat3": "Monthly AI costs",
-            "stat4": "Personal AI assistant",
-            "projects-title": "Projects",
-            "p1-badge":   "Live",
-            "p1-title":   "AKAI",
-            "p1-subtitle":"Personal AI assistant on Nexus",
-            "p1-desc":    "AKAI runs on my own Raspberry Pi server. No subscription. No cloud. No data sharing. Responds on Telegram, handles voice calls and has access to my calendar, Trading Journal and server scripts.",
-            "p1-f1": "24/7 accessible via Telegram",
-            "p1-f2": "Voice calls via Twilio, forwarded to my number",
-            "p1-f3": "Access to calendar, system, notes and Trading Journal",
-            "p1-f4": "100% self-hosted on Nexus",
-            "p1-link": "View AKAI",
-            "p2-badge":   "Live",
-            "p2-title":   "Nexus",
-            "p2-subtitle":"Raspberry Pi 5 homelab server",
-            "p2-desc":    "Nexus is the Raspberry Pi 5 at home that runs everything. AI models, media server, DNS filtering, smart home and monitoring. Secured via zero-trust networking with Tailscale and UFW.",
-            "p2-f1": "17 active services: Jellyfin, Grafana, Homebridge and more",
-            "p2-f2": "Pi-hole blocks ads for the entire network",
-            "p2-f3": "Zero-trust security via Tailscale and UFW",
-            "p2-f4": "Apple HomeKit integration via Homebridge",
-            "p2-link": "View project",
-            "p3-wip":     "In development",
-            "p3-title":   "AI Trading Journal",
-            "p3-subtitle":"AI coaching for XAUUSD trades",
-            "p3-desc":    "Personal AI trading coach that tracks what I do and why. Pre-trade check, post-trade analysis and psychology tracking. Accessible via AKAI on Telegram.",
-            "p3-f1": "Pre-trade validation against personal strategy rules",
-            "p3-f2": "Emotion and psychology tracking per trade",
-            "p3-f3": "Post-trade analysis with news context via Claude API",
-            "p3-f4": "Accessible via AKAI on Telegram",
-            "p3-link": "View showcase",
+            "nav-contact":"Contact","nav-projects-m":"Projects","nav-contact-m":"Contact",
+            "hero-sub-pre":"I build ","hero-sub-strong":"smart, self-hosted systems.","hero-sub-post":" From Raspberry Pi server to personal AI assistant.",
+            "stat1":"Nexus server uptime","stat2":"Active services","stat3":"Monthly AI costs","stat4":"Personal AI assistant",
+            "projects-title":"Projects",
+            "p1-badge":"Live","p1-title":"AKAI","p1-subtitle":"Personal AI assistant on Nexus",
+            "p1-desc":"AKAI runs on my own Raspberry Pi server. No subscription. No cloud. No data sharing. Responds on Telegram, handles voice calls and has access to my calendar, Trading Journal and server scripts.",
+            "p1-f1":"24/7 accessible via Telegram","p1-f2":"Voice calls via Twilio, forwarded to my number",
+            "p1-f3":"Access to calendar, system, notes and Trading Journal","p1-f4":"100% self-hosted on Nexus","p1-link":"View AKAI",
+            "p2-badge":"Live","p2-title":"Nexus","p2-subtitle":"Raspberry Pi 5 homelab server",
+            "p2-desc":"Nexus is the Raspberry Pi 5 at home that runs everything. AI models, media server, DNS filtering, smart home and monitoring. Secured via zero-trust networking with Tailscale and UFW.",
+            "p2-f1":"17 active services: Jellyfin, Grafana, Homebridge and more","p2-f2":"Pi-hole blocks ads for the entire network",
+            "p2-f3":"Zero-trust security via Tailscale and UFW","p2-f4":"Apple HomeKit integration via Homebridge","p2-link":"View project",
+            "p3-wip":"In development","p3-title":"AI Trading Journal","p3-subtitle":"AI coaching for XAUUSD trades",
+            "p3-desc":"Personal AI trading coach that tracks what I do and why. Pre-trade check, post-trade analysis and psychology tracking. Accessible via AKAI on Telegram.",
+            "p3-f1":"Pre-trade validation against personal strategy rules","p3-f2":"Emotion and psychology tracking per trade",
+            "p3-f3":"Post-trade analysis with news context via Claude API","p3-f4":"Accessible via AKAI on Telegram","p3-link":"View showcase"
         }
     };
 
     let currentLang = 'nl';
-
     function toggleLanguage() {
         currentLang = currentLang === 'nl' ? 'en' : 'nl';
         document.getElementById('langToggle').textContent = currentLang === 'nl' ? 'EN' : 'NL';
         applyLanguage(currentLang);
     }
-
     function applyLanguage(lang) {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
